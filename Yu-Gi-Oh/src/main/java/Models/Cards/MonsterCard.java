@@ -1,4 +1,4 @@
-package Models;
+package Models.Cards;
 
 public class MonsterCard extends Card{
     private int level;

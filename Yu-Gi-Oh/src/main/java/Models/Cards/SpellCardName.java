@@ -1,4 +1,4 @@
-package Models;
+package Models.Cards;
 
 public enum SpellCardName {
     MONSTER_REBORN,

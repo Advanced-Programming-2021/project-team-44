@@ -1,4 +1,4 @@
-package Models;
+package Models.Cards;
 
 public enum TrapCardName {
     MAGIC_CYLINDER,

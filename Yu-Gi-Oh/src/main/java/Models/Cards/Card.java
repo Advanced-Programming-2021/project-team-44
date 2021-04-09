@@ -1,4 +1,4 @@
-package Models;
+package Models.Cards;
 
 abstract public class Card {
     protected String name;
