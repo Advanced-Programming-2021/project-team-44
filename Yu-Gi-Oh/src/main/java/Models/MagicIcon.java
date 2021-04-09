@@ -1,6 +1,6 @@
 package Models;
 
-public enum SpellTrapIcon {
+public enum MagicIcon {
     EQUIP,
     FIELD,
     QUICK_PLAY,
