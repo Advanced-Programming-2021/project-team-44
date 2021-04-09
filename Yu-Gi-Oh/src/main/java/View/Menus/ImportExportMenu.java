@@ -4,24 +4,13 @@ import java.util.function.ToDoubleBiFunction;
 
 public class ImportExportMenu {//0
 
-    public void commandHandler(String input) {
-    }
-
-    //Command Performer
-    private void importCard(String cardName) {
+    public int commandHandler(String input) {
         //TODO
-    }
-
-    private void exportCard(String cardName) {
-        //TODO
-    }
-
-    //Error Checker
-    private void importCardErrorChecker(String input) {
-        //TODO
-    }
-
-    private void exportCardErrorChecker(String input) {
-        //TODO
+        /*
+        if 1.find() return 0
+        else if 2.find() return 1
+        else return -1
+         */
+        return -1;
     }
 }

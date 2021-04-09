@@ -1,49 +1,13 @@
 package View.Menus;
 
 public class LoginMenu { //0
-
-    public void commandHandler(String input) {
-        //TODO
-    }
-
-    //Command Performer
-    private void exitMenu() {
-        System.exit(0);
-    } //done
-
-    private void showMenu() {
-        System.out.println("Login Menu");
-    } //done
-
-    private void createUser(String username, String password, String nickname) {
-        //TODO
-    }
-
-    private void loginUser(String username, String password) {
-        //TODO
-    }
-
-    //Error Checkers
-    private void enterMenuErrorThrower() {
-        //TODO
-    }
-
-    private void createUserErrorChecker(String input) {
+    public int commandHandler(String input) {
         //TODO
         /*
-        username
-        password
-        nickname
-
-        if
-        else if
-        else {
-        createUser(input)
-        }
+        if 1.find() return 0
+        else if 2.find() return 1
+        else return -1
          */
-    }
-
-    private void loginUserErrorChecker(String input) {
-        //TODO
+        return -1;
     }
 }

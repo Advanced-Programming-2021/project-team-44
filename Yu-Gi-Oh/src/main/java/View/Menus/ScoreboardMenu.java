@@ -1,14 +1,16 @@
 package View.Menus;
 
 public class ScoreboardMenu {//0
-    public void commandHandler(String input) {
-
-    }
-
-    //Command Performer
-    private void showScoreboard() {
+    public int commandHandler(String input) {
         //TODO
-        // rank- nickname: score
+        /*
+        if 1.find() return 0
+        else if 2.find() return 1
+        else return -1
+         */
+        return -1;
     }
+
+
 
 }

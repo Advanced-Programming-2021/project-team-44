@@ -1,55 +1,68 @@
 package Controller;
 
+import Controller.MenusProcessor.*;
 import View.Menus.*;
+import View.UserInterface;
 
-import java.util.Scanner;
 
-public class Controller {//0
+public class Controller {
     public static Menus currentMenu;
-    public static LoginMenu loginMenu;
-    public static MainMenu mainMenu;
-    public static DuelMenu duelMenu;
-    public static DeckMenu deckMenu;
-    public static ScoreboardMenu scoreboardMenu;
-    public static ProfileMenu profileMenu;
-    public static ShopMenu shopMenu;
-    public static ImportExportMenu importExportMenu;
+    public static LoginMenuProcessor loginMenuProcessor;
+    public static MainMenuProcessor mainMenuProcessor;
+    public static DuelMenuProcessor duelMenuProcessor;
+    public static DeckMenuProcessor deckMenuProcessor;
+    public static ScoreboardMenuProcessor scoreboardMenuProcessor;
+    public static ProfileMenuProcessor profileMenuProcessor;
+    public static ShopMenuProcessor shopMenuProcessor;
+    public static ImportExportMenuProcessor importExportMenuProcessor;
 
     static {
         currentMenu = Menus.LOGIN;
-        loginMenu = new LoginMenu();
-        mainMenu = new MainMenu();
-        duelMenu = new DuelMenu();
-        deckMenu = new DeckMenu();
-        scoreboardMenu = new ScoreboardMenu();
-        profileMenu = new ProfileMenu();
-        shopMenu = new ShopMenu();
-        importExportMenu = new ImportExportMenu();
+        loginMenuProcessor = new LoginMenuProcessor();
+        mainMenuProcessor = new MainMenuProcessor();
+        duelMenuProcessor = new DuelMenuProcessor();
+        deckMenuProcessor = new DeckMenuProcessor();
+        scoreboardMenuProcessor = new ScoreboardMenuProcessor();
+        profileMenuProcessor = new ProfileMenuProcessor();
+        shopMenuProcessor = new ShopMenuProcessor();
+        importExportMenuProcessor = new ImportExportMenuProcessor();
     }
 
     public void run() {
-        inputScanner();
-    } //done
-
-    private void inputScanner() {
-        Scanner scanner = new Scanner(System.in);
-        String line;
-        do {
-            line = scanner.nextLine();
-            inputHandler(line);
-        } while (true);
-    } //done
-
-    private void inputHandler(String input) {
-        switch (currentMenu) {
-            case LOGIN -> loginMenu.commandHandler(input);
-            case MAIN -> mainMenu.commandHandler(input);
-            case DUEL -> duelMenu.commandHandler(input);
-            case DECK -> deckMenu.commandHandler(input);
-            case SCOREBOARD -> scoreboardMenu.commandHandler(input);
-            case PROFILE -> profileMenu.commandHandler(input);
-            case SHOP -> shopMenu.commandHandler(input);
-            case IMPORTEXPORT -> importExportMenu.commandHandler(input);
+        while (true) {
+            int inputId = UserInterface.run();
+            menuDistributor(inputId);
         }
     } //done
+
+    private void menuDistributor(int inputId) {
+        String response = "";
+        switch (currentMenu) {
+            case LOGIN -> {
+                response = loginMenuProcessor.commandDistributor(inputId);
+            }
+            case MAIN -> {
+                response = mainMenuProcessor.commandDistributor(inputId);
+            }
+            case DUEL -> {
+                response = duelMenuProcessor.commandDistributor(inputId);
+            }
+            case DECK -> {
+                response = deckMenuProcessor.commandDistributor(inputId);
+            }
+            case SCOREBOARD -> {
+                response = scoreboardMenuProcessor.commandDistributor(inputId);
+            }
+            case PROFILE -> {
+                response = profileMenuProcessor.commandDistributor(inputId);
+            }
+            case SHOP -> {
+                response = shopMenuProcessor.commandDistributor(inputId);
+            }
+            case IMPORTEXPORT -> {
+                response = importExportMenuProcessor.commandDistributor(inputId);
+            }
+        }
+        UserInterface.returnResponse(response);
+    }
 }
