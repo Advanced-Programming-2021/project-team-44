@@ -1,16 +1,13 @@
 package View.Menus;
 
-import java.util.function.ToDoubleBiFunction;
+public class ImportExportMenu extends Menu {
+    public ImportExportMenu(Menu parentMenu) {
+        super(Menus.IMPORTEXPORT, parentMenu);
+        this.setSubMenus(null);
+    }
 
-public class ImportExportMenu {//0
-
+    @Override
     public int commandHandler(String input) {
-        //TODO
-        /*
-        if 1.find() return 0
-        else if 2.find() return 1
-        else return -1
-         */
         return -1;
     }
 }

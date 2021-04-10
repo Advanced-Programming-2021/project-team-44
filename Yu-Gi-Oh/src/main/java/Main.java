@@ -1,8 +1,8 @@
-import Controller.Controller;
+import Controller.Core;
 
 public class Main {
     public static void main(String[] args) {
-        Controller controller = new Controller();
-        controller.run();
+        Core core = new Core();
+        core.run();
     }
 }

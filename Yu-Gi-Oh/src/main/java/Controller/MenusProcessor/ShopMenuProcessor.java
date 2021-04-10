@@ -1,28 +1,16 @@
 package Controller.MenusProcessor;
 
-import Controller.Controller;
+import Controller.Core;
 import View.Menus.Menus;
 
-public class ShopMenuProcessor {
-    public String commandDistributor(int commandId) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> {
-
-            }
-            case 1 -> {
-
-            }
-            case 2 -> {
-
-            }
-        }
-        return response;
+public class ShopMenuProcessor extends Processor{
+    public ShopMenuProcessor() {
+        super(Menus.SHOP);
     }
 
     //Command Performer
     private void exitMenu() {
-        Controller.currentMenu = Menus.MAIN;
+        Core.currentMenu = Menus.MAIN;
     } //done
 
     private void showAllCards() {
@@ -36,5 +24,28 @@ public class ShopMenuProcessor {
     //Error Checker
     private void buyCardErrorChecker(String input) {
         //TODO
+    }
+
+    @Override
+    public String commandDistributor(int commandId) {
+        String response = "invalid command";
+        switch (commandId) {
+            case 0 -> {
+
+            }
+            case 1 -> {
+
+            }
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+            case 4 -> {
+
+            }
+        }
+        return response;
     }
 }

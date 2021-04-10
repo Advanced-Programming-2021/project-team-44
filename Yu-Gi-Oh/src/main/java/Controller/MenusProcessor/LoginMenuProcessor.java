@@ -1,26 +1,10 @@
 package Controller.MenusProcessor;
 
-public class LoginMenuProcessor {
-    public String commandDistributor(int commandId) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> {
+import View.Menus.Menus;
 
-            }
-            case 1 -> {
-
-            }
-            case 2 -> {
-
-            }
-            case 3 -> {
-
-            }
-            case 4 -> {
-
-            }
-        }
-        return response;
+public class LoginMenuProcessor extends Processor {
+    public LoginMenuProcessor() {
+        super(Menus.LOGIN);
     }
 
     //Command Performer
@@ -62,5 +46,28 @@ public class LoginMenuProcessor {
 
     private void loginUserErrorChecker(String input) {
         //TODO
+    }
+
+    @Override
+    public String commandDistributor(int commandId) {
+        String response = "invalid command";
+        switch (commandId) {
+            case 0 -> {
+
+            }
+            case 1 -> {
+
+            }
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+            case 4 -> {
+
+            }
+        }
+        return response;
     }
 }

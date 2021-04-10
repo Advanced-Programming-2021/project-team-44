@@ -1,13 +1,17 @@
 package View.Menus;
 
-public class LoginMenu { //0
+import java.util.HashMap;
+
+public class LoginMenu extends Menu {
+    public LoginMenu() {
+        super(Menus.LOGIN, null);
+        HashMap<Integer, Menu> submenus = new HashMap<>();
+        submenus.put(0, new MainMenu(this));
+        this.setSubMenus(submenus);
+    } //0
+
+    @Override
     public int commandHandler(String input) {
-        //TODO
-        /*
-        if 1.find() return 0
-        else if 2.find() return 1
-        else return -1
-         */
         return -1;
     }
 }

@@ -1,9 +1,24 @@
 package Controller.MenusProcessor;
 
-import Controller.Controller;
+import Controller.Core;
 import View.Menus.Menus;
 
-public class ScoreboardMenuProcessor {
+public class ScoreboardMenuProcessor extends Processor{
+    public ScoreboardMenuProcessor() {
+        super(Menus.SCOREBOARD);
+    }
+
+    //Command Performer
+    private void exitMenu() {
+        Core.currentMenu = Menus.MAIN;
+    } //done
+
+    private void showScoreboard() {
+        //TODO
+        // rank- nickname: score
+    }
+
+    @Override
     public String commandDistributor(int commandId) {
         String response = "invalid command";
         switch (commandId) {
@@ -24,15 +39,5 @@ public class ScoreboardMenuProcessor {
             }
         }
         return response;
-    }
-
-    //Command Performer
-    private void exitMenu() {
-        Controller.currentMenu = Menus.MAIN;
-    } //done
-
-    private void showScoreboard() {
-        //TODO
-        // rank- nickname: score
     }
 }

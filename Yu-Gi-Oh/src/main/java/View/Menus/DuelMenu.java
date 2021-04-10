@@ -1,13 +1,13 @@
 package View.Menus;
 
-public class DuelMenu {
+public class DuelMenu extends Menu {
+    public DuelMenu(Menu parentMenu) {
+        super(Menus.DUEL, parentMenu);
+        this.setSubMenus(null);
+    }
+
+    @Override
     public int commandHandler(String input) {
-        //TODO
-        /*
-        if 1.find() return 0
-        else if 2.find() return 1
-        else return -1
-         */
         return -1;
     }
 }
