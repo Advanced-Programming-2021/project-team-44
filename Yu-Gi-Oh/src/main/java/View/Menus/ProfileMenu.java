@@ -1,6 +1,6 @@
 package View.Menus;
 
-public class ProfileMenu extends Menu {
+public class ProfileMenu extends Menu {//0
     public ProfileMenu(Menu parentMenu) {
         super(Menus.PROFILE, parentMenu);
         this.setSubMenus(null);

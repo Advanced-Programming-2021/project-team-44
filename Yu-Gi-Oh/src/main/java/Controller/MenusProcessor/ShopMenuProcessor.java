@@ -1,6 +1,7 @@
 package Controller.MenusProcessor;
 
 import Controller.Core;
+import Models.Cards.Card;
 import View.Menus.Menus;
 
 public class ShopMenuProcessor extends Processor{
@@ -8,22 +9,28 @@ public class ShopMenuProcessor extends Processor{
         super(Menus.SHOP);
     }
 
-    //Command Performer
-    private void exitMenu() {
-        Core.currentMenu = Menus.MAIN;
-    } //done
+    //Error Checker
+    private String showCardErrorChecker(String input) {
+        return null;
+    }
 
-    private void showAllCards() {
+    private String buyCardErrorChecker(String input) {
         //TODO
+        return null;
+    }
+
+    //Command Performer
+    private void showCard(Card card) {
+
     }
 
     private void buyCard(String cardName) {
         //TODO
     }
 
-    //Error Checker
-    private void buyCardErrorChecker(String input) {
+    private String showAllCards() {
         //TODO
+        return null;
     }
 
     @Override
@@ -47,5 +54,20 @@ public class ShopMenuProcessor extends Processor{
             }
         }
         return response;
+    }
+
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
+    }
+
+    @Override
+    protected void enterMenu(Menus menu) {
+
+    }
+
+    @Override
+    protected void exitMenu() {
+
     }
 }

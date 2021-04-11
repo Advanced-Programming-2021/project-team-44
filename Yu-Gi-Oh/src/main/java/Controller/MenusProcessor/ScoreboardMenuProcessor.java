@@ -3,19 +3,16 @@ package Controller.MenusProcessor;
 import Controller.Core;
 import View.Menus.Menus;
 
-public class ScoreboardMenuProcessor extends Processor{
+public class ScoreboardMenuProcessor extends Processor {
     public ScoreboardMenuProcessor() {
         super(Menus.SCOREBOARD);
     }
 
     //Command Performer
-    private void exitMenu() {
-        Core.currentMenu = Menus.MAIN;
-    } //done
-
-    private void showScoreboard() {
+    private String showScoreboard() {
         //TODO
         // rank- nickname: score
+        return null;
     }
 
     @Override
@@ -39,5 +36,20 @@ public class ScoreboardMenuProcessor extends Processor{
             }
         }
         return response;
+    }
+
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
+    }
+
+    @Override
+    protected void enterMenu(Menus menu) {
+
+    }
+
+    @Override
+    protected void exitMenu() {
+
     }
 }

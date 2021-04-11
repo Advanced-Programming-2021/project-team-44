@@ -5,7 +5,7 @@ import View.Menus.Menu;
 
 import java.util.Scanner;
 
-public class UserInterface {
+public class UserInterface {//0
 
     public static void run() {
         Scanner scanner = new Scanner(System.in);

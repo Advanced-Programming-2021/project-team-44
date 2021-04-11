@@ -1,12 +1,12 @@
 package Controller.MenusProcessor;
 
+import View.Menus.Menu;
 import View.Menus.Menus;
 
 import java.util.ArrayList;
 
 public abstract class Processor {
     protected Menus name;
-
     public static ArrayList<Processor> processors;
 
     static {
@@ -26,4 +26,16 @@ public abstract class Processor {
     }
 
     public abstract String commandDistributor(int commandId);
+
+    //Error Checker
+    protected abstract String enterMenuErrorChecker(String input);
+
+    //Command Performer
+    protected abstract void enterMenu(Menus menu);
+
+    protected abstract void exitMenu();
+
+    protected String showMenu()  {
+        return this.name.toBePrintedName;
+    }
 }

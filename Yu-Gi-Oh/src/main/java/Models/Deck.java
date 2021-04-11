@@ -52,4 +52,8 @@ public class Deck {
     public ArrayList<Card> getSideDeckCards() {
         return this.sideDeckCards;
     }
+
+    public String getStringToShow() {
+        return null;
+    }
 }

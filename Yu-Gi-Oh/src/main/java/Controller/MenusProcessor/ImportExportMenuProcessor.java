@@ -3,30 +3,28 @@ package Controller.MenusProcessor;
 import Controller.Core;
 import View.Menus.Menus;
 
-public class ImportExportMenuProcessor extends Processor{
+public class ImportExportMenuProcessor extends Processor{//0
     public ImportExportMenuProcessor() {
         super(Menus.IMPORTEXPORT);
     }
 
-    //Command Performer
-    private void exitMenu() {
-        Core.currentMenu = Menus.MAIN;
-    } //done
+    //Error Checker
+    private String importCardErrorChecker(String input) {
+        //TODO
+        return null;
+    }
 
+    private String exportCardErrorChecker(String input) {
+        //TODO
+        return null;
+    }
+
+    //Command Performer
     private void importCard(String cardName) {
         //TODO
     }
 
     private void exportCard(String cardName) {
-        //TODO
-    }
-
-    //Error Checker
-    private void importCardErrorChecker(String input) {
-        //TODO
-    }
-
-    private void exportCardErrorChecker(String input) {
         //TODO
     }
 
@@ -51,5 +49,20 @@ public class ImportExportMenuProcessor extends Processor{
             }
         }
         return response;
+    }
+
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
+    }
+
+    @Override
+    protected void enterMenu(Menus menu) {
+
+    }
+
+    @Override
+    protected void exitMenu() {
+
     }
 }

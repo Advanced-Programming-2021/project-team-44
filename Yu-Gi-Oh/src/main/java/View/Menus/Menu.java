@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
 
-public abstract class Menu {
+public abstract class Menu {//0
     protected Menus name;
     protected Menu parentMenu;
     protected HashMap<Integer, Menu> subMenus;

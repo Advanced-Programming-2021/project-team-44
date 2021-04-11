@@ -3,15 +3,25 @@ package Controller.MenusProcessor;
 import Controller.Core;
 import View.Menus.Menus;
 
-public class MainMenuProcessor extends Processor{
+public class MainMenuProcessor extends Processor{//0
     public MainMenuProcessor() {
         super(Menus.MAIN);
     }
 
+    //Error Checker
+    private String duelStartErrorChecker(String input) {
+        return null;
+    }
+
     //Command Performer
-    private void exitMenu() {
-        Core.currentMenu = Menus.MAIN;
-    } //done
+    private String userLogout() {
+        return null;
+    }
+
+    private void duelStart(String player1, String player2) {
+
+    }
+
 
     @Override
     public String commandDistributor(int commandId) {
@@ -35,4 +45,16 @@ public class MainMenuProcessor extends Processor{
         }
         return response;
     }
+
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
+    }
+
+    @Override
+    protected void enterMenu(Menus menu) {
+    }
+
+    @Override
+    protected void exitMenu() {}
 }

@@ -18,6 +18,12 @@ abstract public class Card {
         return this.number;
     }
 
+    public abstract String getStringForShow();
+
+    public String getStringForAllCardsShow() {
+        return null;
+    }
+
     //Setters
     public void setName(String name) {
         this.name = name;

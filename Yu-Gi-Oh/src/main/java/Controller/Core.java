@@ -7,7 +7,7 @@ import View.UserInterface;
 import java.util.Objects;
 
 
-public class Core {
+public class Core {//0
     public static Menus currentMenu;
 
     static {
