@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Add Khanaki Method">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Models/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Models/Phases.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Models/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/DeckMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/DeckMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/DuelMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/DuelMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ImportExportMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ImportExportMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/LoginMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/LoginMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/MainMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/MainMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ProfileMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ProfileMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ScoreboardMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ScoreboardMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ShopMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ShopMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Cards/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/MonsterCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Models/Cards/MonsterCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ImportExportMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/ImportExportMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/Menus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/Menus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/ProfileMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ScoreboardMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/ScoreboardMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/Menus/ShopMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/UserInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +51,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RunManager">
@@ -85,15 +62,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -125,6 +100,7 @@
       <workItem from="1617983589766" duration="34000" />
       <workItem from="1617983642278" duration="4054000" />
       <workItem from="1618000859375" duration="35219000" />
+      <workItem from="1618165257880" duration="303000" />
     </task>
     <task id="LOCAL-00001" summary="UML_0">
       <created>1617832900255</created>
