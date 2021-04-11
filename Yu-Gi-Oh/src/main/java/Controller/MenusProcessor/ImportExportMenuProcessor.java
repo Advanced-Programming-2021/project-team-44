@@ -1,9 +1,34 @@
 package Controller.MenusProcessor;
 
-import Controller.Controller;
+import Controller.Core;
 import View.Menus.Menus;
 
-public class ImportExportMenuProcessor {
+public class ImportExportMenuProcessor extends Processor{//0
+    public ImportExportMenuProcessor() {
+        super(Menus.IMPORTEXPORT);
+    }
+
+    //Error Checker
+    private String importCardErrorChecker(String input) {
+        //TODO
+        return null;
+    }
+
+    private String exportCardErrorChecker(String input) {
+        //TODO
+        return null;
+    }
+
+    //Command Performer
+    private void importCard(String cardName) {
+        //TODO
+    }
+
+    private void exportCard(String cardName) {
+        //TODO
+    }
+
+    @Override
     public String commandDistributor(int commandId) {
         String response = "invalid command";
         switch (commandId) {
@@ -13,29 +38,31 @@ public class ImportExportMenuProcessor {
             case 1 -> {
 
             }
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+            case 4 -> {
+
+            }
         }
         return response;
     }
 
-    //Command Performer
-    private void exitMenu() {
-        Controller.currentMenu = Menus.MAIN;
-    } //done
-
-    private void importCard(String cardName) {
-        //TODO
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
     }
 
-    private void exportCard(String cardName) {
-        //TODO
+    @Override
+    protected void enterMenu(Menus menu) {
+
     }
 
-    //Error Checker
-    private void importCardErrorChecker(String input) {
-        //TODO
-    }
+    @Override
+    protected void exitMenu() {
 
-    private void exportCardErrorChecker(String input) {
-        //TODO
     }
 }

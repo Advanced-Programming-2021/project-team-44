@@ -1,9 +1,39 @@
 package Controller.MenusProcessor;
 
-import Controller.Controller;
+import Controller.Core;
+import Models.Cards.Card;
 import View.Menus.Menus;
 
-public class ShopMenuProcessor {
+public class ShopMenuProcessor extends Processor{
+    public ShopMenuProcessor() {
+        super(Menus.SHOP);
+    }
+
+    //Error Checker
+    private String showCardErrorChecker(String input) {
+        return null;
+    }
+
+    private String buyCardErrorChecker(String input) {
+        //TODO
+        return null;
+    }
+
+    //Command Performer
+    private void showCard(Card card) {
+
+    }
+
+    private void buyCard(String cardName) {
+        //TODO
+    }
+
+    private String showAllCards() {
+        //TODO
+        return null;
+    }
+
+    @Override
     public String commandDistributor(int commandId) {
         String response = "invalid command";
         switch (commandId) {
@@ -16,25 +46,28 @@ public class ShopMenuProcessor {
             case 2 -> {
 
             }
+            case 3 -> {
+
+            }
+            case 4 -> {
+
+            }
         }
         return response;
     }
 
-    //Command Performer
-    private void exitMenu() {
-        Controller.currentMenu = Menus.MAIN;
-    } //done
-
-    private void showAllCards() {
-        //TODO
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
     }
 
-    private void buyCard(String cardName) {
-        //TODO
+    @Override
+    protected void enterMenu(Menus menu) {
+
     }
 
-    //Error Checker
-    private void buyCardErrorChecker(String input) {
-        //TODO
+    @Override
+    protected void exitMenu() {
+
     }
 }

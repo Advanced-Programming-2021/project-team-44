@@ -9,4 +9,9 @@ public class MonsterCard extends Card{
 
     public MonsterCard() {
     }
+
+    @Override
+    public String getStringForShow() {
+        return null;
+    }
 }

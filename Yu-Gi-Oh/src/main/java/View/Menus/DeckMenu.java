@@ -1,13 +1,13 @@
 package View.Menus;
 
-public class DeckMenu {
+public class DeckMenu extends Menu {
+    public DeckMenu(Menu parentMenu) {
+        super(Menus.DECK, parentMenu);
+        this.setSubMenus(null);
+    }
+
+    @Override
     public int commandHandler(String input) {
-        //TODO
-        /*
-        if 1.find() return 0
-        else if 2.find() return 1
-        else return -1
-         */
         return -1;
     }
 }

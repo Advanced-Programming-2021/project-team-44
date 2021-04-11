@@ -1,6 +1,45 @@
 package Controller.MenusProcessor;
 
-public class LoginMenuProcessor {
+import View.Menus.Menus;
+
+public class LoginMenuProcessor extends Processor {//0
+
+    public LoginMenuProcessor() {
+        super(Menus.LOGIN);
+    }
+
+    //Error Checkers
+    private String createUserErrorChecker(String input) {
+        //TODO
+        /*
+        username
+        password
+        nickname
+
+        if
+        else if
+        else {
+        createUser(input)
+        }
+         */
+        return null;
+    }
+
+    private String loginUserErrorChecker(String input) {
+        //TODO
+        return null;
+    }
+
+    //Command Performer
+    private void createUser(String username, String password, String nickname) {
+        //TODO
+    }
+
+    private void loginUser(String username, String password) {
+        //TODO
+    }
+
+    @Override
     public String commandDistributor(int commandId) {
         String response = "invalid command";
         switch (commandId) {
@@ -23,44 +62,18 @@ public class LoginMenuProcessor {
         return response;
     }
 
-    //Command Performer
-    private void exitMenu() {
+    @Override
+    protected String enterMenuErrorChecker(String input) {
+        return null;
+    }
+
+    @Override
+    protected void enterMenu(Menus menu) {
+
+    }
+
+    @Override
+    protected void exitMenu() {
         System.exit(0);
     } //done
-
-    private void showMenu() {
-        System.out.println("Login Menu");
-    } //done
-
-    private void createUser(String username, String password, String nickname) {
-        //TODO
-    }
-
-    private void loginUser(String username, String password) {
-        //TODO
-    }
-
-    //Error Checkers
-    private void enterMenuErrorThrower() {
-        //TODO
-    }
-
-    private void createUserErrorChecker(String input) {
-        //TODO
-        /*
-        username
-        password
-        nickname
-
-        if
-        else if
-        else {
-        createUser(input)
-        }
-         */
-    }
-
-    private void loginUserErrorChecker(String input) {
-        //TODO
-    }
 }

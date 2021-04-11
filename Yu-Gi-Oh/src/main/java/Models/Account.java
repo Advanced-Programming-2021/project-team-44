@@ -11,6 +11,7 @@ public class Account {
     private String nickname;
     private long score;
     private long coin;
+    private Deck activeDeck;
     private ArrayList<Card> cards;
     private ArrayList<Deck> decks;
 
@@ -51,6 +52,14 @@ public class Account {
 
     public long getCoin() {
         return this.coin;
+    }
+
+    public Deck getActiveDeck() {
+        return this.activeDeck;
+    }
+
+    public String getStringForScoreboard() {
+        return null;
     }
 
     //Setters
