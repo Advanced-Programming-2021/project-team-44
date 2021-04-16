@@ -21,8 +21,6 @@ public abstract class Menu {//0
         menus.add(this);
     }
 
-    public abstract int commandHandler(String input);
-
     public static Menu getMenuByName(Menus name) {
         for (Menu menu : menus)
             if (menu.name == name)
@@ -34,15 +32,17 @@ public abstract class Menu {//0
         Menu.scanner = scanner;
     }
 
+    public abstract String[] commandHandler(String input);
+
     public void setSubMenus(HashMap<Integer, Menu> subMenus) {
         this.subMenus = subMenus;
     }
 
     public void execute() {
         Menu nextMenu;
-        String input = scanner.nextLine();
-        int commandId = commandHandler(input);
-        String response = Core.menuDistributor(commandId);
+        String input = scanner.nextLine().trim();
+        String[] commandId = commandHandler(input);
+        String response = Core.menuDistributor(Integer.parseInt(commandId[0]));
         nextMenu = Menu.getMenuByName(Core.currentMenu);
         UserInterface.returnResponse(response);
         Objects.requireNonNull(nextMenu).execute();

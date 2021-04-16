@@ -8,6 +8,7 @@ public class LoginMenuProcessor extends Processor {//0
     public LoginMenuProcessor() {
         super(Menus.LOGIN);
         new Account("username", "password", "nickname");
+        this.showMenu();
     }
 
     //Error Checkers
