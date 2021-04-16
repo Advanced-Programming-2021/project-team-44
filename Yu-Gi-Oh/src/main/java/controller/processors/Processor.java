@@ -1,14 +1,17 @@
 package controller.processors;
 
+import models.Account;
 import view.menus.Menus;
 
 import java.util.ArrayList;
 
 public abstract class Processor {
+    public static Account loggedInUser;
     protected Menus name;
     public static ArrayList<Processor> processors;
 
     static {
+        loggedInUser = null;
         processors = new ArrayList<>();
     }
 
@@ -24,7 +27,7 @@ public abstract class Processor {
         return null;
     }
 
-    public abstract String commandDistributor(int commandId);
+    public abstract String commandDistributor(int commandId, String commandArguments);
 
     //Error Checker
     protected abstract String enterMenuErrorChecker(String input);

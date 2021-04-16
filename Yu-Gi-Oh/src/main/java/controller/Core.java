@@ -16,6 +16,8 @@ public class Core {//0
     }
 
     public void run() {
+        ////Initialize
+
         new LoginMenuProcessor();
         new MainMenuProcessor();
         new DuelMenuProcessor();
@@ -28,7 +30,7 @@ public class Core {//0
         UserInterface.run();
     } //done
 
-    public static String menuDistributor(int inputId) {
-        return Objects.requireNonNull(Processor.getProcessorByName(currentMenu)).commandDistributor(inputId);
+    public static String menuDistributor(int inputId, String commandArguments) {
+        return Objects.requireNonNull(Processor.getProcessorByName(currentMenu)).commandDistributor(inputId, commandArguments);
     }
 }

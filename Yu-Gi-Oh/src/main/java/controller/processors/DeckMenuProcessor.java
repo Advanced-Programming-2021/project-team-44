@@ -72,7 +72,7 @@ public class DeckMenuProcessor extends Processor {
     }
 
     @Override
-    public String commandDistributor(int commandId) {
+    public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
             case 0 -> {

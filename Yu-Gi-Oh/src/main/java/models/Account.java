@@ -3,6 +3,7 @@ package models;
 import models.cards.Card;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Account {
     public static ArrayList<Account> accounts;
@@ -30,10 +31,33 @@ public class Account {
         accounts.add(this);
     }
 
+    //Utils
+    public static boolean isUsernameValid(String username) {
+        Pattern pattern = Pattern.compile("^\\w+$");
+        return pattern.matcher(username).find();
+    }
+
+    public static boolean isNicknameValid(String nickname) {
+        Pattern pattern = Pattern.compile("^\\S+$");
+        return pattern.matcher(nickname).find();
+    }
+
+    public static boolean isPasswordValid(String password) {
+        Pattern pattern = Pattern.compile("^\\S+$");
+        return pattern.matcher(password).find();
+    }
+
     //Getters
     public static Account getAccountByUsername(String username) {
         for (Account account : accounts)
             if (account.getUsername().equals(username))
+                return account;
+        return null;
+    }
+
+    public static Account getAccountByNickname(String nickname) {
+        for (Account account : accounts)
+            if (account.getNickname().equals(nickname))
                 return account;
         return null;
     }

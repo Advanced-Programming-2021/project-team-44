@@ -7,7 +7,7 @@ public class ImportExportMenu extends Menu {//0
     }
 
     @Override
-    public int commandHandler(String input) {
-        return -1;
+    public String[] commandHandler(String input) {
+        return null;
     }
 }

@@ -7,7 +7,7 @@ public class DeckMenu extends Menu {
     }
 
     @Override
-    public int commandHandler(String input) {
-        return -1;
+    public String[] commandHandler(String input) {
+        return null;
     }
 }
