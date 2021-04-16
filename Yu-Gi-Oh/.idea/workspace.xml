@@ -4,7 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Add Khanaki Method" />
+    <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Add Khanaki Method">
+      <change afterPath="$PROJECT_DIR$/src/main/java/models/cards/MagicType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UMLDiagram.uml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UMLDiagramImage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UMLDiagramImageAnother.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UMLDiagramImageOpened.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Core.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/DeckMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/DeckMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/DuelMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/DuelMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ImportExportMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ImportExportMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/LoginMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/MainMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/MainMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ProfileMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ProfileMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ScoreboardMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ScoreboardMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MenusProcessor/ShopMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ShopMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/MagicCard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/MagicIcon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/MagicIcon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/MonsterCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/MonsterCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/MonsterCardAttribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/MonsterCardAttribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/MonsterCardName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/MonsterCardName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/SpellCard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/SpellCardName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/SpellCardName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/TrapCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/MagicCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Cards/TrapCardName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/cards/TrapCardName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Phases.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Phases.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/DeckMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/DeckMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/DuelMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/DuelMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ImportExportMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ImportExportMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/LoginMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/Menus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/Menus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ProfileMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ScoreboardMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ScoreboardMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/Menus/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ShopMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/UserInterface.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,6 +145,9 @@
       <workItem from="1618000859375" duration="35219000" />
       <workItem from="1618165257880" duration="303000" />
       <workItem from="1618225959842" duration="224000" />
+      <workItem from="1618226899929" duration="399000" />
+      <workItem from="1618511467159" duration="4663000" />
+      <workItem from="1618557483030" duration="3734000" />
     </task>
     <task id="LOCAL-00001" summary="UML_0">
       <created>1617832900255</created>
