@@ -7,17 +7,20 @@
     <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Add Khanaki Method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UML_Diagram/UML_Diagram.zip" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/UML_Diagram.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML_Diagram/view/menus/UML3.1.png" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/view/menus/UML3.1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML_Diagram/controller/UML1.png" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/controller/UML1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML_Diagram/controller/processors/UML1.1.png" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/controller/processors/UML1.1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Core.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/DeckMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/DeckMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/DuelMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/DuelMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ImportExportMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ImportExportMenuProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/DeckMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/DeckMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/DuelMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/DuelMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/ImportExportMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ImportExportMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/LoginMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/LoginMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/MainMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/MainMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ProfileMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ProfileMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ScoreboardMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ScoreboardMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ShopMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ShopMenuProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ProfileMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/ScoreboardMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ScoreboardMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/ShopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/ShopMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,13 +78,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -119,7 +124,8 @@
       <workItem from="1618511467159" duration="4663000" />
       <workItem from="1618557483030" duration="3734000" />
       <workItem from="1618565999938" duration="110000" />
-      <workItem from="1618575966780" duration="7178000" />
+      <workItem from="1618575966780" duration="9266000" />
+      <workItem from="1618599401173" duration="6117000" />
     </task>
     <task id="LOCAL-00001" summary="UML_0">
       <created>1617832900255</created>

@@ -1,8 +1,10 @@
 package controller.processors;
 
+import models.Account;
 import view.menus.Menus;
 
 public class MainMenuProcessor extends Processor {//0
+
     public MainMenuProcessor() {
         super(Menus.MAIN);
     }
@@ -14,6 +16,7 @@ public class MainMenuProcessor extends Processor {//0
 
     //Command Performer
     private String userLogout() {
+        Processor.loggedInUser = null;
         return null;
     }
 
@@ -23,7 +26,7 @@ public class MainMenuProcessor extends Processor {//0
 
 
     @Override
-    public String commandDistributor(int commandId) {
+    public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
             case 0 -> {
@@ -55,5 +58,7 @@ public class MainMenuProcessor extends Processor {//0
     }
 
     @Override
-    protected void exitMenu() {}
+    protected void exitMenu() {
+        userLogout();
+    }
 }
