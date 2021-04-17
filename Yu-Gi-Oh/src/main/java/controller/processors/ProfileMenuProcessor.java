@@ -1,5 +1,6 @@
 package controller.processors;
 
+import controller.Core;
 import models.Account;
 import view.menus.Menus;
 
@@ -30,8 +31,9 @@ public class ProfileMenuProcessor extends Processor {
             }
         }
         //Invalid Command Arguments
-        if(!Account.isNicknameValid(newNickname)) response = "invalid Nickname";
-        else if(Account.getAccountByNickname(newNickname) != null) response = "user with nickname" + newNickname + "already exists";
+        if (!Account.isNicknameValid(newNickname)) response = "invalid Nickname";
+        else if (Account.getAccountByNickname(newNickname) != null)
+            response = "user with nickname" + newNickname + "already exists";
         else {
             changeNickname(newNickname);
             response = "nickname changed successfully!";
@@ -64,8 +66,8 @@ public class ProfileMenuProcessor extends Processor {
         //Invalid Command Arguments
         if (!Account.isPasswordValid(currentPassword)) response = "invalid current Password";
         else if (!Account.isPasswordValid(newPassword)) response = "invalid new Password";
-        else if(!loggedInUser.getPassword().equals(currentPassword)) response = "current password is invalid";
-        else if(currentPassword.equals(newPassword)) response = "please enter a new password";
+        else if (!loggedInUser.getPassword().equals(currentPassword)) response = "current password is invalid";
+        else if (currentPassword.equals(newPassword)) response = "please enter a new password";
         else {
             changePassword(newPassword);
             response = "password changed successfully!";
@@ -83,10 +85,17 @@ public class ProfileMenuProcessor extends Processor {
     }
 
     private String showProfile() {
-        String response = null;
-
+        String response;
+        response = "----------------------------------------\n" +
+                "Nickname: " + loggedInUser.getNickname() + "\n" +
+                "Username: " + loggedInUser.getUsername() + "\n" +
+                "Bio: <bio>\n" +
+                "Rank: <rank>\n" +
+                "Score: " + loggedInUser.getScore() + " pts\n" +
+                "Coin: " + loggedInUser.getCoin() + "\n" +
+                "----------------------------------------";
         return response;
-    } //Option
+    } //Option //TODO
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
@@ -104,16 +113,15 @@ public class ProfileMenuProcessor extends Processor {
 
     @Override
     protected String enterMenuErrorChecker(String input) {
-        return null;
+        return "menu navigation is not possible";
     }
 
     @Override
     protected void enterMenu(Menus menu) {
-
     }
 
     @Override
     protected void exitMenu() {
-
+        Core.currentMenu = Menus.MAIN;
     }
 }

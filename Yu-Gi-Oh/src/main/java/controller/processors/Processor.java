@@ -37,7 +37,7 @@ public abstract class Processor {
 
     protected abstract void exitMenu();
 
-    protected String showMenu()  {
+    public String showMenu()  {
         return this.name.toBePrintedName;
     }
 }

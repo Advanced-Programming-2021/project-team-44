@@ -1,6 +1,7 @@
 package view.menus;
 
 import controller.Core;
+import controller.processors.Processor;
 import view.UserInterface;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public abstract class Menu {//0
     }
 
     public void execute() {
+        UserInterface.returnResponse(Objects.requireNonNull(Processor.getProcessorByName(this.name)).showMenu());
         Menu nextMenu;
         String input = scanner.nextLine().trim();
         String[] commandId = commandHandler(input);
