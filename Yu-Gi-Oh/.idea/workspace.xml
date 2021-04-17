@@ -5,22 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Add Khanaki Method">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML_Diagram/UML_Diagram.zip" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/UML_Diagram.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML_Diagram/controller/UML1.png" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/controller/UML1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UML_Diagram/controller/processors/UML1.1.png" beforeDir="false" afterPath="$PROJECT_DIR$/UML_Diagram/controller/processors/UML1.1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/DeckMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/DeckMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/DuelMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/DuelMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ImportExportMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ImportExportMenuProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/MainMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/MainMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ProfileMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ProfileMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ScoreboardMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ScoreboardMenuProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/ShopMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/ShopMenuProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/menus/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/menus/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Controller$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/DeckMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/DuelMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/ImportExportMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/LoginMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/MainMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/Processor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/ProfileMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/ScoreboardMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MenusProcessor/ShopMenuProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/Card.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/MagicCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/MagicCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/MagicIcon.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/MagicIcon.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/MonsterCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/MonsterCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/MonsterCardAttribute.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/MonsterCardAttribute.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/MonsterCardName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/MonsterCardName.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/SpellCard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/SpellCardName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/SpellCardName.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/TrapCard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Cards/TrapCardName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Cards/TrapCardName.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Models/Deck.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Models/Deck.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/DeckMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/DeckMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/DuelMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/DuelMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/ImportExportMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/ImportExportMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/LoginMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/LoginMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/MainMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/Menus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/Menus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/ProfileMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/ProfileMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/ScoreboardMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/ScoreboardMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/Menus/ShopMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/Menus/ShopMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/View/UserInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/View/UserInterface.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +94,6 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Yu-Gi-Oh" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -87,6 +103,13 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Yu-Gi-Oh" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
