@@ -58,8 +58,39 @@ public class LoginMenuProcessor extends Processor {
     }//done
 
     private String loginUserErrorChecker(String arguments) {
-        //TODO
-        return null;
+        String response;
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
+        Matcher matcher = pattern.matcher(arguments);
+        String username = null;
+        String password = null;
+        //Invalid Command
+        while (matcher.find()) {
+            switch (matcher.group(1)) {
+                case "--username", "-u" -> {
+                    if (username != null) return "invalid command";
+                    username = matcher.group(2);
+                }
+                case "--password", "-p" -> {
+                    if (password != null) return "invalid command";
+                    password = matcher.group(2);
+                }
+                default -> {
+                    return "invalid command";
+                }
+            }
+        }
+        //Invalid Command Arguments
+        if (!Account.isUsernameValid(username)) response = "invalid username";
+        else if (!Account.isPasswordValid(password)) response = "invalid password";
+        else if(Account.getAccountByUsername(username) == null)
+            response = "Username and password did not match!";
+        else if(!Account.getAccountByUsername(username).getPassword().equals(password))
+            response = "Username and password did not match!";
+        else {
+            loginUser(username);
+            response = "user logged in successfully!";
+        }
+        return response;
     }
 
     //Command Performer
@@ -67,9 +98,7 @@ public class LoginMenuProcessor extends Processor {
         new Account(username, password, nickname);
     }//done
 
-    private void loginUser(String username, String password) {
-        //TODO
-        //if login == true
+    private void loginUser(String username) {
         Core.currentMenu = Menus.MAIN;
         Processor.loggedInUser = Account.getAccountByUsername(username);
     }

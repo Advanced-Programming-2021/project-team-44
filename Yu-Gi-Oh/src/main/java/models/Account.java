@@ -70,6 +70,8 @@ public class Account {
         return this.nickname;
     }
 
+    public String getPassword() { return this.password;}
+
     public long getScore() {
         return this.score;
     }
