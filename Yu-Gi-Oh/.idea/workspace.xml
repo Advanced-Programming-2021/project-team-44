@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
 <<<<<<< Updated upstream
     <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Add Khanaki Method">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/processors/LoginMenuProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/models/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Controller/Controller$1.class" beforeDir="false" />
@@ -48,6 +48,8 @@
 =======
     <list default="true" id="ef949458-eb6f-4f5b-976d-02b067038ab2" name="Default Changelist" comment="Complete Login Menu: Create User">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
