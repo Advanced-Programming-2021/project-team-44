@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class MainMenu extends Menu {
     public MainMenu(Menu parentMenu) {
-        super(Menus.LOGIN, parentMenu);
+        super(Menus.MAIN, parentMenu);
         HashMap<Integer, Menu> submenus = new HashMap<>();
         submenus.put(0, new DuelMenu(this));
         submenus.put(1, new DeckMenu(this));

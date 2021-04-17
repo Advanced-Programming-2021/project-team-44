@@ -11,11 +11,11 @@ public class LoginMenuProcessor extends Processor {
 
     public LoginMenuProcessor() {
         super(Menus.LOGIN);
-        new Account("username", "password", "nickname");
     }
 
     //Error Checkers
     private String createUserErrorChecker(String arguments) {
+        // -p pass -u username username -n nickname
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
         Matcher matcher = pattern.matcher(arguments);

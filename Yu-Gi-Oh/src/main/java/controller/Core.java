@@ -1,12 +1,10 @@
 package controller;
 
 import controller.processors.*;
-import view.menus.Menus;
-import controller.processors.Processor;
 import view.UserInterface;
+import view.menus.Menus;
 
 import java.util.Objects;
-
 
 public class Core {//0
     public static Menus currentMenu;
