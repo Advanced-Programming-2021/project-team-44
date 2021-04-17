@@ -12,7 +12,7 @@ public class ProfileMenu extends Menu {//0
     @Override
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|profile change|profile change --password)\\b(?:\\s+(.*))?$");
+        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|profile change --password|profile change|show profile)\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             switch (matcher.group(1)) {
