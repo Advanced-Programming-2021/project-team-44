@@ -7,7 +7,7 @@ import view.menus.Menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginMenuProcessor extends Processor {
+public class  LoginMenuProcessor extends Processor {
 
     public LoginMenuProcessor() {
         super(Menus.LOGIN);
@@ -15,7 +15,6 @@ public class LoginMenuProcessor extends Processor {
 
     //Error Checkers
     private String createUserErrorChecker(String arguments) {
-        // -p pass -u username username -n nickname
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
         Matcher matcher = pattern.matcher(arguments);
