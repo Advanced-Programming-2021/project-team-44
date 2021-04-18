@@ -7,7 +7,6 @@ import view.menus.Menus;
 public class DeckMenuProcessor extends Processor {
     public DeckMenuProcessor() {
         super(Menus.DECK);
-        new Deck("sample");
     }
 
     //Error Checker

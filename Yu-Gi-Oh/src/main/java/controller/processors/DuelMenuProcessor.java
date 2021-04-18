@@ -17,7 +17,6 @@ public class DuelMenuProcessor extends Processor {
 
     public DuelMenuProcessor() {
         super(Menus.DUEL);
-        new Board(new Player(new Account("username", "password", "nickname")));
         phase = Phases.DRAW;
     }
 

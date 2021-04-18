@@ -6,7 +6,6 @@ import view.menus.Menus;
 public class ScoreboardMenuProcessor extends Processor {
     public ScoreboardMenuProcessor() {
         super(Menus.SCOREBOARD);
-        new Account("username", "password", "nickname");
     }
 
     //Command Performer

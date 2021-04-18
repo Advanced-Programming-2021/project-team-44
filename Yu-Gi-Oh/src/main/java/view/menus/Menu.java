@@ -16,6 +16,11 @@ public abstract class Menu {//0
     protected static Scanner scanner;
     public static ArrayList<Menu> menus;
 
+    //Initialization Block
+    static {
+        menus = new ArrayList<>();
+    }
+
     public Menu(Menus name, Menu parentMenu) {
         this.name = name;
         this.parentMenu = parentMenu;

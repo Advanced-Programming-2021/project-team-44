@@ -7,8 +7,6 @@ import view.menus.Menus;
 public class ImportExportMenuProcessor extends Processor {//0
     public ImportExportMenuProcessor() {
         super(Menus.IMPORTEXPORT);
-        new MonsterCard();
-        new MagicCard();
     }
 
     //Error Checker

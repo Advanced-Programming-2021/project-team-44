@@ -9,9 +9,6 @@ import models.cards.MonsterCard;
 public class ShopMenuProcessor extends Processor {
     public ShopMenuProcessor() {
         super(Menus.SHOP);
-        new MonsterCard();
-        new MagicCard();
-        new Account("username", "password", "nickname");
     }
 
     //Error Checker
