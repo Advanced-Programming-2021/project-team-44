@@ -1,5 +1,6 @@
 package controller.processors;
 
+import controller.Core;
 import models.Account;
 import models.cards.Card;
 import view.menus.Menus;
@@ -12,55 +13,59 @@ public class ShopMenuProcessor extends Processor {
     }
 
     //Error Checker
-    private String showCardErrorChecker(String input) {
-        return null;
+    private String showCardErrorChecker(String arguments) {
+        String response ;
+        if(Card.getCardByName(arguments) == null) response = "there is no card with this name";
+        else{
+            response = showCard(arguments);
+        }
+        return response;
     }
 
-    private String buyCardErrorChecker(String input) {
-        //TODO
-        return null;
+    private String buyCardErrorChecker(String arguments) {
+        String response;
+        if(Card.getCardByName(arguments) == null) response = "there is no card with this name";
+        else if(Card.getCardByName(arguments).getPrice() > loggedInUser.getCoin()) response = "not enough money";
+        else{
+            buyCard(arguments);
+            response = "card bought successfully";
+        }
+        return response;
     }
 
     //Command Performer
-    private void showCard(Card card) {
-
+    private String showCard(String cardName) {
+        return Card.getCardByName(cardName).getStringForShow();
     }
 
     private void buyCard(String cardName) {
-        //TODO
+        loggedInUser.decreaseCoin(Card.getCardByName(cardName).getPrice());
+        loggedInUser.addCard(Card.getCardByName(cardName));
     }
 
     private String showAllCards() {
-        //TODO
-        return null;
+        String response ;
+        response = Card.getStringForAllCardsShow();
+        return response;
     }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
-            case 0 -> {
-
-            }
-            case 1 -> {
-
-            }
-            case 2 -> {
-
-            }
-            case 3 -> {
-
-            }
-            case 4 -> {
-
-            }
+            case 0 -> response = enterMenuErrorChecker(commandArguments);
+            case 1 -> exitMenu();
+            case 2 -> response = showMenu();
+            case 3 -> response = buyCardErrorChecker(commandArguments);
+            case 4 -> response = showAllCards();
+            case 5 -> response = showCardErrorChecker(commandArguments);
         }
         return response;
     }
 
     @Override
     protected String enterMenuErrorChecker(String input) {
-        return null;
+        return "menu navigation is not possible";
     }
 
     @Override
@@ -70,6 +75,6 @@ public class ShopMenuProcessor extends Processor {
 
     @Override
     protected void exitMenu() {
-
+        Core.currentMenu = Menus.MAIN;
     }
 }

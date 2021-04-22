@@ -101,9 +101,11 @@ public class Account {
         this.score = this.score + (long) addedScore;
     }
 
-    public void increaseCoin(int addedCoins) {
-        this.coin = this.coin - (long) addedCoins;
+    public void increaseCoin(long addedCoins) {
+        this.coin = this.coin + addedCoins;
     }
+
+    public void decreaseCoin(long decreasedCoins) {this.coin = this.coin - decreasedCoins;}
 
     public void addCard(Card card) {
         cards.add(card);
