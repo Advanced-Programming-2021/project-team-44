@@ -25,6 +25,11 @@ public class MagicCard extends Card{
 
     @Override
     public String getStringForShow() {
-        return null;
+        String magicCardInfo;
+        magicCardInfo = "Name: " + this.getName() + "\n" +
+                this.getType() + "\n" +
+                "Type: " + this.getIcon() + "\n" +
+                "Description: " + this.getDescription();
+        return magicCardInfo;
     }
 }

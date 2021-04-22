@@ -52,6 +52,13 @@ public class MonsterCard extends Card{
 
     @Override
     public String getStringForShow() {
-        return null;
+        String monsterCardInfo;
+        monsterCardInfo = "Name: " + this.getName() + "\n" +
+                "Level: " + this.getLevel() + "\n" +
+                "Type: " + this.getType() + "\n" +
+                "ATK: " + this.getAttackPoint() + "\n" +
+                "DEF: " + this.getDefensePoint() + "\n" +
+                "Description: " + this.getDescription();
+        return monsterCardInfo;
     }
 }
