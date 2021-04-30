@@ -11,7 +11,6 @@ abstract public class Card {
     public static ArrayList<Card> cards;
     protected String name;
     protected String description;
-    protected long id;
     protected long price;
 
     static {
@@ -28,10 +27,6 @@ abstract public class Card {
         return this.description;
     }
 
-    public long getId() {
-        return this.id;
-    }
-
     public abstract String getStringForShow();
 
     public static String getStringForAllCardsShow() {
@@ -42,7 +37,7 @@ abstract public class Card {
 
     public long getPrice() {return this.price;}
 
-    public static Card getCardByName(String cardName){
+    public static Card getCardByName(String cardName){//TODO
         for (Card card : cards)
             if (card.getName().equals(cardName))
                 return card;
@@ -56,10 +51,6 @@ abstract public class Card {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setPrice(long price){ this.price = price;}

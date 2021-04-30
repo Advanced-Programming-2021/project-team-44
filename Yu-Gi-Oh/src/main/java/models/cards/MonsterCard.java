@@ -3,7 +3,8 @@ package models.cards;
 public class MonsterCard extends Card{
     private int level;
     private MonsterCardAttribute attribute;
-    private String type;
+    private String monsterType;
+    private String cardType;
     private int attackPoint;
     private int defensePoint;
 
@@ -26,12 +27,20 @@ public class MonsterCard extends Card{
         this.attribute = attribute;
     }
 
-    public String getType() {
-        return type;
+    public String getMonsterType() {
+        return monsterType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setMonsterType(String monsterType) {
+        this.monsterType = monsterType;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
     }
 
     public int getAttackPoint() {
@@ -55,7 +64,7 @@ public class MonsterCard extends Card{
         String monsterCardInfo;
         monsterCardInfo = "Name: " + this.getName() + "\n" +
                 "Level: " + this.getLevel() + "\n" +
-                "Type: " + this.getType() + "\n" +
+                "Type: " + this.getMonsterType() + "\n" +
                 "ATK: " + this.getAttackPoint() + "\n" +
                 "DEF: " + this.getDefensePoint() + "\n" +
                 "Description: " + this.getDescription();
