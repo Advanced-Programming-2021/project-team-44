@@ -95,7 +95,7 @@ public class ProfileMenuProcessor extends Processor {
                 "Coin: " + loggedInUser.getCoin() + "\n" +
                 "----------------------------------------";
         return response;
-    } //Option //TODO
+    } //TODO
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {

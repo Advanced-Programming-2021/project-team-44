@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginMenu extends Menu {//0
+public class LoginMenu extends Menu {
 
     public LoginMenu() {
         super(Menus.LOGIN, null);
         HashMap<Integer, Menu> submenus = new HashMap<>();
         submenus.put(0, new MainMenu(this));
         this.setSubMenus(submenus);
-    } //0
+    }
 
     @Override
     public String[] commandHandler(String input) {

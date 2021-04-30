@@ -3,6 +3,7 @@ package models.cards;
 public class MagicCard extends Card{
     protected MagicType type;
     protected MagicIcon icon;
+    private String status;
 
     public MagicCard() {
     }
@@ -21,6 +22,14 @@ public class MagicCard extends Card{
 
     public void setIcon(MagicIcon icon) {
         this.icon = icon;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
