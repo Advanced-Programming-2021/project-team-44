@@ -2,7 +2,11 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
+import models.comparators.AccountSortByNickname;
+import models.comparators.AccountSortByScore;
 import view.menus.Menus;
+
+import java.util.Collections;
 
 public class ScoreboardMenuProcessor extends Processor {
     public ScoreboardMenuProcessor() {
@@ -11,9 +15,10 @@ public class ScoreboardMenuProcessor extends Processor {
 
     //Command Performer
     private String showScoreboard() {
-        //TODO
-        // rank- nickname: score
-        return null;
+        String response;
+        Collections.sort(Account.accounts, new AccountSortByScore());
+        Collections.sort(Account.accounts, new AccountSortByNickname());
+        return response;
     }
 
     @Override
@@ -26,12 +31,7 @@ public class ScoreboardMenuProcessor extends Processor {
                 exitMenu();
             }
             case 2 -> response = showMenu();
-            case 3 -> {
-
-            }
-            case 4 -> {
-
-            }
+            case 3 -> response = showScoreboard();
         }
         return response;
     }

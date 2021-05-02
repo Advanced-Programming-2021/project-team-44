@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.*;
 
 abstract public class Card {
-    public static ArrayList<Card> cards;
+    public static ArrayList<Card> allCards;
     protected String name;
     protected String description;
     protected int price;
 
     static {
-        cards = new ArrayList<>();
+        allCards = new ArrayList<>();
     }
 
 
@@ -38,7 +38,7 @@ abstract public class Card {
     }
 
     public static Card getCardByName(String cardName) {//TODO
-        for (Card card : cards)
+        for (Card card : allCards)
             if (card.getName().equals(cardName))
                 return card;
         return null;
@@ -56,15 +56,4 @@ abstract public class Card {
     public void setPrice(int price) {
         this.price = price;
     }
-}
-
-//Sort By Name
-class SortByName implements Comparator<Card> {
-    @Override
-    public int compare(Card card1, Card card2) {
-        return card1.name.compareTo(card2.name);
-    }
-//    Usage:
-//    Collecions.sort(cards, new SortByName());
-//    cards = ArrayList<Card>
 }
