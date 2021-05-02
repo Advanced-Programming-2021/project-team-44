@@ -6,8 +6,6 @@ import models.comparators.AccountSortByNickname;
 import models.comparators.AccountSortByScore;
 import view.menus.Menus;
 
-import java.util.Collections;
-
 public class ScoreboardMenuProcessor extends Processor {
     public ScoreboardMenuProcessor() {
         super(Menus.SCOREBOARD);
@@ -15,10 +13,23 @@ public class ScoreboardMenuProcessor extends Processor {
 
     //Command Performer
     private String showScoreboard() {
-        String response;
-        Collections.sort(Account.accounts, new AccountSortByScore());
-        Collections.sort(Account.accounts, new AccountSortByNickname());
-        return response;
+        StringBuilder response = new StringBuilder();
+        Account.accounts.sort(new AccountSortByNickname());
+        Account.accounts.sort(new AccountSortByScore());
+        int rank = 1;
+        for (int i = 0; i < Account.accounts.size(); i++) {
+            if (i == 0)
+                response.append(rank).append("- ").append(Account.accounts.get(i).getStringForScoreboard()).append("\n");
+            else {
+                if (i == Account.accounts.size() - 1)
+                    response.append(rank).append("- ").append(Account.accounts.get(i).getStringForScoreboard());
+                else {
+                    if (Account.accounts.get(i - 1).getScore() > Account.accounts.get(i).getScore()) rank++;
+                    response.append(rank).append("- ").append(Account.accounts.get(i).getStringForScoreboard()).append("\n");
+                }
+            }
+        }
+        return response.toString();
     }
 
     @Override
