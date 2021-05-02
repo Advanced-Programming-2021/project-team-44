@@ -1,5 +1,7 @@
 package models.cards;
 
+import java.util.HashMap;
+
 public class MonsterCard extends Card{
     private int level;
     private MonsterCardAttribute attribute;
@@ -11,6 +13,21 @@ public class MonsterCard extends Card{
     public MonsterCard() {
     }
 
+    //Utils
+    public static String generateJSONByHashMap(HashMap<String, String> hashMap) {
+        String jsonData = "{\"name\":\"" + hashMap.get("Name") + "\", " +
+                "\"level\":\"" + Integer.parseInt(hashMap.get("Level")) + "\", " +
+                "\"attribute\":\"" + hashMap.get("Attribute") + "\", " +
+                "\"monsterType\":\"" + hashMap.get("Monster Type") + "\", " +
+                "\"cardType\":\"" + hashMap.get("Card Type") + "\", " +
+                "\"attack\":\"" + Integer.parseInt(hashMap.get("Attack")) + "\", " +
+                "\"defense\":\"" + Integer.parseInt(hashMap.get("Defense")) + "\", " +
+                "\"description\":\"" + hashMap.get("Description") + "\", " +
+                "\"price\":" + Integer.parseInt(hashMap.get("Price")) + "}";
+        return jsonData;
+    }
+
+    //Getters and Setters
     public int getLevel() {
         return level;
     }
@@ -69,5 +86,20 @@ public class MonsterCard extends Card{
                 "DEF: " + this.getDefensePoint() + "\n" +
                 "Description: " + this.getDescription();
         return monsterCardInfo;
+    }
+
+    @Override
+    public HashMap<String, String> getHashMap() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("Name", this.name);
+        hashMap.put("Level", String.valueOf(this.level));
+        hashMap.put("Attribute", this.attribute.stringName);
+        hashMap.put("Monster Type", this.monsterType);
+        hashMap.put("Card Type", this.cardType);
+        hashMap.put("Attack", String.valueOf(this.attackPoint));
+        hashMap.put("Defense", String.valueOf(this.defensePoint));
+        hashMap.put("Description", this.description);
+        hashMap.put("Price", String.valueOf(this.price));
+        return hashMap;
     }
 }

@@ -1,10 +1,6 @@
 package models.cards;
 
-import models.Account;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.regex.Pattern;
 import java.util.*;
 
 abstract public class Card {
@@ -28,6 +24,8 @@ abstract public class Card {
     }
 
     public abstract String getStringForShow();
+
+    public abstract HashMap<String, String> getHashMap();
 
     public static String getStringForAllCardsShow() {
         //TODO
