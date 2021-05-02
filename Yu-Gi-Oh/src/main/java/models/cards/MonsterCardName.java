@@ -39,7 +39,7 @@ public enum MonsterCardName {
     WARRIOR_DAI_GREPHER("Warrior Dai Grepher"),
     DARK_BLADE("Dark Blade"),
     WATTAILDRAGON("Wattaildragon"),
-    TERRATIGER_THE_EMPOWERED_WARRIOR("\"Terratiger, the Empowered Warrior\""),
+    TERRATIGER_THE_EMPOWERED_WARRIOR("Terratiger, the Empowered Warrior"),
     THE_TRICKY("The Tricky"),
     SPIRAL_SERPENT("Spiral Serpent");
 
