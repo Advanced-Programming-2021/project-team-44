@@ -27,6 +27,8 @@ abstract public class Card {
 
     abstract public HashMap<String, String> getHashMap();
 
+    public abstract HashMap<String, String> getHashMap();
+
     public static String getStringForAllCardsShow() {
         //TODO
         //Collections.sort(cards);
