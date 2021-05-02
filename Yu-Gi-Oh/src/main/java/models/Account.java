@@ -13,7 +13,7 @@ public class Account {
     private int score;
     private int coin;
     private Deck activeDeck;
-    private ArrayList<Card> cards;
+    private ArrayList<Card> spareCards;
     private ArrayList<Deck> decks;
 
     static {
@@ -27,7 +27,7 @@ public class Account {
         this.score = 0;
         this.coin = 0;
         this.activeDeck = null;
-        cards = new ArrayList<>();
+        spareCards = new ArrayList<>();
         decks = new ArrayList<>();
         accounts.add(this);
     }
@@ -71,7 +71,9 @@ public class Account {
         return this.nickname;
     }
 
-    public String getPassword() { return this.password;}
+    public String getPassword() {
+        return this.password;
+    }
 
     public int getScore() {
         return this.score;
@@ -87,6 +89,20 @@ public class Account {
 
     public String getStringForScoreboard() {
         return this.nickname + ": " + this.score;
+    }
+
+    public Deck getDeckByName(String deckName) {
+        for (Deck deck : this.decks)
+            if (deck.getName().equals(deckName))
+                return deck;
+        return null;
+    }
+
+    public Card getCardByName(String cardName) {
+        for (Card card : this.spareCards)
+            if (card.getName().equals(cardName))
+                return card;
+        return null;
     }
 
     //Setters
@@ -106,14 +122,16 @@ public class Account {
         this.coin = this.coin + addedCoins;
     }
 
-    public void decreaseCoin(int decreasedCoins) {this.coin = this.coin - decreasedCoins;}
+    public void decreaseCoin(int decreasedCoins) {
+        this.coin = this.coin - decreasedCoins;
+    }
 
     public void addCard(Card card) {
-        cards.add(card);
+        spareCards.add(card);
     }
 
     public void removeCard(Card card) {
-        cards.remove(card);
+        spareCards.remove(card);
     }
 
     public void addDeck(Deck deck) {
@@ -121,8 +139,12 @@ public class Account {
     }
 
     public void removeDeck(Deck deck) {
-        cards.addAll(deck.getMainDeckCards());
-        cards.addAll(deck.getSideDeckCards());
+        spareCards.addAll(deck.getMainDeckCards());
+        spareCards.addAll(deck.getSideDeckCards());
         decks.remove(deck);
+    }
+
+    public void setActiveDeck(Deck activeDeck) {
+        this.activeDeck = activeDeck;
     }
 }

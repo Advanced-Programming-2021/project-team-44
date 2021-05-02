@@ -56,4 +56,16 @@ public class Deck {
     public String getStringToShow() {
         return null;
     }
+
+    public boolean ifMaxOfCardIsReached(String cardName) {
+        int flag = 0;
+        for (Card card : mainDeckCards)
+            if (card.getName().equals(cardName))
+                flag++;
+
+        for (Card card : sideDeckCards)
+            if (card.getName().equals(cardName))
+                flag++;
+        return flag >= 3;
+    }
 }
