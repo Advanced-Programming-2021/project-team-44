@@ -1,6 +1,16 @@
 package models.cards;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
+
 
 public class MonsterCard extends Card{
     private int level;
@@ -14,14 +24,77 @@ public class MonsterCard extends Card{
     }
 
     //Utils
+    public static HashMap<String, String> getHashMapFromString(String data) {
+        String[] dataSplit = data.split(",(?!\\s)");
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("Name", dataSplit[0]);
+        hashMap.put("Level", dataSplit[1]);
+        hashMap.put("Attribute", dataSplit[2]);
+        hashMap.put("Monster Type", dataSplit[3]);
+        hashMap.put("Card Type", dataSplit[4]);
+        hashMap.put("Attack", dataSplit[5]);
+        hashMap.put("Defense", dataSplit[6]);
+        hashMap.put("Description", dataSplit[7]);
+        hashMap.put("Price", dataSplit[8]);
+        return hashMap;
+    }
+
+    public static ArrayList<Card> monsterCardsInitializer() {
+        //TODO LOG
+        ArrayList<Card> monsterCards = new ArrayList<>();
+        String path = File.separator + "." +
+                File.separator + "data" +
+                File.separator + "static" +
+                File.separator + "cards" +
+                File.separator + "Monster.csv";
+        try {
+            File source = new File(path);
+            Scanner reader = new Scanner(source);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                HashMap<String, String> toBeAddedCard = getHashMapFromString(data);
+                //File Creation
+                String newCardFilePath = File.separator + "." +
+                        File.separator + "data" +
+                        File.separator + "static" +
+                        File.separator + "cards" +
+                        File.separator + "monster" +
+                        File.separator + toBeAddedCard.get("Name") + ".json";
+                File newCardFile = new File(newCardFilePath);
+                try {
+                    FileWriter writer = new FileWriter(newCardFile.getAbsolutePath());
+                    String jsonData = generateJSONByHashMap(toBeAddedCard);
+                    writer.write(jsonData);
+                    writer.write(jsonData);
+                    writer.close();
+                    GsonBuilder builder = new GsonBuilder();
+                    builder.setPrettyPrinting();
+                    Gson gson = builder.create();
+                    MonsterCard tmpMonsterCard = gson.fromJson(jsonData, MonsterCard.class);
+                    monsterCards.add(tmpMonsterCard);
+                } catch (IOException e) {
+                    System.out.println("Can't parse monsters JSON Files!");
+                    //Error Code: Can't parse JSON files - Parse Error: 3
+                    System.exit(3);
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Monsters source file missing!");
+            //Error Code: Source not found - Source Error: 2
+            System.exit(2);
+        }
+        return monsterCards;
+    }
+
     public static String generateJSONByHashMap(HashMap<String, String> hashMap) {
         String jsonData = "{\"name\":\"" + hashMap.get("Name") + "\", " +
-                "\"level\":\"" + Integer.parseInt(hashMap.get("Level")) + "\", " +
+                "\"level\":" + Integer.parseInt(hashMap.get("Level")) + ", " +
                 "\"attribute\":\"" + hashMap.get("Attribute") + "\", " +
                 "\"monsterType\":\"" + hashMap.get("Monster Type") + "\", " +
                 "\"cardType\":\"" + hashMap.get("Card Type") + "\", " +
-                "\"attack\":\"" + Integer.parseInt(hashMap.get("Attack")) + "\", " +
-                "\"defense\":\"" + Integer.parseInt(hashMap.get("Defense")) + "\", " +
+                "\"attackPoint\":" + Integer.parseInt(hashMap.get("Attack")) + ", " +
+                "\"defensePoint\":" + Integer.parseInt(hashMap.get("Defense")) + ", " +
                 "\"description\":\"" + hashMap.get("Description") + "\", " +
                 "\"price\":" + Integer.parseInt(hashMap.get("Price")) + "}";
         return jsonData;

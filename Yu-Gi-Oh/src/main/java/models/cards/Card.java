@@ -7,7 +7,7 @@ abstract public class Card {
     public static ArrayList<Card> cards;
     protected String name;
     protected String description;
-    protected long price;
+    protected int price;
 
     static {
         cards = new ArrayList<>();
@@ -27,15 +27,13 @@ abstract public class Card {
 
     abstract public HashMap<String, String> getHashMap();
 
-    public abstract HashMap<String, String> getHashMap();
-
     public static String getStringForAllCardsShow() {
         //TODO
         //Collections.sort(cards);
         return null;
     }
 
-    public long getPrice() {
+    public int getPrice() {
         return this.price;
     }
 
@@ -55,7 +53,7 @@ abstract public class Card {
         this.description = description;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }
