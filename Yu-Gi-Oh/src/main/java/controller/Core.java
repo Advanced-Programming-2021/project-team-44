@@ -31,4 +31,8 @@ public class Core {//0
     public static String menuDistributor(int inputId, String commandArguments) {
         return Objects.requireNonNull(Processor.getProcessorByName(currentMenu)).commandDistributor(inputId, commandArguments);
     }
+
+    public static void Initializer() {
+        //TODO
+    }
 }

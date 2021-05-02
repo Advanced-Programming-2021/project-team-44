@@ -59,25 +59,11 @@ public class ImportExportMenuProcessor extends Processor {//0
             Scanner importFileReader = new Scanner(toBeImportedFile);
             while (importFileReader.hasNextLine()) {
                 String data = importFileReader.nextLine().trim();
-                String[] dataSplit = data.split(",(?!\\s)");
                 HashMap<String, String> cardHashMap = new HashMap<>();
                 try {
-                    cardHashMap.put("Name", dataSplit[0]);
-                    cardHashMap.put("Level", dataSplit[1]);
-                    cardHashMap.put("Attribute", dataSplit[2]);
-                    cardHashMap.put("Monster Type", dataSplit[3]);
-                    cardHashMap.put("Card Type", dataSplit[4]);
-                    cardHashMap.put("Attack", dataSplit[5]);
-                    cardHashMap.put("Defense", dataSplit[6]);
-                    cardHashMap.put("Description", dataSplit[7]);
-                    cardHashMap.put("Price", dataSplit[8]);
+                    cardHashMap = MonsterCard.getHashMapFromString(data);
                 } catch (ArrayIndexOutOfBoundsException ae) {
-                    cardHashMap.put("Name", dataSplit[0]);
-                    cardHashMap.put("Type", dataSplit[1]);
-                    cardHashMap.put("Icon", dataSplit[2]);
-                    cardHashMap.put("Description", dataSplit[3]);
-                    cardHashMap.put("Status", dataSplit[4]);
-                    cardHashMap.put("Price", dataSplit[5]);
+                    cardHashMap = MagicCard.getHashMapFromString(data);
                 } catch (Exception e) {
                     return "Input format is invalid!";
                 }
