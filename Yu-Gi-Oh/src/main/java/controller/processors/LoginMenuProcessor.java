@@ -107,7 +107,10 @@ public class  LoginMenuProcessor extends Processor {
         String response = "invalid command";
         switch (commandId) {
             case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> exitMenu();
+            case 1 -> {
+                response = "";
+                exitMenu();
+            }
             case 2 -> response = showMenu();
             case 3 -> response = createUserErrorChecker(commandArguments);
             case 4 -> response = loginUserErrorChecker(commandArguments);

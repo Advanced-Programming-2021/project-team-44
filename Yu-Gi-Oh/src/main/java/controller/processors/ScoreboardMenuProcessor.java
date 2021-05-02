@@ -1,5 +1,6 @@
 package controller.processors;
 
+import controller.Core;
 import models.Account;
 import view.menus.Menus;
 
@@ -19,15 +20,12 @@ public class ScoreboardMenuProcessor extends Processor {
     public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
-            case 0 -> {
-
-            }
+            case 0 -> response = enterMenuErrorChecker(commandArguments);
             case 1 -> {
-
+                response = "";
+                exitMenu();
             }
-            case 2 -> {
-
-            }
+            case 2 -> response = showMenu();
             case 3 -> {
 
             }
@@ -40,16 +38,15 @@ public class ScoreboardMenuProcessor extends Processor {
 
     @Override
     protected String enterMenuErrorChecker(String input) {
-        return null;
+        return "menu navigation is not possible";
     }
 
     @Override
     protected void enterMenu(Menus menu) {
-
     }
 
     @Override
     protected void exitMenu() {
-
+        Core.currentMenu = Menus.MAIN;
     }
 }
