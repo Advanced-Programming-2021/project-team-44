@@ -160,7 +160,8 @@ public class DuelMenuProcessor extends Processor {
 
             }
             case 1 -> {
-
+                response = "";
+                exitMenu();
             }
             case 2 -> {
 

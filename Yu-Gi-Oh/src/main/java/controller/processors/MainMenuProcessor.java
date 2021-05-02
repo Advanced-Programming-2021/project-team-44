@@ -32,7 +32,8 @@ public class MainMenuProcessor extends Processor {//0
 
             }
             case 1 -> {
-
+                response = "";
+                exitMenu();
             }
             case 2 -> {
 

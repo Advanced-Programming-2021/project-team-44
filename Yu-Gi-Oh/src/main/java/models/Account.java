@@ -10,8 +10,8 @@ public class Account {
     private String username;
     private String password;
     private String nickname;
-    private long score;
-    private long coin;
+    private int score;
+    private int coin;
     private Deck activeDeck;
     private ArrayList<Card> cards;
     private ArrayList<Deck> decks;
@@ -26,6 +26,7 @@ public class Account {
         this.nickname = nickname;
         this.score = 0;
         this.coin = 0;
+        this.activeDeck = null;
         cards = new ArrayList<>();
         decks = new ArrayList<>();
         accounts.add(this);
@@ -72,11 +73,11 @@ public class Account {
 
     public String getPassword() { return this.password;}
 
-    public long getScore() {
+    public int getScore() {
         return this.score;
     }
 
-    public long getCoin() {
+    public int getCoin() {
         return this.coin;
     }
 
@@ -85,7 +86,7 @@ public class Account {
     }
 
     public String getStringForScoreboard() {
-        return null;
+        return this.nickname + ": " + this.score;
     }
 
     //Setters
@@ -98,14 +99,14 @@ public class Account {
     }
 
     public void increaseScore(int addedScore) {
-        this.score = this.score + (long) addedScore;
+        this.score = this.score + addedScore;
     }
 
-    public void increaseCoin(long addedCoins) {
+    public void increaseCoin(int addedCoins) {
         this.coin = this.coin + addedCoins;
     }
 
-    public void decreaseCoin(long decreasedCoins) {this.coin = this.coin - decreasedCoins;}
+    public void decreaseCoin(int decreasedCoins) {this.coin = this.coin - decreasedCoins;}
 
     public void addCard(Card card) {
         cards.add(card);

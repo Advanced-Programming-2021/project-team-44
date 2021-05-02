@@ -78,7 +78,8 @@ public class DeckMenuProcessor extends Processor {
 
             }
             case 1 -> {
-
+                response = "";
+                exitMenu();
             }
             case 2 -> {
 
