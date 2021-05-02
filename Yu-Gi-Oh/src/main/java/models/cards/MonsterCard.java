@@ -20,7 +20,8 @@ public class MonsterCard extends Card{
     private int attackPoint;
     private int defensePoint;
 
-    public MonsterCard() {
+    public MonsterCard(String name) {
+        //TODO
     }
 
     //Utils

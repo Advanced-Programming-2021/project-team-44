@@ -16,7 +16,8 @@ public class MagicCard extends Card{
     protected MagicIcon icon;
     private String status;
 
-    public MagicCard() {
+    public MagicCard(String name) {
+        //TODO
     }
 
     //Utils
