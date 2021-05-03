@@ -7,7 +7,7 @@ import view.menus.Menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class  LoginMenuProcessor extends Processor {
+public class  LoginMenuProcessor extends Processor { //DONE
 
     public LoginMenuProcessor() {
         super(Menus.LOGIN);
@@ -54,7 +54,7 @@ public class  LoginMenuProcessor extends Processor {
             response = "user created successfully!";
         }
         return response;
-    }//done
+    }
 
     private String loginUserErrorChecker(String arguments) {
         String response;
@@ -95,7 +95,7 @@ public class  LoginMenuProcessor extends Processor {
     //Command Performer
     private void createUser(String username, String password, String nickname) {
         new Account(username, password, nickname);
-    }//done
+    }
 
     private void loginUser(String username) {
         Core.currentMenu = Menus.MAIN;
@@ -116,19 +116,19 @@ public class  LoginMenuProcessor extends Processor {
             case 4 -> response = loginUserErrorChecker(commandArguments);
         }
         return response;
-    }//done
+    }
 
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "please login first";
-    }//done
+    }
 
     @Override
     protected void enterMenu(Menus menu) {
-    }//done
+    }
 
     @Override
     protected void exitMenu() {
         System.exit(0);
-    } //done
+    }
 }

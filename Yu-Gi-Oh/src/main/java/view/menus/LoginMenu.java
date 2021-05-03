@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginMenu extends Menu {
+public class LoginMenu extends Menu { //DONE
 
     public LoginMenu() {
         super(Menus.LOGIN, null);

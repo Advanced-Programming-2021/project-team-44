@@ -3,7 +3,8 @@ package view.menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ScoreboardMenu extends Menu {//0
+public class ScoreboardMenu extends Menu { //DONE
+
     public ScoreboardMenu(Menu parentMenu) {
         super(Menus.SCOREBOARD, parentMenu);
         this.setSubMenus(null);

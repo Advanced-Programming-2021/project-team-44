@@ -7,7 +7,8 @@ import view.menus.Menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProfileMenuProcessor extends Processor {
+public class ProfileMenuProcessor extends Processor { //DONE
+
     public ProfileMenuProcessor() {
         super(Menus.PROFILE);
     }
@@ -89,13 +90,11 @@ public class ProfileMenuProcessor extends Processor {
         response = "----------------------------------------\n" +
                 "Nickname: " + loggedInUser.getNickname() + "\n" +
                 "Username: " + loggedInUser.getUsername() + "\n" +
-                "Bio: <bio>\n" +
-                "Rank: <rank>\n" +
                 "Score: " + loggedInUser.getScore() + " pts\n" +
                 "Coin: " + loggedInUser.getCoin() + "\n" +
                 "----------------------------------------";
         return response;
-    } //TODO
+    }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {

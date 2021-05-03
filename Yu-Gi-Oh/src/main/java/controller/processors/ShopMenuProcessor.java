@@ -8,7 +8,8 @@ import view.menus.Menus;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
 
-public class ShopMenuProcessor extends Processor {
+public class ShopMenuProcessor extends Processor { //DONE
+
     public ShopMenuProcessor() {
         super(Menus.SHOP);
     }
@@ -77,7 +78,6 @@ public class ShopMenuProcessor extends Processor {
 
     @Override
     protected void enterMenu(Menus menu) {
-
     }
 
     @Override

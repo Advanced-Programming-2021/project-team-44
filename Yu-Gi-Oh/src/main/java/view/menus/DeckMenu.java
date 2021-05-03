@@ -3,7 +3,8 @@ package view.menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DeckMenu extends Menu {
+public class DeckMenu extends Menu { //DONE
+
     public DeckMenu(Menu parentMenu) {
         super(Menus.DECK, parentMenu);
         this.setSubMenus(null);

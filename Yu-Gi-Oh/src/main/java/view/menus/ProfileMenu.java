@@ -3,7 +3,7 @@ package view.menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProfileMenu extends Menu {//0
+public class ProfileMenu extends Menu { //DONE
     public ProfileMenu(Menu parentMenu) {
         super(Menus.PROFILE, parentMenu);
         this.setSubMenus(null);

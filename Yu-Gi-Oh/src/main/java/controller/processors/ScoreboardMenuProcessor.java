@@ -6,7 +6,8 @@ import models.comparators.AccountSortByNickname;
 import models.comparators.AccountSortByScore;
 import view.menus.Menus;
 
-public class ScoreboardMenuProcessor extends Processor {
+public class ScoreboardMenuProcessor extends Processor { //DONE
+
     public ScoreboardMenuProcessor() {
         super(Menus.SCOREBOARD);
     }
