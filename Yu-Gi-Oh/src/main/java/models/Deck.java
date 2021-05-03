@@ -1,6 +1,8 @@
 package models;
 
 import models.cards.Card;
+import models.cards.MagicCard;
+import models.cards.MonsterCard;
 
 import java.util.ArrayList;
 
@@ -45,31 +47,31 @@ public class Deck {
         return sideDeckCards.size() == 15;
     }
 
-    public boolean isCardExistedInSideDeck(String cardName){
-        for (Card sideDeckCard: sideDeckCards) {
-            if(sideDeckCard.getName().equals(cardName))
-            return true;
+    public boolean isCardExistedInSideDeck(String cardName) {
+        for (Card sideDeckCard : sideDeckCards) {
+            if (sideDeckCard.getName().equals(cardName))
+                return true;
         }
         return false;
     }
 
-    public boolean isCardExistedInMainDeck(String cardName){
-        for (Card mainDeckCard: mainDeckCards) {
-            if(mainDeckCard.getName().equals(cardName))
-            return true;
+    public boolean isCardExistedInMainDeck(String cardName) {
+        for (Card mainDeckCard : mainDeckCards) {
+            if (mainDeckCard.getName().equals(cardName))
+                return true;
         }
         return false;
     }
 
-    public int mainDeckCounter(){
+    public int mainDeckCounter() {
         return this.mainDeckCards.size();
     }
 
-    public int sideDeckCounter(){
+    public int sideDeckCounter() {
         return this.sideDeckCards.size();
     }
 
-    public boolean isDeckValid(){
+    public boolean isDeckValid() {
         return this.mainDeckCards.size() >= 45 && this.mainDeckCards.size() <= 60 && this.sideDeckCards.size() <= 15;
     }
 
@@ -81,31 +83,50 @@ public class Deck {
         return this.sideDeckCards;
     }
 
-    public String showDeck() {
-        String response;
-        String validOrInvalid;
-        if(this.isDeckValid()){
-            validOrInvalid = "valid";
+    public String showDeck(String mainOrSide) {
+        StringBuilder response = new StringBuilder();
+        response.append("Deck: ").append(this.name).append("\n");
+        response.append(mainOrSide).append(" deck:").append("\n");
+        response.append("Monsters:").append("\n");
+        switch (mainOrSide) {
+            case "Main" -> {
+                for (Card card : mainDeckCards)
+                    if (card instanceof MonsterCard)
+                        response.append(card.getStringForAllCardsShow()).append("\n");
+            }
+            case "Side" -> {
+                for (Card card : sideDeckCards)
+                    if (card instanceof MonsterCard)
+                        response.append(card.getStringForAllCardsShow()).append("\n");
+            }
         }
-        else{
-            validOrInvalid = "invalid";
+        response.append("Spell and Traps:").append("\n");
+        switch (mainOrSide) {
+            case "Main" -> {
+                for (Card card : mainDeckCards)
+                    if (card instanceof MagicCard)
+                        response.append(card.getStringForAllCardsShow()).append("\n");
+            }
+            case "Side" -> {
+                for (Card card : sideDeckCards)
+                    if (card instanceof MagicCard)
+                        response.append(card.getStringForAllCardsShow()).append("\n");
+            }
         }
-        response = this.getName() + ": main deck "+ this.mainDeckCounter() + ", side deck " +
-                this.sideDeckCounter() + ", " + validOrInvalid + "\n";
-        return response;
+        response.deleteCharAt(response.length()-1);
+        return response.toString();
     }
 
-    public String showDeckCards(boolean isSide){
-        String response;
-        response = "Deck: " + this.getName() + "\n";
-        if(isSide) {
-            response += "Side deck: \n Monsters: \n";
-            //TODO
-        }
-        else {
-            response += "Main deck: \n Monsters: \n";
-        }
-        return response;
+    public String getStringForShowAllDecks() {
+       StringBuilder response = new StringBuilder();
+       response.append(this.name).append(": ");
+       response.append("main deck ").append(mainDeckCards.size()).append(",");
+       response.append("side deck ").append(sideDeckCards.size()).append(",");
+       String validString;
+       if (isDeckValid()) validString = "valid";
+       else validString = "invalid";
+       response.append(validString);
+       return response.toString();
     }
 
     public boolean ifMaxOfCardIsReached(String cardName) {

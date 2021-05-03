@@ -3,6 +3,7 @@ package controller.processors;
 import controller.Core;
 import models.Account;
 import models.cards.Card;
+import models.comparators.CardSortByName;
 import view.menus.Menus;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
@@ -14,9 +15,9 @@ public class ShopMenuProcessor extends Processor {
 
     //Error Checker
     private String showCardErrorChecker(String arguments) {
-        String response ;
-        if(Card.getCardByName(arguments) == null) response = "there is no card with this name";
-        else{
+        String response;
+        if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
+        else {
             response = showCard(arguments);
         }
         return response;
@@ -24,9 +25,9 @@ public class ShopMenuProcessor extends Processor {
 
     private String buyCardErrorChecker(String arguments) {
         String response;
-        if(Card.getCardByName(arguments) == null) response = "there is no card with this name";
-        else if(Card.getCardByName(arguments).getPrice() > loggedInUser.getCoin()) response = "not enough money";
-        else{
+        if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
+        else if (Card.getCardByName(arguments).getPrice() > loggedInUser.getCoin()) response = "not enough money";
+        else {
             buyCard(arguments);
             response = "card bought successfully";
         }
@@ -44,9 +45,12 @@ public class ShopMenuProcessor extends Processor {
     }
 
     private String showAllCards() {
-        String response ;
-        response = Card.getStringForAllCardsShow();
-        return response;
+        Card.allCards.sort(new CardSortByName());
+        StringBuilder response = new StringBuilder();
+        for (Card card : Card.allCards)
+            response.append(card.getStringForAllCardsShow()).append("\n");
+        response.deleteCharAt(response.length()-1);
+        return response.toString();
     }
 
     @Override

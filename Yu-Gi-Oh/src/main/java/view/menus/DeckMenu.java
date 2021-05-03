@@ -12,7 +12,18 @@ public class DeckMenu extends Menu {
     @Override
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|deck create|deck delete|deck set activate|deck add-card|deck rm-card|deck show --all|deck show --cards|deck show|card show)\\b(?:\\s+(.*))?$");
+        Pattern pattern = Pattern.compile("^(menu enter|" +
+                "menu exit|" +
+                "menu show-current|" +
+                "deck create|" +
+                "deck delete|" +
+                "deck set activate|" +
+                "deck add-card|" +
+                "deck rm-card|" +
+                "deck show --all|" +
+                "deck show --cards|" +
+                "deck show|" +
+                "card show)\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             switch (matcher.group(1)) {

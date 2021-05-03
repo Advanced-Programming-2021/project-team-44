@@ -154,13 +154,11 @@ public class DeckMenuProcessor extends Processor {
             } else {
                 whichDeck = "main";
             }
-            if(isSideDeck && !Processor.loggedInUser.getDeckByName(deckName).isCardExistedInSideDeck(cardName)){
-                response = "card with name " + cardName +" does not exist in side deck";
-            }
-            else if(!isSideDeck && !Processor.loggedInUser.getDeckByName(deckName).isCardExistedInMainDeck(cardName)){
-                response = "card with name " + cardName +" does not exist in main deck";
-            }
-            else {
+            if (isSideDeck && !Processor.loggedInUser.getDeckByName(deckName).isCardExistedInSideDeck(cardName)) {
+                response = "card with name " + cardName + " does not exist in side deck";
+            } else if (!isSideDeck && !Processor.loggedInUser.getDeckByName(deckName).isCardExistedInMainDeck(cardName)) {
+                response = "card with name " + cardName + " does not exist in main deck";
+            } else {
                 removeCardFromDeck(deckName, cardName, whichDeck);
                 response = "card removed form deck successfully";
             }
@@ -190,11 +188,11 @@ public class DeckMenuProcessor extends Processor {
                 }
             }
         }
-        if(loggedInUser.getDeckByName(deckName) == null) {
+        if (isSideDeck == null) isSideDeck = false;
+        if (loggedInUser.getDeckByName(deckName) == null) {
             response = "deck with name " + deckName + " does not exist";
-        }
-        else{
-            response = showDeck(loggedInUser.getDeckByName(deckName), isSideDeck);
+        } else {
+            response = showDeck(deckName, isSideDeck);
         }
         return response;
     }
@@ -220,41 +218,60 @@ public class DeckMenuProcessor extends Processor {
         switch (whichDeck) {
             case "main" -> {
                 switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
-                    case "monster" ->
-                            Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(new MonsterCard(cardName));
-                    case "magic" ->
-                            Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(new MagicCard(cardName));
+                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(new MonsterCard(cardName));
+                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(new MagicCard(cardName));
                 }
             }
             case "side" -> {
                 switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
-                    case "monster" ->
-                            Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(new MonsterCard(cardName));
-                    case "magic" ->
-                            Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(new MagicCard(cardName));
+                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(new MonsterCard(cardName));
+                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(new MagicCard(cardName));
                 }
             }
         }
     }
 
     private void removeCardFromDeck(String deckName, String cardName, String whichDeck) {
+        switch (whichDeck) {
+            case "main" -> {
+                switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
+                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(new MonsterCard(cardName));
+                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(new MagicCard(cardName));
+                }
+            }
+            case "side" -> {
+                switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
+                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(new MonsterCard(cardName));
+                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(new MagicCard(cardName));
+                }
+            }
+        }
     }
 
     private String showAllDecks() {
-        String response =null;
-        response = "Decks:\nActive deck:\n";
-        response = response + Processor.loggedInUser.getActiveDeck().showDeck();
-        response = response + "Other decks:\n";
-        response = response + loggedInUser.showAllDecks();
-        return response;
+        StringBuilder response = new StringBuilder();
+        response.append("Decks:").append("\n");
+        response.append("Active deck:").append("\n");
+        if (Processor.loggedInUser.getActiveDeck() != null)
+            response.append(Processor.loggedInUser.getActiveDeck().getStringForShowAllDecks()).append("\n");
+        response.append("Other decks:").append("\n");
+        if (Processor.loggedInUser.getOtherDecks().size() == 0)
+            return response.toString();
+        for (Deck deck : Processor.loggedInUser.getOtherDecks())
+            response.append(deck.getStringForShowAllDecks()).append("\n");
+        response.deleteCharAt(response.length() - 1);
+        return response.toString();
+    }
+
+    private String showDeck(String deckName, Boolean isSide) {
+        String mainOrSide;
+        if (isSide) mainOrSide = "Side";
+        else mainOrSide = "Main";
+        return Processor.loggedInUser.getDeckByName(deckName).showDeck(mainOrSide);
     }
 
     private String showCards() {
-        return loggedInUser.showCards();
-    }
-
-    private String showDeck(Deck deckName, Boolean isSide){
-        return deckName.showDeckCards(isSide);
+        return loggedInUser.showSpareCards();
     }
 
     @Override
@@ -287,7 +304,6 @@ public class DeckMenuProcessor extends Processor {
 
     @Override
     protected void enterMenu(Menus menu) {
-
     }
 
     @Override

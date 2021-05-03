@@ -15,11 +15,9 @@ abstract public class Card {
 
 
     //Getters
-    public static String getStringForAllCardsShow() {
-        //TODO
-        //Collections.sort(cards);
-        return null;
-    }
+    abstract public String getStringForShow();
+
+    abstract public HashMap<String, String> getHashMap();
 
     public static Card getCardByName(String cardName) {
         for (Card card : allCards)
@@ -47,12 +45,12 @@ abstract public class Card {
         return this.description;
     }
 
-    abstract public String getStringForShow();
-
-    abstract public HashMap<String, String> getHashMap();
-
     public int getPrice() {
         return this.price;
+    }
+
+    public String getStringForAllCardsShow() {
+        return this.name + ":" + this.description;
     }
 
     //Setters

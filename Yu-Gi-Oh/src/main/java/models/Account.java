@@ -1,6 +1,7 @@
 package models;
 
 import models.cards.Card;
+import models.comparators.CardSortByName;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -12,7 +13,7 @@ public class Account {
     private String nickname;
     private int score;
     private int coin;
-    private Deck activeDeck ;
+    private Deck activeDeck;
     private ArrayList<Card> spareCards;
     private ArrayList<Deck> decks;
 
@@ -87,6 +88,14 @@ public class Account {
         return this.activeDeck;
     }
 
+    public ArrayList<Deck> getOtherDecks() {
+        ArrayList<Deck> otherDecks = new ArrayList<>();
+        for (Deck deck : decks)
+            if (deck != activeDeck)
+                otherDecks.add(deck);
+        return otherDecks;
+    }
+
     public String getStringForScoreboard() {
         return this.nickname + ": " + this.score;
     }
@@ -105,21 +114,14 @@ public class Account {
         return null;
     }
 
-    public String showAllDecks() {
-        String response = null;
-        for (Deck deck: decks) {
-            if(!deck.getName().equals(activeDeck.getName())) response += deck.showDeck();
-        }
-        return response;
-    }
-
-    public String showCards() {
-        String response = null;
-        //sort{                   }
+    public String showSpareCards() {
+        StringBuilder response = new StringBuilder();
+        spareCards.sort(new CardSortByName());
         for (Card card : spareCards) {
-            response = response + card.getName() + ":" + card.getDescription() + "\n";
+            response.append(card.getStringForAllCardsShow()).append("\n");
         }
-        return response;
+        response.deleteCharAt(response.length() - 1);
+        return response.toString();
     }
 
     //Setters
@@ -164,6 +166,4 @@ public class Account {
     public void setActiveDeck(Deck activeDeck) {
         this.activeDeck = activeDeck;
     }
-
-
 }
