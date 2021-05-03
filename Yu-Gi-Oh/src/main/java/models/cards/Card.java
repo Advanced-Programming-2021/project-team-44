@@ -52,17 +52,4 @@ abstract public class Card {
     public String getStringForAllCardsShow() {
         return this.name + ":" + this.description;
     }
-
-    //Setters
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 }

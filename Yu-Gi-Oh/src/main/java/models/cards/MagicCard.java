@@ -16,8 +16,13 @@ public class MagicCard extends Card{
     protected MagicIcon icon;
     private String status;
 
-    public MagicCard(String name) {
-        //TODO
+    public MagicCard() {
+    }
+
+    public static MagicCard createMagicCard(String name) {
+        MagicCard template = (MagicCard) Card.getCardByName(name);
+        assert template != null;
+        return (MagicCard) template.clone();
     }
 
     //Utils
@@ -96,24 +101,12 @@ public class MagicCard extends Card{
         return type;
     }
 
-    public void setType(MagicType type) {
-        this.type = type;
-    }
-
     public MagicIcon getIcon() {
         return icon;
     }
 
-    public void setIcon(MagicIcon icon) {
-        this.icon = icon;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     @Override
@@ -136,5 +129,17 @@ public class MagicCard extends Card{
         hashMap.put("Status", this.status);
         hashMap.put("Price", String.valueOf(this.price));
         return hashMap;
+    }
+
+    @Override
+    protected Object clone() {
+        MagicCard dummy = new MagicCard();
+        dummy.name = this.name;
+        dummy.description = this.description;
+        dummy.price = this.price;
+        dummy.type = this.type;
+        dummy.icon = this.icon;
+        dummy.status = this.status;
+        return dummy;
     }
 }

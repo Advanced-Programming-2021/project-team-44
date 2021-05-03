@@ -26,12 +26,22 @@ public class Deck {
         sideDeckCards.add(card);
     }
 
-    public void removeCardFromMainDeck(Card card) {
-        mainDeckCards.remove(card);
+    public void removeCardFromMainDeck(String cardName) {
+        for (Card card : mainDeckCards) {
+            if (card.getName().equals(cardName)) {
+                mainDeckCards.remove(card);
+                return;
+            }
+        }
     }
 
-    public void removeCardFromSideDeck(Card card) {
-        sideDeckCards.remove(card);
+    public void removeCardFromSideDeck(String cardName) {
+        for (Card card : sideDeckCards) {
+            if (card.getName().equals(cardName)) {
+                sideDeckCards.remove(card);
+                return;
+            }
+        }
     }
 
     //Getters

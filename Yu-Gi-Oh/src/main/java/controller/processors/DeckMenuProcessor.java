@@ -218,14 +218,14 @@ public class DeckMenuProcessor extends Processor {
         switch (whichDeck) {
             case "main" -> {
                 switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
-                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(new MonsterCard(cardName));
-                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(new MagicCard(cardName));
+                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(MonsterCard.createMonsterCard(cardName));
+                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).addCardToMainDeck(MagicCard.createMagicCard(cardName));
                 }
             }
             case "side" -> {
                 switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
-                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(new MonsterCard(cardName));
-                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(new MagicCard(cardName));
+                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(MonsterCard.createMonsterCard(cardName));
+                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).addCardToSideDeck(MagicCard.createMagicCard(cardName));
                 }
             }
         }
@@ -234,16 +234,10 @@ public class DeckMenuProcessor extends Processor {
     private void removeCardFromDeck(String deckName, String cardName, String whichDeck) {
         switch (whichDeck) {
             case "main" -> {
-                switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
-                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(new MonsterCard(cardName));
-                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(new MagicCard(cardName));
-                }
+                Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(cardName);
             }
             case "side" -> {
-                switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
-                    case "monster" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(new MonsterCard(cardName));
-                    case "magic" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(new MagicCard(cardName));
-                }
+                Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(cardName);
             }
         }
     }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
-public class MonsterCard extends Card{
+public class MonsterCard extends Card {
     private int level;
     private MonsterCardAttribute attribute;
     private String monsterType;
@@ -20,8 +20,13 @@ public class MonsterCard extends Card{
     private int attackPoint;
     private int defensePoint;
 
-    public MonsterCard(String name) {
-        //TODO
+    public MonsterCard() {
+    }
+
+    public static MonsterCard createMonsterCard(String name) {
+        MonsterCard template = (MonsterCard) Card.getCardByName(name);
+        assert template != null;
+        return (MonsterCard) template.clone();
     }
 
     //Utils
@@ -106,49 +111,26 @@ public class MonsterCard extends Card{
         return level;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     public MonsterCardAttribute getAttribute() {
         return attribute;
-    }
-
-    public void setAttribute(MonsterCardAttribute attribute) {
-        this.attribute = attribute;
     }
 
     public String getMonsterType() {
         return monsterType;
     }
 
-    public void setMonsterType(String monsterType) {
-        this.monsterType = monsterType;
-    }
-
     public String getCardType() {
         return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
     }
 
     public int getAttackPoint() {
         return attackPoint;
     }
 
-    public void setAttackPoint(int attackPoint) {
-        this.attackPoint = attackPoint;
-    }
-
     public int getDefensePoint() {
         return defensePoint;
     }
 
-    public void setDefensePoint(int defensePoint) {
-        this.defensePoint = defensePoint;
-    }
 
     @Override
     public String getStringForShow() {
@@ -175,5 +157,20 @@ public class MonsterCard extends Card{
         hashMap.put("Description", this.description);
         hashMap.put("Price", String.valueOf(this.price));
         return hashMap;
+    }
+
+    @Override
+    protected Object clone() {
+        MonsterCard dummy = new MonsterCard();
+        dummy.name = this.name;
+        dummy.description = this.description;
+        dummy.price = this.price;
+        dummy.level = this.level;
+        dummy.attribute = this.attribute;
+        dummy.monsterType = this.monsterType;
+        dummy.cardType = this.cardType;
+        dummy.attackPoint = this.attackPoint;
+        dummy.defensePoint = this.defensePoint;
+        return dummy;
     }
 }
