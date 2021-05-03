@@ -12,7 +12,7 @@ public class Account {
     private String nickname;
     private int score;
     private int coin;
-    private Deck activeDeck;
+    private Deck activeDeck ;
     private ArrayList<Card> spareCards;
     private ArrayList<Deck> decks;
 
@@ -105,6 +105,23 @@ public class Account {
         return null;
     }
 
+    public String showAllDecks() {
+        String response = null;
+        for (Deck deck: decks) {
+            if(!deck.getName().equals(activeDeck.getName())) response += deck.showDeck();
+        }
+        return response;
+    }
+
+    public String showCards() {
+        String response = null;
+        //sort{                   }
+        for (Card card : spareCards) {
+            response = response + card.getName() + ":" + card.getDescription() + "\n";
+        }
+        return response;
+    }
+
     //Setters
     public void setPassword(String password) {
         this.password = password;
@@ -147,4 +164,6 @@ public class Account {
     public void setActiveDeck(Deck activeDeck) {
         this.activeDeck = activeDeck;
     }
+
+
 }

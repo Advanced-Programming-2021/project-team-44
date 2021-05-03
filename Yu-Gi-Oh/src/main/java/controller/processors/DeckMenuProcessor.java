@@ -1,5 +1,6 @@
 package controller.processors;
 
+import controller.Core;
 import models.cards.Card;
 import models.Deck;
 import models.cards.MagicCard;
@@ -111,14 +112,91 @@ public class DeckMenuProcessor extends Processor {
                 response = "card added to deck successfully";
             }
         }
+        return response;
     }
 
     private String removeCardFromDeckErrorChecker(String arguments) {
-        return null;
+        String response;
+        Pattern pattern = Pattern.compile("(?=\\B)((?:-\\w)|(?:--\\w+))\\b(.*?)(?=(?: -[-]?)|(?:$))");
+        Matcher matcher = pattern.matcher(arguments);
+        String cardName = null;
+        String deckName = null;
+        Boolean isSideDeck = null;
+        //Invalid Command
+        while (matcher.find()) {
+            switch (matcher.group(1)) {
+                case "--card", "-c" -> {
+                    if (cardName != null) return "invalid command";
+                    cardName = matcher.group(2);
+                }
+                case "--deck", "-d" -> {
+                    if (deckName != null) return "invalid command";
+                    deckName = matcher.group(2);
+                }
+                case "--side", "-s" -> {
+                    if (isSideDeck != null) return "invalid command";
+                    isSideDeck = true;
+                }
+                default -> {
+                    return "invalid command";
+                }
+            }
+        }
+        if (isSideDeck == null) isSideDeck = false;
+        if (Processor.loggedInUser.getCardByName(cardName) == null)
+            response = "card with name " + cardName + " does not exist";
+        else if (Processor.loggedInUser.getDeckByName(deckName) == null)
+            response = "deck with name " + deckName + " does not exist";
+        else {
+            String whichDeck;
+            if (isSideDeck) {
+                whichDeck = "side";
+            } else {
+                whichDeck = "main";
+            }
+            if(isSideDeck && !Processor.loggedInUser.getDeckByName(deckName).isCardExistedInSideDeck(cardName)){
+                response = "card with name " + cardName +" does not exist in side deck";
+            }
+            else if(!isSideDeck && !Processor.loggedInUser.getDeckByName(deckName).isCardExistedInMainDeck(cardName)){
+                response = "card with name " + cardName +" does not exist in main deck";
+            }
+            else {
+                removeCardFromDeck(deckName, cardName, whichDeck);
+                response = "card removed form deck successfully";
+            }
+        }
+        return response;
     }
 
     private String showDeckErrorChecker(String arguments) {
-        return null;
+        String response;
+        Pattern pattern = Pattern.compile("(?=\\B)((?:-\\w)|(?:--\\w+))\\b(.*?)(?=(?: -[-]?)|(?:$))");
+        Matcher matcher = pattern.matcher(arguments);
+        String deckName = null;
+        Boolean isSideDeck = null;
+        //Invalid Command
+        while (matcher.find()) {
+            switch (matcher.group(1)) {
+                case "--deck-name", "-d" -> {
+                    if (deckName != null) return "invalid command";
+                    deckName = matcher.group(2);
+                }
+                case "--side", "-s" -> {
+                    if (isSideDeck != null) return "invalid command";
+                    isSideDeck = true;
+                }
+                default -> {
+                    return "invalid command";
+                }
+            }
+        }
+        if(loggedInUser.getDeckByName(deckName) == null) {
+            response = "deck with name " + deckName + " does not exist";
+        }
+        else{
+            response = showDeck(loggedInUser.getDeckByName(deckName), isSideDeck);
+        }
+        return response;
     }
 
     //Command Performer
@@ -163,44 +241,48 @@ public class DeckMenuProcessor extends Processor {
     }
 
     private String showAllDecks() {
-        return null;
-    }
-
-    private String showDeck(Deck deck, String whichDeck) {
-        return null;
+        String response =null;
+        response = "Decks:\nActive deck:\n";
+        response = response + Processor.loggedInUser.getActiveDeck().showDeck();
+        response = response + "Other decks:\n";
+        response = response + loggedInUser.showAllDecks();
+        return response;
     }
 
     private String showCards() {
-        return null;
+        return loggedInUser.showCards();
+    }
+
+    private String showDeck(Deck deckName, Boolean isSide){
+        return deckName.showDeckCards(isSide);
     }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
-            case 0 -> {
-
-            }
+            case 0 -> response = enterMenuErrorChecker(commandArguments);
             case 1 -> {
                 response = "";
                 exitMenu();
             }
-            case 2 -> {
-
-            }
-            case 3 -> {
-
-            }
-            case 4 -> {
-
-            }
+            case 2 -> response = showMenu();
+            case 3 -> response = createDeckErrorChecker(commandArguments);
+            case 4 -> response = deleteDeckErrorChecker(commandArguments);
+            case 5 -> response = setActiveDeckErrorChecker(commandArguments);
+            case 6 -> response = addCardToDeckErrorChecker(commandArguments);
+            case 7 -> response = removeCardFromDeckErrorChecker(commandArguments);
+            case 8 -> response = showAllDecks();
+            case 9 -> response = showCards();
+            case 10 -> response = showDeckErrorChecker(commandArguments);
+            case 11 -> response = showCardErrorChecker(commandArguments);
         }
         return response;
     }
 
     @Override
     protected String enterMenuErrorChecker(String input) {
-        return null;
+        return "menu navigation is not possible";
     }
 
     @Override
@@ -210,6 +292,6 @@ public class DeckMenuProcessor extends Processor {
 
     @Override
     protected void exitMenu() {
-
+        Core.currentMenu = Menus.MAIN;
     }
 }
