@@ -17,6 +17,16 @@ public class DuelMenuProcessor extends Processor {
 
     public DuelMenuProcessor() {
         super(Menus.DUEL);
+    }
+
+    public void gameInitialization(Account player1, Account player2, int rounds) {
+        ifAI = player1 == null || player2 == null;
+        if (ifAI) {
+
+        } else {
+            this.player1 = new Player(player1);
+            this.player2 = new Player(player2);
+        }
         phase = Phases.DRAW;
     }
 
@@ -146,11 +156,6 @@ public class DuelMenuProcessor extends Processor {
     private void increaseLPCheat(int amount) {}
 
     private void setWinnerCheat(String nickname) {}
-
-    public void gameInitialization(Account player1, Account player2, int rounds) {
-        this.player1 = new Player(player1);
-        this.player2 = new Player(player2);
-    }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {

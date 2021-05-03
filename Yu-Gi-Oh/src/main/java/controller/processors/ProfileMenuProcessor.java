@@ -24,13 +24,15 @@ public class ProfileMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--nickname", "-n" -> {
                     if (newNickname != null) return "invalid command";
-                    newNickname = matcher.group(2);
+                    newNickname = matcher.group(2).trim();
                 }
                 default -> {
                     return "invalid command";
                 }
             }
         }
+        if (newNickname == null) return "invalid command";
+
         //Invalid Command Arguments
         if (!Account.isNicknameValid(newNickname)) response = "invalid Nickname";
         else if (Account.getAccountByNickname(newNickname) != null)
@@ -53,17 +55,19 @@ public class ProfileMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--current", "-c" -> {
                     if (currentPassword != null) return "invalid command";
-                    currentPassword = matcher.group(2);
+                    currentPassword = matcher.group(2).trim();
                 }
                 case "--new", "-n" -> {
                     if (newPassword != null) return "invalid command";
-                    newPassword = matcher.group(2);
+                    newPassword = matcher.group(2).trim();
                 }
                 default -> {
                     return "invalid command";
                 }
             }
         }
+        if (currentPassword == null || newPassword == null) return "invalid command";
+
         //Invalid Command Arguments
         if (!Account.isPasswordValid(currentPassword)) response = "invalid current Password";
         else if (!Account.isPasswordValid(newPassword)) response = "invalid new Password";

@@ -7,7 +7,7 @@ import view.menus.Menus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class  LoginMenuProcessor extends Processor { //DONE
+public class LoginMenuProcessor extends Processor { //DONE
 
     public LoginMenuProcessor() {
         super(Menus.LOGIN);
@@ -26,21 +26,23 @@ public class  LoginMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--username", "-u" -> {
                     if (username != null) return "invalid command";
-                    username = matcher.group(2);
+                    username = matcher.group(2).trim();
                 }
                 case "--nickname", "-n" -> {
                     if (nickname != null) return "invalid command";
-                    nickname = matcher.group(2);
+                    nickname = matcher.group(2).trim();
                 }
                 case "--password", "-p" -> {
                     if (password != null) return "invalid command";
-                    password = matcher.group(2);
+                    password = matcher.group(2).trim();
                 }
                 default -> {
                     return "invalid command";
                 }
             }
         }
+        if (username == null || nickname == null || password == null) return "invalid command";
+
         //Invalid Command Arguments
         if (!Account.isUsernameValid(username)) response = "invalid username";
         else if (!Account.isNicknameValid(nickname)) response = "invalid nickname";
@@ -67,23 +69,25 @@ public class  LoginMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--username", "-u" -> {
                     if (username != null) return "invalid command";
-                    username = matcher.group(2);
+                    username = matcher.group(2).trim();
                 }
                 case "--password", "-p" -> {
                     if (password != null) return "invalid command";
-                    password = matcher.group(2);
+                    password = matcher.group(2).trim();
                 }
                 default -> {
                     return "invalid command";
                 }
             }
         }
+        if (username == null || password == null) return "invalid command";
+
         //Invalid Command Arguments
         if (!Account.isUsernameValid(username)) response = "invalid username";
         else if (!Account.isPasswordValid(password)) response = "invalid password";
-        else if(Account.getAccountByUsername(username) == null)
+        else if (Account.getAccountByUsername(username) == null)
             response = "Username and password did not match!";
-        else if(!Account.getAccountByUsername(username).getPassword().equals(password))
+        else if (!Account.getAccountByUsername(username).getPassword().equals(password))
             response = "Username and password did not match!";
         else {
             loginUser(username);

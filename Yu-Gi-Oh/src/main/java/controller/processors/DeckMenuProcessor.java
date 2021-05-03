@@ -75,11 +75,11 @@ public class DeckMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--card", "-c" -> {
                     if (cardName != null) return "invalid command";
-                    cardName = matcher.group(2);
+                    cardName = matcher.group(2).trim();
                 }
                 case "--deck", "-d" -> {
                     if (deckName != null) return "invalid command";
-                    deckName = matcher.group(2);
+                    deckName = matcher.group(2).trim();
                 }
                 case "--side", "-s" -> {
                     if (isSideDeck != null) return "invalid command";
@@ -91,6 +91,8 @@ public class DeckMenuProcessor extends Processor { //DONE
             }
         }
         if (isSideDeck == null) isSideDeck = false;
+        if (cardName == null || deckName == null) return "invalid command";
+
         if (Processor.loggedInUser.getCardByName(cardName) == null)
             response = "card with name " + cardName + " does not exist";
         else if (Processor.loggedInUser.getDeckByName(deckName) == null)
@@ -128,11 +130,11 @@ public class DeckMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--card", "-c" -> {
                     if (cardName != null) return "invalid command";
-                    cardName = matcher.group(2);
+                    cardName = matcher.group(2).trim();
                 }
                 case "--deck", "-d" -> {
                     if (deckName != null) return "invalid command";
-                    deckName = matcher.group(2);
+                    deckName = matcher.group(2).trim();
                 }
                 case "--side", "-s" -> {
                     if (isSideDeck != null) return "invalid command";
@@ -144,6 +146,8 @@ public class DeckMenuProcessor extends Processor { //DONE
             }
         }
         if (isSideDeck == null) isSideDeck = false;
+        if (cardName == null || deckName == null) return "invalid command";
+
         if (Processor.loggedInUser.getCardByName(cardName) == null)
             response = "card with name " + cardName + " does not exist";
         else if (Processor.loggedInUser.getDeckByName(deckName) == null)
@@ -178,7 +182,7 @@ public class DeckMenuProcessor extends Processor { //DONE
             switch (matcher.group(1)) {
                 case "--deck-name", "-d" -> {
                     if (deckName != null) return "invalid command";
-                    deckName = matcher.group(2);
+                    deckName = matcher.group(2).trim();
                 }
                 case "--side", "-s" -> {
                     if (isSideDeck != null) return "invalid command";
@@ -190,6 +194,8 @@ public class DeckMenuProcessor extends Processor { //DONE
             }
         }
         if (isSideDeck == null) isSideDeck = false;
+        if (deckName == null) return "invalid command";
+
         if (loggedInUser.getDeckByName(deckName) == null) {
             response = "deck with name " + deckName + " does not exist";
         } else {
