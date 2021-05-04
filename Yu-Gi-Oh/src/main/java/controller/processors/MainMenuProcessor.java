@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import java.util.Random;
 
 
-public class MainMenuProcessor extends Processor {//0
+public class MainMenuProcessor extends Processor { //DONE
 
     public MainMenuProcessor() {
         super(Menus.MAIN);
@@ -18,7 +18,7 @@ public class MainMenuProcessor extends Processor {//0
     //Error Checker
     private String duelStartErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String secondPLayerUsername = null;
         String rounds = null;
@@ -38,7 +38,7 @@ public class MainMenuProcessor extends Processor {//0
                 }
             }
         }
-        if (secondPLayerUsername == null ||  rounds == null) return "invalid command";
+        if (secondPLayerUsername == null || rounds == null) return "invalid command";
 
         if (Account.getAccountByUsername(secondPLayerUsername) == null)
             response = "there is no player with this username";
@@ -53,25 +53,42 @@ public class MainMenuProcessor extends Processor {//0
         else if (!rounds.equals("1") && !rounds.equals("3"))
             response = "number of rounds is not supported";
         else {
-            Random random = new Random();
-            int randomNumber = random.nextInt(2);
-            int gameRounds = Integer.parseInt(rounds);
-            if (randomNumber == 0) {
-                Account player1 = Processor.loggedInUser;
-                Account player2 = Account.getAccountByUsername(secondPLayerUsername);
-                ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, player2, gameRounds);
-            } else {
-                Account player2 = Processor.loggedInUser;
-                Account player1 = Account.getAccountByUsername(secondPLayerUsername);
-                ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, player2, gameRounds);
-            }
-
+            duelStart(Processor.loggedInUser.getUsername(), secondPLayerUsername, Integer.parseInt(rounds));
+            response = "duel started successfully between " + Processor.loggedInUser.getUsername() + " and " + secondPLayerUsername;
         }
-        return "";
+        return response;
     }
 
     private String duelStartWithAIErrorChecker(String arguments) {
-        return null;
+        String response;
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
+        Matcher matcher = pattern.matcher(arguments);
+        String rounds = null;
+        //Invalid Command
+        while (matcher.find()) {
+            switch (matcher.group(1)) {
+                case "--rounds", "-r" -> {
+                    if (rounds != null) return "invalid command";
+                    rounds = matcher.group(2).trim();
+                }
+                default -> {
+                    return "invalid command";
+                }
+            }
+        }
+        if (rounds == null) return "invalid command";
+
+        if (Processor.loggedInUser.getActiveDeck() == null)
+            response = Processor.loggedInUser.getUsername() + " has no active deck";
+        else if (!Processor.loggedInUser.getActiveDeck().isDeckValid())
+            response = Processor.loggedInUser.getUsername() + " deck is invalid";
+        else if (!rounds.equals("1") && !rounds.equals("3"))
+            response = "number of rounds is not supported";
+        else {
+            duelStartWithAI(Processor.loggedInUser.getUsername(), Integer.parseInt(rounds));
+            response = "duel started successfully between " + Processor.loggedInUser.getUsername() + " and " + "AI";
+        }
+        return response;
     }
 
     //Command Performer
@@ -81,11 +98,23 @@ public class MainMenuProcessor extends Processor {//0
         return "user logged out successfully!";
     }
 
-    private void duelStart(String player1, String player2) {
-        //TODO
+    private void duelStart(String player1Username, String player2Username, int rounds) {
+        Random random = new Random();
+        int randomNumber = random.nextInt(2);
+        if (randomNumber == 0) {
+            Account player1 = Account.getAccountByUsername(player1Username);
+            Account player2 = Account.getAccountByUsername(player2Username);
+            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, player2, rounds);
+        } else {
+            Account player2 = Account.getAccountByUsername(player1Username);
+            Account player1 = Account.getAccountByUsername(player2Username);
+            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, player2, rounds);
+        }
     }
 
-    private void duelStartWithAI(String player1, String player2) {
+    private void duelStartWithAI(String player1Username, int rounds) {
+        Account player1 = Account.getAccountByUsername(player1Username);
+        ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, null, rounds);
         //TODO
     }
 
@@ -109,11 +138,40 @@ public class MainMenuProcessor extends Processor {//0
 
     @Override
     protected String enterMenuErrorChecker(String input) {
-        return null;
+        String response;
+        input = input.trim();
+        switch (input) {
+            case "Duel", "duel", "Duel Menu", "duel menu", "Login", "login", "Login Menu", "login menu" ->
+                    response = "you can't enter this menu by this command";
+            case "Deck", "deck", "Deck Menu", "deck menu" -> {
+                response = "";
+                enterMenu(Menus.DECK);
+            }
+            case "Scoreboard", "scoreboard", "Scoreboard Menu", "scoreboard menu" -> {
+                response = "";
+                enterMenu(Menus.SCOREBOARD);
+            }
+            case "Profile", "profile", "Profile Menu", "profile menu" -> {
+                response = "";
+                enterMenu(Menus.PROFILE);
+            }
+            case "Shop", "shop", "Shop Menu", "shop menu" -> {
+                response = "";
+                enterMenu(Menus.SHOP);
+            }
+            case "Import/Export", "import/export", "Import/Export Menu", "import/export menu" -> {
+                response = "";
+                enterMenu(Menus.IMPORTEXPORT);
+            }
+            case "Main", "main", "Main Menu", "main menu" -> response = "you are already in Main Menu!";
+            default -> response = "invalid menu name";
+        }
+        return response;
     }
 
     @Override
     protected void enterMenu(Menus menu) {
+        Core.currentMenu = menu;
     }
 
     @Override

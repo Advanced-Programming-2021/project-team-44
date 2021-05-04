@@ -65,7 +65,7 @@ public class DeckMenuProcessor extends Processor { //DONE
 
     private String addCardToDeckErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)((?:-\\w)|(?:--\\w+))\\b(.*?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String cardName = null;
         String deckName = null;
@@ -120,7 +120,7 @@ public class DeckMenuProcessor extends Processor { //DONE
 
     private String removeCardFromDeckErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)((?:-\\w)|(?:--\\w+))\\b(.*?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String cardName = null;
         String deckName = null;
@@ -173,7 +173,7 @@ public class DeckMenuProcessor extends Processor { //DONE
 
     private String showDeckErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)((?:-\\w)|(?:--\\w+))\\b(.*?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String deckName = null;
         Boolean isSideDeck = null;
@@ -240,12 +240,8 @@ public class DeckMenuProcessor extends Processor { //DONE
 
     private void removeCardFromDeck(String deckName, String cardName, String whichDeck) {
         switch (whichDeck) {
-            case "main" -> {
-                Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(cardName);
-            }
-            case "side" -> {
-                Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(cardName);
-            }
+            case "main" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(cardName);
+            case "side" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(cardName);
         }
     }
 
