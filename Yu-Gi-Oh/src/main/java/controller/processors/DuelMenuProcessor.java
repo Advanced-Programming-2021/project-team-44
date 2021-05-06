@@ -1,161 +1,161 @@
 package controller.processors;
 
+import controller.Core;
 import models.*;
 import models.cards.Card;
 import view.menus.Menus;
 
 import java.util.ArrayList;
 
-public class DuelMenuProcessor extends Processor {
-    private Phases phase;
-    private int turn;
-    private Player player1;
-    private Player player2;
-    private Board player1Board;
-    private Board player2Board;
-    private boolean ifAI;
+abstract public class DuelMenuProcessor extends Processor {
+    protected Phases phase;
+    protected int whoseTurn;
+    protected Player player1;
+    protected Player player2;
+    protected Board player1Board;
+    protected Board player2Board;
 
-    public DuelMenuProcessor() {
-        super(Menus.DUEL);
+    public DuelMenuProcessor(Menus Name) {
+        super(Name);
     }
 
-    public void gameInitialization(Account player1, Account player2, int rounds) {
-        ifAI = player1 == null || player2 == null;
-        if (ifAI) {
+    abstract public void gameInitialization(Account player1, Account player2, int rounds);
 
-        } else {
-            this.player1 = new Player(player1);
-            this.player2 = new Player(player2);
-        }
-        phase = Phases.DRAW;
-    }
+    abstract public void execute();
 
     //Error Checker
-    private String showCard(String input) {
+    protected String showCardErrorChecker(String arguments) {
+        String response;
+        if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
+        else {
+            response = showCard(arguments);
+        }
+        return response;
+    }
+
+    protected String selectCardErrorChecker(String arguments) { //user and opponent
         return null;
     }
 
-    private String selectCardErrorChecker(String input) { //user and opponent
+    protected String deselectErrorChecker(String arguments) {
         return null;
     }
 
-    private String deselectErrorChecker(String input) {
+    protected String summonErrorChecker(String arguments) {
         return null;
     }
 
-    private String summonErrorChecker(String input) {
+    protected String setErrorChecker(String arguments) { //monster and spell and trap
         return null;
     }
 
-    private String setErrorChecker(String input) { //monster and spell and trap
+    protected String setPositionErrorChecker(String arguments) {
         return null;
     }
 
-    private String setPositionErrorChecker(String input) {
+    protected String flipSummonErrorChecker(String arguments) {
         return null;
     }
 
-    private String flipSummonErrorChecker(String input) {
+    protected String attackErrorChecker(String arguments) {
         return null;
     }
 
-    private String attackErrorChecker(String input) {
+    protected String directAttackErrorChecker(String arguments) {
         return null;
     }
 
-    private String directAttackErrorChecker(String input) {
+    protected String activateEffectErrorChecker(String arguments) {
         return null;
     }
 
-    private String activateEffectErrorChecker(String input) {
+    protected String showGraveyardErrorChecker(String arguments) {
         return null;
     }
 
-    private String showGraveyardErrorChecker(String input) {
-        return null;
-    }
-
-    private String showSelectedCardErrorChecker(String input) {
+    protected String showSelectedCardErrorChecker(String arguments) {
         return null;
     }
 
     //Command Performer
-    private String showCard(Card card) {
+    protected String showCard(String cardName) {
+        return Card.getCardByName(cardName).getStringForShow();
+    }
+
+    protected String selectCard(String arguments) { //user and opponent
         return null;
     }
 
-    private String selectCard(String input) { //user and opponent
+    protected String deselect(String arguments) {
         return null;
     }
 
-    private String deselect(String input) {
+    protected String summon(String arguments) {
         return null;
     }
 
-    private String summon(String input) {
+    protected String set(String arguments) { //monster and spell and trap
         return null;
     }
 
-    private String set(String input) { //monster and spell and trap
+    protected String setPosition(String arguments) {
         return null;
     }
 
-    private String setPosition(String input) {
+    protected String flipSummon(String input) {
         return null;
     }
 
-    private String flipSummon(String input) {
+    protected String attack(String input) {
         return null;
     }
 
-    private String attack(String input) {
+    protected String directAttack(String input) {
         return null;
     }
 
-    private String directAttack(String input) {
+    protected String activateEffect(String input) {
         return null;
     }
 
-    private String activateEffect(String input) {
+    protected String showGraveyard(String input) {
         return null;
     }
 
-    private String showGraveyard(String input) {
+    protected String showSelectedCard(String input) {
         return null;
     }
 
-    private String showSelectedCard(String input) {
+    //Utils
+    protected String showBoard(Account selfAccount, Account opponentAccount) {
         return null;
     }
 
-
-    private String showBoard(Account selfAccount, Account opponentAccount) {
-        return null;
-    }
-
-    private String showPhase() {
+    protected String showPhase() {
         return phase.name;
     }
 
-    private int showPlayerPoints(Player player) {
+    protected int showPlayerPoints(Player player) {
         return 0;
     }
 
-    private ArrayList<Card> checkForCardEffectActivation() {
+    protected ArrayList<Card> checkForCardEffectActivation() {
         return null;
     }
 
-    public boolean isAI() {
-        return ifAI;
+    protected void endDuel() {
     }
 
 
     //Cheats
-    private void increaseMoneyCheat(int amount) {}
+    protected void increaseMoneyCheat(int amount) {
+    }
 
-    private void increaseLPCheat(int amount) {}
+    protected void increaseLPCheat(int amount) {
+    }
 
-    private void setWinnerCheat(String nickname) {}
+    protected void setWinnerCheat(String nickname) {
+    }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
@@ -193,6 +193,7 @@ public class DuelMenuProcessor extends Processor {
 
     @Override
     protected void exitMenu() {
-
+        Core.currentMenu = Menus.MAIN;
+        endDuel();
     }
 }

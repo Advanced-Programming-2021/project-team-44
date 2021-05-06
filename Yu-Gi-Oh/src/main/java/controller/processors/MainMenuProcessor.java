@@ -101,21 +101,30 @@ public class MainMenuProcessor extends Processor { //DONE
     private void duelStart(String player1Username, String player2Username, int rounds) {
         Random random = new Random();
         int randomNumber = random.nextInt(2);
+        Core.currentMenu = Menus.PLAYER_DUEL;
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
             Account player2 = Account.getAccountByUsername(player2Username);
-            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, player2, rounds);
+            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
             Account player1 = Account.getAccountByUsername(player2Username);
-            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, player2, rounds);
+            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
         }
     }
 
     private void duelStartWithAI(String player1Username, int rounds) {
-        Account player1 = Account.getAccountByUsername(player1Username);
-        ((DuelMenuProcessor) Processor.getProcessorByName(Menus.DUEL)).gameInitialization(player1, null, rounds);
-        //TODO
+        Random random = new Random();
+        int randomNumber = random.nextInt(2);
+        Core.currentMenu = Menus.AI_DUEL;
+        if (randomNumber == 0) {
+            Account player1 = Account.getAccountByUsername(player1Username);
+            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(player1, null, rounds);
+        } else {
+            Account player2 = Account.getAccountByUsername(player1Username);
+            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(null, player2, rounds);
+        }
+        //TODO AI
     }
 
 

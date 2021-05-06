@@ -18,7 +18,8 @@ public class Core {//0
 
         new LoginMenuProcessor();
         new MainMenuProcessor();
-        new DuelMenuProcessor();
+        new PlayerDuelMenuProcessor();
+        new AIDuelMenuProcessor();
         new DeckMenuProcessor();
         new ScoreboardMenuProcessor();
         new ProfileMenuProcessor();
@@ -33,6 +34,6 @@ public class Core {//0
     }
 
     public static void Initializer() {
-        //TODO
+        //TODO INITIALIZER
     }
 }

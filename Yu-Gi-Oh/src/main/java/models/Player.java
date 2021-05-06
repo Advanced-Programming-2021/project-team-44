@@ -5,6 +5,7 @@ import models.cards.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Player {
     private Account account;
@@ -29,6 +30,14 @@ public class Player {
         setHandCards();
         this.graveyardCards = new ArrayList<>();
         this.fieldZone = null;
+    }
+
+    public String getCommand(String dir) {
+        System.out.print(account.getNickname() + "@" + dir + ":$ ");
+        Scanner scanner = new Scanner(System.in);
+        String command = scanner.nextLine();
+        scanner.close();
+        return command;
     }
 
     private void setHandCards() {

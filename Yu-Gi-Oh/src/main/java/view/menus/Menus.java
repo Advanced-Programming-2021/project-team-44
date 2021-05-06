@@ -4,6 +4,8 @@ public enum Menus {
     LOGIN("Login Menu"),
     MAIN("Main Menu"),
     DUEL("Duel Menu"),
+    PLAYER_DUEL("Player Duel Menu"),
+    AI_DUEL("AI Duel Menu"),
     DECK("Deck Menu"),
     SCOREBOARD("Scoreboard Menu"),
     PROFILE("Profile Menu"),

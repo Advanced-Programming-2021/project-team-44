@@ -50,8 +50,8 @@ public abstract class Menu {//0
         String input = scanner.nextLine().trim();
         String[] commandId = commandHandler(input);
         String response = Core.menuDistributor(Integer.parseInt(commandId[0]), commandId[1]);
-        nextMenu = Menu.getMenuByName(Core.currentMenu);
+        nextMenu = Objects.requireNonNull(Menu.getMenuByName(Core.currentMenu));
         UserInterface.returnResponse(response);
-        Objects.requireNonNull(nextMenu).execute();
+        nextMenu.execute();
     }
 }
