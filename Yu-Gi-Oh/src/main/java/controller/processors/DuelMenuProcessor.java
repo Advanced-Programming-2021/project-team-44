@@ -161,9 +161,7 @@ abstract public class DuelMenuProcessor extends Processor {
     public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
-            case 0 -> {
-
-            }
+            case 0 -> {}
             case 1 -> {
                 response = "";
                 exitMenu();
