@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 
 public class MonsterCard extends Card {
+    public static ArrayList<Card> monsterCards;
     private int level;
     private MonsterCardAttribute attribute;
     private String monsterType;
@@ -45,14 +46,9 @@ public class MonsterCard extends Card {
         return hashMap;
     }
 
-    public static ArrayList<Card> monsterCardsInitializer() {
+    public static String monsterCardsInitializer() {
         //TODO LOG
-        ArrayList<Card> monsterCards = new ArrayList<>();
-        String path = File.separator + "." +
-                File.separator + "data" +
-                File.separator + "static" +
-                File.separator + "cards" +
-                File.separator + "Monster.csv";
+        String path = "src/main/resources/static/cards/Monster.csv";
         try {
             File source = new File(path);
             Scanner reader = new Scanner(source);
@@ -60,17 +56,11 @@ public class MonsterCard extends Card {
                 String data = reader.nextLine();
                 HashMap<String, String> toBeAddedCard = getHashMapFromString(data);
                 //File Creation
-                String newCardFilePath = File.separator + "." +
-                        File.separator + "data" +
-                        File.separator + "static" +
-                        File.separator + "cards" +
-                        File.separator + "monster" +
-                        File.separator + toBeAddedCard.get("Name") + ".json";
+                String newCardFilePath = "src/main/resources/static/cards/" + toBeAddedCard.get("Name") + ".json";
                 File newCardFile = new File(newCardFilePath);
                 try {
                     FileWriter writer = new FileWriter(newCardFile.getAbsolutePath());
                     String jsonData = generateJSONByHashMap(toBeAddedCard);
-                    writer.write(jsonData);
                     writer.write(jsonData);
                     writer.close();
                     GsonBuilder builder = new GsonBuilder();
@@ -79,18 +69,14 @@ public class MonsterCard extends Card {
                     MonsterCard tmpMonsterCard = gson.fromJson(jsonData, MonsterCard.class);
                     monsterCards.add(tmpMonsterCard);
                 } catch (IOException e) {
-                    System.out.println("Can't parse monsters JSON Files!");
-                    //Error Code: Can't parse JSON files - Parse Error: 3
-                    System.exit(3);
+                    return "Can't parse monsters JSON Files!";
                 }
             }
             reader.close();
+            return "Monsters imported successfully.";
         } catch (FileNotFoundException e) {
-            System.out.println("Monsters source file missing!");
-            //Error Code: Source not found - Source Error: 2
-            System.exit(2);
+            return "Monsters source file missing!";
         }
-        return monsterCards;
     }
 
     public static String generateJSONByHashMap(HashMap<String, String> hashMap) {

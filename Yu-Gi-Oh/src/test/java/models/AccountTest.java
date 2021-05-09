@@ -116,6 +116,4 @@ class AccountTest {
         Account test1 = new Account("matinKing3","12345","matadysa3");
         Assertions.assertEquals(test1.getNickname(), "matadysa3");
     }
-
-
 }
