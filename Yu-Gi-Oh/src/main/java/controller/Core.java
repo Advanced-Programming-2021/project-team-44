@@ -1,6 +1,8 @@
 package controller;
 
 import controller.processors.*;
+import models.cards.MagicCard;
+import models.cards.MonsterCard;
 import view.UserInterface;
 import view.menus.Menus;
 
@@ -35,5 +37,9 @@ public class Core {//0
 
     public static void Initializer() {
         //TODO INITIALIZER
+        //Cards Initialize
+        MonsterCard.addMonsterCardFromJSON();
+        MagicCard.addMagicCardFromJSON();
+
     }
 }

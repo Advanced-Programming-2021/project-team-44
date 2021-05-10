@@ -5,6 +5,7 @@ import models.Account;
 import models.Board;
 import models.Phases;
 import models.Player;
+import view.UserInterface;
 import view.menus.Menus;
 
 public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
@@ -26,6 +27,9 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
     @Override
     public void execute() {
         String command = duelScanner.nextLine();
+        String[] dividedCommand = commandHandler(command);
+        String response = commandDistributor(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
+        UserInterface.returnResponse(response);
 
         if (!checkForDuelEnd()) execute();
         else endDuel();
