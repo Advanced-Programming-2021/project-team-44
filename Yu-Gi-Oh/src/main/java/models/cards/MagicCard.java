@@ -77,7 +77,7 @@ public class MagicCard extends Card{
         }
         assert magicJsonFiles != null;
         for (File file : magicJsonFiles) {
-            String magicJson = null;
+            String magicJson;
             try {
                 magicJson = Files.readString(Paths.get(file.getPath()));
             } catch (IOException e) {
@@ -104,12 +104,12 @@ public class MagicCard extends Card{
     public static HashMap<String, String> getHashMapFromString(String data) {
         String[] dataSplit = data.split(",(?!\\s)");
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Name", Card.cardNameFilter(dataSplit[0]));
-        hashMap.put("Type", dataSplit[1]);
-        hashMap.put("Icon", dataSplit[2]);
-        hashMap.put("Description", Card.descriptionFilter(dataSplit[3]));
-        hashMap.put("Status", dataSplit[4]);
-        hashMap.put("Price", dataSplit[5]);
+        hashMap.put("Name", Card.cardNameFilter(dataSplit[0]).trim());
+        hashMap.put("Type", dataSplit[1].trim());
+        hashMap.put("Icon", dataSplit[2].trim());
+        hashMap.put("Description", Card.descriptionFilter(dataSplit[3]).trim());
+        hashMap.put("Status", dataSplit[4].trim());
+        hashMap.put("Price", dataSplit[5].trim());
         return hashMap;
     }
 

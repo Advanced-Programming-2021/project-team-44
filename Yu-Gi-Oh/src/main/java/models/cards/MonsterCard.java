@@ -79,14 +79,13 @@ public class MonsterCard extends Card {
         }
         assert monstersJsonFiles != null;
         for (File file : monstersJsonFiles) {
-            String monsterJson = null;
+            String monsterJson;
             try {
                 monsterJson = Files.readString(Paths.get(file.getPath()));
             } catch (IOException e) {
                 response += "Json files can't be accessed!";
                 return response;
             }
-            System.out.println(monsterJson);
             MonsterCard tmpMonsterCard = (new Gson()).fromJson(monsterJson, MonsterCard.class);
             monsterCards.add(tmpMonsterCard);
         }
@@ -102,15 +101,15 @@ public class MonsterCard extends Card {
     public static HashMap<String, String> getHashMapFromString(String data) {
         String[] dataSplit = data.split(",(?!\\s)");
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Name", Card.cardNameFilter(dataSplit[0]));
-        hashMap.put("Level", dataSplit[1]);
-        hashMap.put("Attribute", dataSplit[2]);
-        hashMap.put("Monster Type", dataSplit[3]);
-        hashMap.put("Card Type", dataSplit[4]);
-        hashMap.put("Attack", dataSplit[5]);
-        hashMap.put("Defense", dataSplit[6]);
-        hashMap.put("Description", Card.descriptionFilter(dataSplit[7]));
-        hashMap.put("Price", dataSplit[8]);
+        hashMap.put("Name", Card.cardNameFilter(dataSplit[0]).trim());
+        hashMap.put("Level", dataSplit[1].trim());
+        hashMap.put("Attribute", dataSplit[2].trim());
+        hashMap.put("Monster Type", dataSplit[3].trim());
+        hashMap.put("Card Type", dataSplit[4].trim());
+        hashMap.put("Attack", dataSplit[5].trim());
+        hashMap.put("Defense", dataSplit[6].trim());
+        hashMap.put("Description", Card.descriptionFilter(dataSplit[7]).trim());
+        hashMap.put("Price", dataSplit[8].trim());
         return hashMap;
     }
 
