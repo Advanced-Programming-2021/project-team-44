@@ -1,11 +1,7 @@
 package models;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
 
 class AccountTest {
     @Test
@@ -116,6 +112,4 @@ class AccountTest {
         Account test1 = new Account("matinKing3","12345","matadysa3");
         Assertions.assertEquals(test1.getNickname(), "matadysa3");
     }
-
-
 }

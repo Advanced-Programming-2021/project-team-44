@@ -2,6 +2,8 @@ package models.cards;
 
 import java.util.ArrayList;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 abstract public class Card {
     public static ArrayList<Card> allCards;
@@ -35,6 +37,26 @@ abstract public class Card {
                 return type;
             }
         return null;
+    }
+
+    public static String cardNameFilter(String name) {
+        Pattern pattern = Pattern.compile("([^\\\\/:*?\"<>|])");
+        Matcher matcher = pattern.matcher(name);
+        StringBuilder stringBuilder = new StringBuilder();
+        while (matcher.find())
+            stringBuilder.append(matcher.group(1));
+        return stringBuilder.toString();
+    }
+
+    public static String descriptionFilter(String description) {
+        Pattern pattern = Pattern.compile("^\"(.*)\"$");
+        Matcher matcher = pattern.matcher(description);
+        if (matcher.find())
+            description = matcher.group(1);
+
+        description = description.replaceAll("\"", "\\\\\\\"");
+
+        return description;
     }
 
     public String getName() {

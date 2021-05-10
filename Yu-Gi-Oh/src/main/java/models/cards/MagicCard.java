@@ -7,16 +7,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class MagicCard extends Card{
+    public static ArrayList<MagicCard> magicCards;
     protected MagicType type;
     protected MagicIcon icon;
     private String status;
 
-    public MagicCard() {
+    static {
+        magicCards = new ArrayList<>();
+    }
+
+    protected MagicCard() {
     }
 
     public static MagicCard createMagicCard(String name) {
@@ -26,26 +33,11 @@ public class MagicCard extends Card{
     }
 
     //Utils
-    public static HashMap<String, String> getHashMapFromString(String data) {
-        String[] dataSplit = data.split(",(?!\\s)");
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Name", dataSplit[0]);
-        hashMap.put("Type", dataSplit[1]);
-        hashMap.put("Icon", dataSplit[2]);
-        hashMap.put("Description", dataSplit[3]);
-        hashMap.put("Status", dataSplit[4]);
-        hashMap.put("Price", dataSplit[5]);
-        return hashMap;
-    }
-
-    public static ArrayList<Card> magicCardsInitializer() {
+    public static String magicCardsJsonParser() {
+        //Generates Json files from csv file
         //TODO LOG
         ArrayList<Card> magicCards = new ArrayList<>();
-        String path = File.separator + "." +
-                File.separator + "data" +
-                File.separator + "static" +
-                File.separator + "cards" +
-                File.separator + "SpellTrap.csv";
+        String path = "src/main/resources/static/cards/SpellTrap.csv";
         try {
             File source = new File(path);
             Scanner reader = new Scanner(source);
@@ -53,37 +45,72 @@ public class MagicCard extends Card{
                 String data = reader.nextLine();
                 HashMap<String, String> toBeAddedCard = getHashMapFromString(data);
                 //File Creation
-                String newCardFilePath = File.separator + "." +
-                        File.separator + "data" +
-                        File.separator + "static" +
-                        File.separator + "cards" +
-                        File.separator + "magic" +
-                        File.separator + toBeAddedCard.get("Name") + ".json";
+                File directory = new File("src/main/resources/static/cards/magics");
+                directory.mkdir();
+                String newCardFilePath = "src/main/resources/static/cards/magics/" + toBeAddedCard.get("Name") + ".json";
                 File newCardFile = new File(newCardFilePath);
                 try {
-                    FileWriter writer = new FileWriter(newCardFile.getAbsolutePath());
+                    FileWriter writer = new FileWriter(newCardFile.getPath());
                     String jsonData = generateJSONByHashMap(toBeAddedCard);
                     writer.write(jsonData);
-                    writer.write(jsonData);
                     writer.close();
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.setPrettyPrinting();
-                    Gson gson = builder.create();
-                    MagicCard tmpMagicCard = gson.fromJson(jsonData, MagicCard.class);
-                    magicCards.add(tmpMagicCard);
                 } catch (IOException e) {
-                    System.out.println("Can't parse magics JSON Files!");
-                    //Error Code: Can't parse JSON files - Parse Error: 3
-                    System.exit(3);
+                    return "Can't parse magics JSON Files!";
                 }
             }
             reader.close();
+            return "Magics json files parsed successfully.";
         } catch (FileNotFoundException e) {
-            System.out.println("Magics source file missing!");
-            //Error Code: Source not found - Source Error: 2
-            System.exit(2);
+            return "Magics source file missing!";
         }
-        return magicCards;
+    }
+
+    public static String addMagicCardFromJSON() {
+        //Imports magic cards from json source files
+        String response = "";
+        File magicCardsDirectory = new File("src/main/resources/static/cards/magics");
+        File[] magicJsonFiles = magicCardsDirectory.listFiles();
+        if (magicJsonFiles == null) {
+            response += "Magic Json files missing! Parsing Json files...\n";
+            response += magicCardsJsonParser() + "\n";
+            magicJsonFiles = magicCardsDirectory.listFiles();
+        }
+        assert magicJsonFiles != null;
+        for (File file : magicJsonFiles) {
+            String magicJson;
+            try {
+                magicJson = Files.readString(Paths.get(file.getPath()));
+            } catch (IOException e) {
+                response += "Json files can't be accessed!";
+                return response;
+            }
+            MagicCard tmpMagicCard = (new Gson()).fromJson(magicJson, MagicCard.class);
+            magicCards.add(tmpMagicCard);
+        }
+        for (SpellCardName name : SpellCardName.values())
+            if (getMagicCardByName(name.stringName) == null) {
+                response += name.stringName + " card is missing!";
+                return response;
+            }
+        for (TrapCardName name : TrapCardName.values())
+            if (getMagicCardByName(name.stringName) == null) {
+                response += name.stringName + " card is missing!";
+                return response;
+            }
+        response += "All magic cards added successfully!";
+        return response;
+    }
+
+    public static HashMap<String, String> getHashMapFromString(String data) {
+        String[] dataSplit = data.split(",(?!\\s)");
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("Name", Card.cardNameFilter(dataSplit[0]).trim());
+        hashMap.put("Type", dataSplit[1].trim());
+        hashMap.put("Icon", dataSplit[2].trim());
+        hashMap.put("Description", Card.descriptionFilter(dataSplit[3]).trim());
+        hashMap.put("Status", dataSplit[4].trim());
+        hashMap.put("Price", dataSplit[5].trim());
+        return hashMap;
     }
 
     public static String generateJSONByHashMap(HashMap<String, String> hashMap) {
@@ -97,6 +124,13 @@ public class MagicCard extends Card{
     }
 
     //Getters and Setters
+    public static MagicCard getMagicCardByName(String name) {
+        for (MagicCard card : magicCards)
+            if (name.equals(card.getName()))
+                return card;
+        return null;
+    }
+
     public MagicType getType() {
         return type;
     }

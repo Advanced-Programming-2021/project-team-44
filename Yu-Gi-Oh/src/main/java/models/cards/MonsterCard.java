@@ -1,18 +1,20 @@
 package models.cards;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 
 public class MonsterCard extends Card {
+    public static ArrayList<MonsterCard> monsterCards;
     private int level;
     private MonsterCardAttribute attribute;
     private String monsterType;
@@ -20,7 +22,11 @@ public class MonsterCard extends Card {
     private int attackPoint;
     private int defensePoint;
 
-    public MonsterCard() {
+    static {
+        monsterCards = new ArrayList<>();
+    }
+
+    protected MonsterCard() {
     }
 
     public static MonsterCard createMonsterCard(String name) {
@@ -30,29 +36,10 @@ public class MonsterCard extends Card {
     }
 
     //Utils
-    public static HashMap<String, String> getHashMapFromString(String data) {
-        String[] dataSplit = data.split(",(?!\\s)");
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Name", dataSplit[0]);
-        hashMap.put("Level", dataSplit[1]);
-        hashMap.put("Attribute", dataSplit[2]);
-        hashMap.put("Monster Type", dataSplit[3]);
-        hashMap.put("Card Type", dataSplit[4]);
-        hashMap.put("Attack", dataSplit[5]);
-        hashMap.put("Defense", dataSplit[6]);
-        hashMap.put("Description", dataSplit[7]);
-        hashMap.put("Price", dataSplit[8]);
-        return hashMap;
-    }
-
-    public static ArrayList<Card> monsterCardsInitializer() {
+    public static String monsterCardsJsonParser() {
+        //Generates Json files from csv file
         //TODO LOG
-        ArrayList<Card> monsterCards = new ArrayList<>();
-        String path = File.separator + "." +
-                File.separator + "data" +
-                File.separator + "static" +
-                File.separator + "cards" +
-                File.separator + "Monster.csv";
+        String path = "src/main/resources/static/cards/Monster.csv";
         try {
             File source = new File(path);
             Scanner reader = new Scanner(source);
@@ -60,40 +47,73 @@ public class MonsterCard extends Card {
                 String data = reader.nextLine();
                 HashMap<String, String> toBeAddedCard = getHashMapFromString(data);
                 //File Creation
-                String newCardFilePath = File.separator + "." +
-                        File.separator + "data" +
-                        File.separator + "static" +
-                        File.separator + "cards" +
-                        File.separator + "monster" +
-                        File.separator + toBeAddedCard.get("Name") + ".json";
+                File directory = new File("src/main/resources/static/cards/monsters");
+                directory.mkdir();
+                String newCardFilePath = "src/main/resources/static/cards/monsters/" + toBeAddedCard.get("Name") + ".json";
                 File newCardFile = new File(newCardFilePath);
                 try {
-                    FileWriter writer = new FileWriter(newCardFile.getAbsolutePath());
-                    String jsonData = generateJSONByHashMap(toBeAddedCard);
-                    writer.write(jsonData);
+                    FileWriter writer = new FileWriter(newCardFile.getPath());
+                    String jsonData = generateJsonByHashMap(toBeAddedCard);
                     writer.write(jsonData);
                     writer.close();
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.setPrettyPrinting();
-                    Gson gson = builder.create();
-                    MonsterCard tmpMonsterCard = gson.fromJson(jsonData, MonsterCard.class);
-                    monsterCards.add(tmpMonsterCard);
                 } catch (IOException e) {
-                    System.out.println("Can't parse monsters JSON Files!");
-                    //Error Code: Can't parse JSON files - Parse Error: 3
-                    System.exit(3);
+                    return "Can't parse monsters JSON Files!";
                 }
             }
             reader.close();
+            return "Monsters json files parsed successfully.";
         } catch (FileNotFoundException e) {
-            System.out.println("Monsters source file missing!");
-            //Error Code: Source not found - Source Error: 2
-            System.exit(2);
+            return "Monsters source file missing!";
         }
-        return monsterCards;
     }
 
-    public static String generateJSONByHashMap(HashMap<String, String> hashMap) {
+    public static String addMonsterCardFromJSON() {
+        //Imports monster cards from json source files
+        String response = "";
+        File monsterCardsDirectory = new File("src/main/resources/static/cards/monsters");
+        File[] monstersJsonFiles = monsterCardsDirectory.listFiles();
+        if (monstersJsonFiles == null) {
+            response += "Monsters Json files missing! Parsing Json files...\n";
+            response += monsterCardsJsonParser() + "\n";
+            monstersJsonFiles = monsterCardsDirectory.listFiles();
+        }
+        assert monstersJsonFiles != null;
+        for (File file : monstersJsonFiles) {
+            String monsterJson;
+            try {
+                monsterJson = Files.readString(Paths.get(file.getPath()));
+            } catch (IOException e) {
+                response += "Json files can't be accessed!";
+                return response;
+            }
+            MonsterCard tmpMonsterCard = (new Gson()).fromJson(monsterJson, MonsterCard.class);
+            monsterCards.add(tmpMonsterCard);
+        }
+        for (MonsterCardName name : MonsterCardName.values())
+            if (getMonsterCardByName(name.stringName) == null) {
+                response += name.stringName + " card is missing!";
+                return response;
+            }
+        response += "All monster cards added successfully!";
+        return response;
+    }
+
+    public static HashMap<String, String> getHashMapFromString(String data) {
+        String[] dataSplit = data.split(",(?!\\s)");
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("Name", Card.cardNameFilter(dataSplit[0]).trim());
+        hashMap.put("Level", dataSplit[1].trim());
+        hashMap.put("Attribute", dataSplit[2].trim());
+        hashMap.put("Monster Type", dataSplit[3].trim());
+        hashMap.put("Card Type", dataSplit[4].trim());
+        hashMap.put("Attack", dataSplit[5].trim());
+        hashMap.put("Defense", dataSplit[6].trim());
+        hashMap.put("Description", Card.descriptionFilter(dataSplit[7]).trim());
+        hashMap.put("Price", dataSplit[8].trim());
+        return hashMap;
+    }
+
+    public static String generateJsonByHashMap(HashMap<String, String> hashMap) {
         String jsonData = "{\"name\":\"" + hashMap.get("Name") + "\", " +
                 "\"level\":" + Integer.parseInt(hashMap.get("Level")) + ", " +
                 "\"attribute\":\"" + hashMap.get("Attribute") + "\", " +
@@ -107,6 +127,13 @@ public class MonsterCard extends Card {
     }
 
     //Getters and Setters
+    public static MonsterCard getMonsterCardByName(String name) {
+        for (MonsterCard card : monsterCards)
+            if (name.equals(card.getName()))
+                return card;
+        return null;
+    }
+
     public int getLevel() {
         return level;
     }

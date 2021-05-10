@@ -1,4 +1,6 @@
 import controller.Core;
+import models.cards.MagicCard;
+import models.cards.MonsterCard;
 
 public class Main {
     public static void main(String[] args) {

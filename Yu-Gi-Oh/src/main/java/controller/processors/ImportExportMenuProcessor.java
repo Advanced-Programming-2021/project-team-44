@@ -90,7 +90,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
                                 File.separator + "monster" +
                                 File.separator + cardHashMap.get("Name") + ".json");
 
-                        jsonData = MonsterCard.generateJSONByHashMap(cardHashMap);
+                        jsonData = MonsterCard.generateJsonByHashMap(cardHashMap);
                     }
                     FileWriter importedCardWriter = new FileWriter(importedCardFile.getAbsolutePath());
                     importedCardWriter.write(jsonData);
@@ -113,7 +113,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
             String exportedCardData;
             if (toBeExportedCard instanceof MonsterCard) {
                 MonsterCard toBeExportedMonsterCard = (MonsterCard) toBeExportedCard;
-                exportedCardData = MonsterCard.generateJSONByHashMap(toBeExportedMonsterCard.getHashMap());
+                exportedCardData = MonsterCard.generateJsonByHashMap(toBeExportedMonsterCard.getHashMap());
 
             } else if (toBeExportedCard instanceof MagicCard) {
                 MagicCard toBeExportedMagicCard = (MagicCard) toBeExportedCard;
