@@ -105,11 +105,11 @@ public class MainMenuProcessor extends Processor { //DONE
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
             Account player2 = Account.getAccountByUsername(player2Username);
-            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
+            ((PlayerDuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
             Account player1 = Account.getAccountByUsername(player2Username);
-            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
+            ((PlayerDuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
         }
     }
 
@@ -119,10 +119,10 @@ public class MainMenuProcessor extends Processor { //DONE
         Core.currentMenu = Menus.AI_DUEL;
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
-            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(player1, null, rounds);
+            ((AIDuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(player1, null, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
-            ((DuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(null, player2, rounds);
+            ((AIDuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(null, player2, rounds);
         }
         //TODO AI
     }
