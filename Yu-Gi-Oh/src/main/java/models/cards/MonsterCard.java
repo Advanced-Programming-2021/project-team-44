@@ -22,6 +22,10 @@ public class MonsterCard extends Card {
     private int attackPoint;
     private int defensePoint;
 
+    static {
+        monsterCards = new ArrayList<>();
+    }
+
     protected MonsterCard() {
     }
 
@@ -82,6 +86,7 @@ public class MonsterCard extends Card {
                 response += "Json files can't be accessed!";
                 return response;
             }
+            System.out.println(monsterJson);
             MonsterCard tmpMonsterCard = (new Gson()).fromJson(monsterJson, MonsterCard.class);
             monsterCards.add(tmpMonsterCard);
         }
@@ -104,7 +109,7 @@ public class MonsterCard extends Card {
         hashMap.put("Card Type", dataSplit[4]);
         hashMap.put("Attack", dataSplit[5]);
         hashMap.put("Defense", dataSplit[6]);
-        hashMap.put("Description", dataSplit[7]);
+        hashMap.put("Description", Card.descriptionFilter(dataSplit[7]));
         hashMap.put("Price", dataSplit[8]);
         return hashMap;
     }

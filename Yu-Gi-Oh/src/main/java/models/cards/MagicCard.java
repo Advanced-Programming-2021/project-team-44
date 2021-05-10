@@ -19,6 +19,10 @@ public class MagicCard extends Card{
     protected MagicIcon icon;
     private String status;
 
+    static {
+        magicCards = new ArrayList<>();
+    }
+
     protected MagicCard() {
     }
 
@@ -103,7 +107,7 @@ public class MagicCard extends Card{
         hashMap.put("Name", Card.cardNameFilter(dataSplit[0]));
         hashMap.put("Type", dataSplit[1]);
         hashMap.put("Icon", dataSplit[2]);
-        hashMap.put("Description", dataSplit[3]);
+        hashMap.put("Description", Card.descriptionFilter(dataSplit[3]));
         hashMap.put("Status", dataSplit[4]);
         hashMap.put("Price", dataSplit[5]);
         return hashMap;

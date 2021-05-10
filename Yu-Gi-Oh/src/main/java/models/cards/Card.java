@@ -48,6 +48,17 @@ abstract public class Card {
         return stringBuilder.toString();
     }
 
+    public static String descriptionFilter(String description) {
+        Pattern pattern = Pattern.compile("^\"(.*)\"$");
+        Matcher matcher = pattern.matcher(description);
+        if (matcher.find())
+            description = matcher.group(1);
+
+        description = description.replaceAll("\"", "\\\\\\\"");
+
+        return description;
+    }
+
     public String getName() {
         return this.name;
     }
