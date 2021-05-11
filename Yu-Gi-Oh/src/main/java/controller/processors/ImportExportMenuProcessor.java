@@ -1,5 +1,6 @@
 package controller.processors;
 
+import com.google.gson.Gson;
 import controller.Core;
 import models.cards.Card;
 import models.cards.MagicCard;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -51,56 +54,31 @@ public class ImportExportMenuProcessor extends Processor { //DONE
 
     //Command Performer
     private String importCard(String path) {
+        Scanner tmpScanner = new Scanner(System.in);
+        System.out.println("What type of card is it? Respond with monster or magic.");
+        String response = tmpScanner.nextLine();
+        tmpScanner.close();
+        File cardJsonFile = new File(path);
+        String cardJson = null;
         try {
-            File toBeImportedFile = new File(path);
-            Scanner importFileReader = new Scanner(toBeImportedFile);
-            while (importFileReader.hasNextLine()) {
-                String data = importFileReader.nextLine().trim();
-                HashMap<String, String> cardHashMap = new HashMap<>();
-                try {
-                    cardHashMap = MonsterCard.getHashMapFromString(data);
-                } catch (ArrayIndexOutOfBoundsException ae) {
-                    cardHashMap = MagicCard.getHashMapFromString(data);
-                } catch (Exception e) {
-                    return "Input format is invalid!";
-                }
-
-                File importedCardFile;
-                try {
-                    String jsonData;
-                    if (cardHashMap.size() == 6) {
-                        //Magic
-                        importedCardFile = new File(File.separator + "." +
-                                File.separator + "data" +
-                                File.separator + "static" +
-                                File.separator + "cards" +
-                                File.separator + "magic" +
-                                File.separator + cardHashMap.get("Name") + ".json");
-
-                        jsonData = MagicCard.generateJSONByHashMap(cardHashMap);
-                    } else {
-                        //Monster
-                        importedCardFile = new File(File.separator + "." +
-                                File.separator + "data" +
-                                File.separator + "static" +
-                                File.separator + "cards" +
-                                File.separator + "monster" +
-                                File.separator + cardHashMap.get("Name") + ".json");
-
-                        jsonData = MonsterCard.generateJsonByHashMap(cardHashMap);
-                    }
-                    FileWriter importedCardWriter = new FileWriter(importedCardFile.getAbsolutePath());
-                    importedCardWriter.write(jsonData);
-                    importedCardWriter.close();
-                } catch (IOException e) {
-                    return "An error occurred!";
-                }
-            }
-            importFileReader.close();
-        } catch (FileNotFoundException e) {
-            return "Input file doesn't exist!";
+            cardJson = Files.readString(Paths.get(cardJsonFile.getPath()));
+        } catch (IOException e) {
+            return "Json files can't be accessed!";
         }
-        return "Cards imported successfully!";
+        switch (response) {
+            case "monster" -> {
+                MonsterCard tmpMonsterCard = (new Gson()).fromJson(cardJson, MonsterCard.class);
+                MonsterCard.monsterCards.add(tmpMonsterCard);
+            }
+            case "magic" -> {
+                MagicCard tmpMagicCard = (new Gson()).fromJson(cardJson, MagicCard.class);
+                MagicCard.magicCards.add(tmpMagicCard);
+            }
+            default -> {
+                return "Invalid card type!";
+            }
+        }
+        return "Card imported successfully!";
     }
 
     private void exportCard(String cardName, String path) {
