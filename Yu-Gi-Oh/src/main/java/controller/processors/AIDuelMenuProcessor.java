@@ -4,6 +4,7 @@ import controller.Core;
 import models.Account;
 import models.Phases;
 import models.Player;
+import view.UserInterface;
 import view.menus.Menus;
 
 public class AIDuelMenuProcessor extends DuelMenuProcessor {
@@ -31,11 +32,16 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
 
     @Override
     public void execute() {
+        if (whoseTurn == whichPlayerIsAI) {
 
-    }
+        } else {
+            String command = duelScanner.nextLine();
+            String[] dividedCommand = commandHandler(command);
+            String response = commandDistributor(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
+            UserInterface.returnResponse(response);
+        }
 
-    private Player getPlayerByNumber(int number) {
-        if (number == 1) return this.player1;
-        else return this.player2;
+        if (!checkForDuelEnd()) execute();
+        else endDuel();
     }
 }

@@ -1,5 +1,6 @@
 package controller.processors;
 
+import com.google.gson.Gson;
 import controller.Core;
 import models.cards.Card;
 import models.cards.MagicCard;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -28,7 +31,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     private String exportCardErrorChecker(String arguments) {
-        //Command: export card <CARD_NAME> --path [ABSOLUTE_PATH_TO_SAVE, DEFAULT=./data/exports/CARD_NAME.json]
+        //Command: export card <CARD_NAME> --path [PATH_TO_SAVE, DEFAULT=src/main/resources/dynamic/exports/CARD_NAME.json]
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(?:--path|-p)\\s+(.+?)");
         Matcher matcher = pattern.matcher(arguments);
@@ -37,10 +40,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         if (matcher.find()) {
             path = arguments.substring(matcher.start(), matcher.end());
             arguments = arguments.substring(0, matcher.start()) + arguments.substring(matcher.end());
-        } else path = File.separator + "." +
-                File.separator + "data" +
-                File.separator + "exports" +
-                File.separator + arguments.trim() + ".json";
+        } else path = "src/main/resources/dynamic/exports/" + arguments.trim() + ".json";
         cardName = arguments.trim();
 
         if (Card.getCardByName(cardName) == null)
@@ -54,56 +54,31 @@ public class ImportExportMenuProcessor extends Processor { //DONE
 
     //Command Performer
     private String importCard(String path) {
+        Scanner tmpScanner = new Scanner(System.in);
+        System.out.println("What type of card is it? Respond with monster or magic.");
+        String response = tmpScanner.nextLine();
+        tmpScanner.close();
+        File cardJsonFile = new File(path);
+        String cardJson = null;
         try {
-            File toBeImportedFile = new File(path);
-            Scanner importFileReader = new Scanner(toBeImportedFile);
-            while (importFileReader.hasNextLine()) {
-                String data = importFileReader.nextLine().trim();
-                HashMap<String, String> cardHashMap = new HashMap<>();
-                try {
-                    cardHashMap = MonsterCard.getHashMapFromString(data);
-                } catch (ArrayIndexOutOfBoundsException ae) {
-                    cardHashMap = MagicCard.getHashMapFromString(data);
-                } catch (Exception e) {
-                    return "Input format is invalid!";
-                }
-
-                File importedCardFile;
-                try {
-                    String jsonData;
-                    if (cardHashMap.size() == 6) {
-                        //Magic
-                        importedCardFile = new File(File.separator + "." +
-                                File.separator + "data" +
-                                File.separator + "static" +
-                                File.separator + "cards" +
-                                File.separator + "magic" +
-                                File.separator + cardHashMap.get("Name") + ".json");
-
-                        jsonData = MagicCard.generateJSONByHashMap(cardHashMap);
-                    } else {
-                        //Monster
-                        importedCardFile = new File(File.separator + "." +
-                                File.separator + "data" +
-                                File.separator + "static" +
-                                File.separator + "cards" +
-                                File.separator + "monster" +
-                                File.separator + cardHashMap.get("Name") + ".json");
-
-                        jsonData = MonsterCard.generateJsonByHashMap(cardHashMap);
-                    }
-                    FileWriter importedCardWriter = new FileWriter(importedCardFile.getAbsolutePath());
-                    importedCardWriter.write(jsonData);
-                    importedCardWriter.close();
-                } catch (IOException e) {
-                    return "An error occurred!";
-                }
-            }
-            importFileReader.close();
-        } catch (FileNotFoundException e) {
-            return "Input file doesn't exist!";
+            cardJson = Files.readString(Paths.get(cardJsonFile.getPath()));
+        } catch (IOException e) {
+            return "Json files can't be accessed!";
         }
-        return "Cards imported successfully!";
+        switch (response) {
+            case "monster" -> {
+                MonsterCard tmpMonsterCard = (new Gson()).fromJson(cardJson, MonsterCard.class);
+                MonsterCard.monsterCards.add(tmpMonsterCard);
+            }
+            case "magic" -> {
+                MagicCard tmpMagicCard = (new Gson()).fromJson(cardJson, MagicCard.class);
+                MagicCard.magicCards.add(tmpMagicCard);
+            }
+            default -> {
+                return "Invalid card type!";
+            }
+        }
+        return "Card imported successfully!";
     }
 
     private void exportCard(String cardName, String path) {
@@ -114,17 +89,17 @@ public class ImportExportMenuProcessor extends Processor { //DONE
             if (toBeExportedCard instanceof MonsterCard) {
                 MonsterCard toBeExportedMonsterCard = (MonsterCard) toBeExportedCard;
                 exportedCardData = MonsterCard.generateJsonByHashMap(toBeExportedMonsterCard.getHashMap());
-
+                FileWriter importedCardWriter = new FileWriter(exportedCardFile.getPath());
+                importedCardWriter.write(exportedCardData);
+                importedCardWriter.close();
             } else if (toBeExportedCard instanceof MagicCard) {
                 MagicCard toBeExportedMagicCard = (MagicCard) toBeExportedCard;
                 exportedCardData = MagicCard.generateJSONByHashMap(toBeExportedMagicCard.getHashMap());
-
-            } else exportedCardData = "";
-            FileWriter importedCardWriter = new FileWriter(exportedCardFile.getAbsolutePath());
-            importedCardWriter.write(exportedCardData);
-            importedCardWriter.close();
-        } catch (IOException e) {
-            return;
+                FileWriter importedCardWriter = new FileWriter(exportedCardFile.getPath());
+                importedCardWriter.write(exportedCardData);
+                importedCardWriter.close();
+            }
+        } catch (IOException ignored) {
         }
     }
 
