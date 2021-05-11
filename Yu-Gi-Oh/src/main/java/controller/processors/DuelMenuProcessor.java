@@ -182,6 +182,11 @@ abstract public class DuelMenuProcessor extends Processor {
     protected void endDuel() {
     }
 
+    protected Player getPlayerByNumber(int number) {
+        if (number == 1) return this.player1;
+        else return this.player2;
+    }
+
 
     //Cheats
     protected void increaseMoneyCheat(int amount) {
