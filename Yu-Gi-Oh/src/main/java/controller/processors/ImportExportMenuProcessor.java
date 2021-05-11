@@ -121,8 +121,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
                 importedCardWriter.write(exportedCardData);
                 importedCardWriter.close();
             }
-        } catch (IOException e) {
-            return;
+        } catch (IOException ignored) {
         }
     }
 
