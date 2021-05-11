@@ -1,9 +1,11 @@
 package models;
 
+import models.cards.Card;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class AccountTest {
+    //Utils
     @Test
     void isUsernameValidTest() {
         String test1 = "matadysa";
@@ -77,6 +79,7 @@ class AccountTest {
         Assertions.assertFalse(Account.isPasswordValid(test7));
     }
 
+    //Getters
     @Test
     void getAccountByUsernameTest(){
         Account test1 = new Account("matinKing","12345","matadysa");
@@ -112,4 +115,70 @@ class AccountTest {
         Account test1 = new Account("matinKing3","12345","matadysa3");
         Assertions.assertEquals(test1.getNickname(), "matadysa3");
     }
+
+    @Test
+    void getPasswordTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        Assertions.assertEquals(test1.getPassword(), "karai2465");
+    }
+
+    @Test
+    void getScoreTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        Assertions.assertEquals(test1.getScore(), 0);
+    }
+
+    @Test
+    void getCoinTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        Assertions.assertEquals(test1.getCoin(), 0);
+    }
+
+    @Test
+    void getStringForScoreboardTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        test1.increaseScore(300);
+        Assertions.assertEquals(test1.getStringForScoreboard(), "karai1: 300");
+    }
+
+    //Setters
+    @Test
+    void setPasswordTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        test1.setPassword("1234");
+        Assertions.assertEquals(test1.getPassword(), "1234");
+        Assertions.assertNotEquals(test1.getPassword(), "karai2465");
+    }
+
+    @Test
+    void setNicknameTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        test1.setNickname("karaiKing");
+        Assertions.assertNotEquals(test1.getNickname(), "karai1");
+        Assertions.assertEquals(test1.getNickname(), "karaiKing");
+    }
+
+    @Test
+    void increaseScoreTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        test1.increaseScore(2000);
+        Assertions.assertEquals(test1.getScore(), 2000);
+    }
+
+    @Test
+    void increaseCoinTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        test1.increaseCoin(205);
+        Assertions.assertEquals(test1.getCoin(), 205);
+    }
+
+    @Test
+    void decreaseCoinTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        test1.increaseCoin(1000);
+        test1.decreaseCoin(200);
+        Assertions.assertEquals(test1.getCoin(), 800);
+    }
+
+
 }

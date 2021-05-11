@@ -18,7 +18,7 @@ public class DeckMenu extends Menu { //DONE
                 "menu show-current|" +
                 "deck create|" +
                 "deck delete|" +
-                "deck set activate|" +
+                "deck set-activate|" +
                 "deck add-card|" +
                 "deck rm-card|" +
                 "deck show --all|" +
@@ -33,7 +33,7 @@ public class DeckMenu extends Menu { //DONE
                 case "menu show-current" -> output[0] = "2";
                 case "deck create" -> output[0] = "3";
                 case "deck delete" -> output[0] = "4";
-                case "deck set activate" -> output[0] = "5";
+                case "deck set-activate" -> output[0] = "5";
                 case "deck add-card" -> output[0] = "6";
                 case "deck rm-card" -> output[0] = "7";
                 case "deck show --all" -> output[0] = "8";
