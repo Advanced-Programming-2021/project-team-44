@@ -32,19 +32,27 @@ abstract public class DuelMenuProcessor extends Processor {
         Pattern pattern = Pattern.compile("^(menu enter|" +
                 "menu exit|" +
                 "menu show-current|" +
+                //Cheats
+                "use cheat|" +
+                "increase|" +
+                "select --hand|" +
+                "duel set-winner|" +
+                //Main
                 "card show|" +
                 "select|" +
                 "select -d|" +
                 "next phase|" +
                 "summon|" +
-                "|" +
-                "|" +
-                "|" +
-                "|" +
-                "|" +
-                "|" +
-                "|" +
-                "|" +
+                "set|" +
+                "set --position|" + "set -p|" +
+                "flip-summon|" +
+                "attack|" +
+                "attack direct|" +
+                "activate effect|" +
+                "show graveyard|" +
+                "card show --selected|" + "card show -s|" +
+                "cancel|" +
+                "surrender|" +
                 ")\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
@@ -212,7 +220,8 @@ abstract public class DuelMenuProcessor extends Processor {
     public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
-            case 0 -> {}
+            case 0 -> {
+            }
             case 1 -> {
                 response = "";
                 exitMenu();
