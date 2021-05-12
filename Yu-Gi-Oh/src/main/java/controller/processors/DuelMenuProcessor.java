@@ -223,38 +223,48 @@ abstract public class DuelMenuProcessor extends Processor {
 
 
     //Cheats
-    protected void useCheat() {
+    protected String useCheat(String commandArguments) {
 
+        return commandArguments;
     }
 
-    protected void increaseMoneyCheat(int amount) {
+    protected String increaseProperty(String arguments) {
+        return null;
     }
 
-    protected void increaseLPCheat(int amount) {
-    }
-
-    protected void setWinnerCheat(String nickname) {
+    protected String setWinnerCheat(String arguments) {
+        return null;
     }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
-            case 0 -> {
-            }
+            case 0 -> response = enterMenuErrorChecker(commandArguments);
             case 1 -> {
                 response = "";
                 exitMenu();
             }
-            case 2 -> {
-
-            }
-            case 3 -> {
-
-            }
-            case 4 -> {
-
-            }
+            case 2 -> response = showMenu();
+            case 3 -> response = showCardErrorChecker(commandArguments);
+            case 4 -> response = selectCardErrorChecker(commandArguments);
+            case 5 -> response = deselectErrorChecker(commandArguments);
+            case 6 -> response = changePhase();
+            case 7 -> response = summonErrorChecker(commandArguments);
+            case 8 -> response = setErrorChecker(commandArguments);
+            case 9 -> response = setPositionErrorChecker(commandArguments);
+            case 10 -> response = flipSummonErrorChecker(commandArguments);
+            case 11 -> response = attackErrorChecker(commandArguments);
+            case 12 -> response = directAttackErrorChecker(commandArguments);
+            case 13 -> response = activateEffectErrorChecker(commandArguments);
+            case 14 -> response = showGraveyardErrorChecker(commandArguments);
+            case 15 -> response = showSelectedCardErrorChecker(commandArguments);
+            case 16 -> //cancel
+            case 17 -> //surrender
+            case 18 -> response = useCheat(commandArguments);
+            case 19 -> response = increaseProperty(commandArguments);
+            case 20 -> //select hand
+            case 21 ->  response = setWinnerCheat(commandArguments);
         }
         return response;
     }
