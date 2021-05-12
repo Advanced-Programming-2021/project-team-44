@@ -32,22 +32,22 @@ abstract public class DuelMenuProcessor extends Processor {
         Pattern pattern = Pattern.compile("^(menu enter|" +
                 "menu exit|" +
                 "menu show-current|" +
+                "card show|" +
                 //Cheats
                 "use cheat|" +
                 "increase|" +
                 "select --hand|" +
                 "duel set-winner|" +
                 //Main
-                "card show|" +
-                "select|" +
                 "select -d|" +
+                "select|" +
                 "next phase|" +
                 "summon|" +
-                "set|" +
                 "set --position|" + "set -p|" +
+                "set|" +
                 "flip-summon|" +
-                "attack|" +
                 "attack direct|" +
+                "attack|" +
                 "activate effect|" +
                 "show graveyard|" +
                 "card show --selected|" + "card show -s|" +
@@ -61,8 +61,24 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "menu exit" -> output[0] = "1";
                 case "menu show-current" -> output[0] = "2";
                 case "card show" -> output[0] = "3";
-                case "" -> output[0] = "4";
-
+                case "select" -> output[0] = "4";
+                case "select -d" -> output[0] = "5";
+                case "next phase" -> output[0] = "6";
+                case "summon" -> output[0] = "7";
+                case "set" -> output[0] = "8";
+                case "set --position", "set -p" -> output[0] = "9";
+                case "flip-summon" -> output[0] = "10";
+                case "attack" -> output[0] = "11";
+                case "attack direct" -> output[0] = "12";
+                case "activate effect" -> output[0] = "13";
+                case "show graveyard" -> output[0] = "14";
+                case "card show --selected", "card show -s" -> output[0] = "15";
+                case "cancel" -> output[0] = "16";
+                case "surrender" -> output[0] = "17";
+                case "use cheat" -> output[0] = "18";
+                case "increase" -> output[0] = "19";
+                case "select --hand" -> output[0] = "20";
+                case "duel set-winner" -> output[0] = "21";
             }
             output[1] = matcher.group(2);
         }
@@ -208,7 +224,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Cheats
     protected void useCheat() {
-        
+
     }
 
     protected void increaseMoneyCheat(int amount) {
