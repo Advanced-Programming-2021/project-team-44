@@ -166,6 +166,7 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     //Command Performer
+    ////Main
     protected String showCard(String cardName) {
         return Card.getCardByName(cardName).getStringForShow();
     }
@@ -218,6 +219,24 @@ abstract public class DuelMenuProcessor extends Processor {
         return null;
     }
 
+    ////Cheats
+    protected String useCheat(String commandArguments) {
+
+        return commandArguments;
+    }
+
+    protected String increaseProperty(String arguments) {
+        return null;
+    }
+
+    protected String selectHand(String arguments) {
+        return null;
+    }
+
+    protected String setWinnerCheat(String arguments) {
+        return null;
+    }
+
     //Utils
     protected String showBoard(Account selfAccount, Account opponentAccount) {
         return null;
@@ -246,21 +265,6 @@ abstract public class DuelMenuProcessor extends Processor {
         if (number == 1) return this.player1;
         else return this.player2;
     }
-
-
-    //Cheats
-//    protected String useCheat(String commandArguments) {
-//
-//        return commandArguments;
-//    }
-//
-//    protected String increaseProperty(String arguments) {
-//        return null;
-//    }
-//
-//    protected String setWinnerCheat(String arguments) {
-//        return null;
-//    }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
@@ -297,17 +301,15 @@ abstract public class DuelMenuProcessor extends Processor {
 
     @Override
     protected String enterMenuErrorChecker(String input) {
-        return null;
+        return "menu navigation is not possible";
     }
 
     @Override
     protected void enterMenu(Menus menu) {
-
     }
 
     @Override
     protected void exitMenu() {
         Core.currentMenu = Menus.MAIN;
-        endDuel();
     }
 }
