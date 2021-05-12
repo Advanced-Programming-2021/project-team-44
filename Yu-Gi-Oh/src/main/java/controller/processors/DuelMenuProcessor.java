@@ -157,6 +157,10 @@ abstract public class DuelMenuProcessor extends Processor {
         return null;
     }
 
+    protected String selectHandErrorChecker(String arguments) {
+        return null;
+    }
+
     protected String setWinnerErrorChecker(String arguments) {
         return null;
     }
@@ -281,11 +285,11 @@ abstract public class DuelMenuProcessor extends Processor {
             case 13 -> response = activateEffectErrorChecker(commandArguments);
             case 14 -> response = showGraveyardErrorChecker(commandArguments);
             case 15 -> response = showSelectedCardErrorChecker(commandArguments);
-            case 16 -> //cancel
-            case 17 -> //surrender
+            case 16 -> response = cancelErrorChecker(commandArguments);
+            case 17 -> response = surrenderErrorChecker(commandArguments);
             case 18 -> response = useCheatErrorChecker(commandArguments);
             case 19 -> response = increasePropertyErrorChecker(commandArguments);
-            case 20 -> //select hand
+            case 20 -> response = selectHandErrorChecker(commandArguments);
             case 21 -> response = setWinnerErrorChecker(commandArguments);
         }
         return response;
