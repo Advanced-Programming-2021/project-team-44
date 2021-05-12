@@ -32,6 +32,11 @@ abstract public class DuelMenuProcessor extends Processor {
         Pattern pattern = Pattern.compile("^(menu enter|" +
                 "menu exit|" +
                 "menu show-current|" +
+                "card show|" +
+                "select|" +
+                "select -d|" +
+                "next phase|" +
+                "summon|" +
                 "|" +
                 "|" +
                 "|" +
@@ -47,7 +52,8 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "menu enter" -> output[0] = "0";
                 case "menu exit" -> output[0] = "1";
                 case "menu show-current" -> output[0] = "2";
-                case "" -> output[0] = "3";
+                case "card show" -> output[0] = "3";
+                case "" -> output[0] = "4";
 
             }
             output[1] = matcher.group(2);
@@ -123,6 +129,10 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String summon(String arguments) {
+        return null;
+    }
+
+    protected String changePhase() {
         return null;
     }
 
