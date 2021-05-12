@@ -207,6 +207,10 @@ abstract public class DuelMenuProcessor extends Processor {
 
 
     //Cheats
+    protected void useCheat() {
+        
+    }
+
     protected void increaseMoneyCheat(int amount) {
     }
 
