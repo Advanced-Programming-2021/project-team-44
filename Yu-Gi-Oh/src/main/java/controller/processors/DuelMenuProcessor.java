@@ -86,6 +86,7 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     //Error Checker
+    ////Main
     protected String showCardErrorChecker(String arguments) {
         String response;
         if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
@@ -136,6 +137,27 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String showSelectedCardErrorChecker(String arguments) {
+        return null;
+    }
+
+    protected String cancelErrorChecker(String arguments) {
+        return null;
+    }
+
+    protected String surrenderErrorChecker(String arguments) {
+        return null;
+    }
+
+    ////Cheats
+    protected String useCheatErrorChecker(String arguments) {
+        return arguments;
+    }
+
+    protected String increasePropertyErrorChecker(String arguments) {
+        return null;
+    }
+
+    protected String setWinnerErrorChecker(String arguments) {
         return null;
     }
 
@@ -223,18 +245,18 @@ abstract public class DuelMenuProcessor extends Processor {
 
 
     //Cheats
-    protected String useCheat(String commandArguments) {
-
-        return commandArguments;
-    }
-
-    protected String increaseProperty(String arguments) {
-        return null;
-    }
-
-    protected String setWinnerCheat(String arguments) {
-        return null;
-    }
+//    protected String useCheat(String commandArguments) {
+//
+//        return commandArguments;
+//    }
+//
+//    protected String increaseProperty(String arguments) {
+//        return null;
+//    }
+//
+//    protected String setWinnerCheat(String arguments) {
+//        return null;
+//    }
 
     @Override
     public String commandDistributor(int commandId, String commandArguments) {
@@ -261,10 +283,10 @@ abstract public class DuelMenuProcessor extends Processor {
             case 15 -> response = showSelectedCardErrorChecker(commandArguments);
             case 16 -> //cancel
             case 17 -> //surrender
-            case 18 -> response = useCheat(commandArguments);
-            case 19 -> response = increaseProperty(commandArguments);
+            case 18 -> response = useCheatErrorChecker(commandArguments);
+            case 19 -> response = increasePropertyErrorChecker(commandArguments);
             case 20 -> //select hand
-            case 21 ->  response = setWinnerCheat(commandArguments);
+            case 21 -> response = setWinnerErrorChecker(commandArguments);
         }
         return response;
     }
