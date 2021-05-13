@@ -149,10 +149,6 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     ////Cheats
-    protected String useCheatErrorChecker(String arguments) {
-        return arguments;
-    }
-
     protected String increasePropertyErrorChecker(String arguments) {
         return null;
     }
@@ -220,9 +216,12 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     ////Cheats
-    protected String useCheat(String commandArguments) {
-
-        return commandArguments;
+    protected String useCheat() {
+        if (getPlayerByNumber(whoseTurn).isCheatActivated()) return "cheats already activated";
+        else {
+            getPlayerByNumber(whoseTurn).setCheatActivated(true);
+            return "cheats activated successfully";
+        }
     }
 
     protected String increaseProperty(String arguments) {
@@ -261,9 +260,12 @@ abstract public class DuelMenuProcessor extends Processor {
     protected void endDuel() {
     }
 
-    protected Player getPlayerByNumber(int number) {
-        if (number == 1) return this.player1;
-        else return this.player2;
+    protected Player getPlayerByNumber(int playerNumber) {
+        return switch (playerNumber) {
+            case 1 -> player1;
+            case 2 -> player2;
+            default -> null;
+        };
     }
 
     @Override
@@ -291,7 +293,7 @@ abstract public class DuelMenuProcessor extends Processor {
             case 15 -> response = showSelectedCardErrorChecker(commandArguments);
             case 16 -> response = cancelErrorChecker(commandArguments);
             case 17 -> response = surrenderErrorChecker(commandArguments);
-            case 18 -> response = useCheatErrorChecker(commandArguments);
+            case 18 -> response = useCheat();
             case 19 -> response = increasePropertyErrorChecker(commandArguments);
             case 20 -> response = selectHandErrorChecker(commandArguments);
             case 21 -> response = setWinnerErrorChecker(commandArguments);

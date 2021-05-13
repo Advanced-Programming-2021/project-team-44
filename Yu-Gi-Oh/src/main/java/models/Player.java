@@ -48,7 +48,7 @@ public class Player {
         }
     }
 
-    //Setters and Getters
+    //Getters and Setters
     public Account getAccount() {
         return account;
     }
