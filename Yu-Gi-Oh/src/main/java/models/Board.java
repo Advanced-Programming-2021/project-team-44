@@ -38,4 +38,53 @@ public class Board {
     }
 
     public void update() {}
+
+    //Getters and Setters
+    public static int[] getAreasNumber() {
+        return areasNumber;
+    }
+
+    public static void setAreasNumber(int[] areasNumber) {
+        Board.areasNumber = areasNumber;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public HashMap<Integer, String> getMonsterAreaState() {
+        return monsterAreaState;
+    }
+
+    public void setMonsterAreaState(HashMap<Integer, String> monsterAreaState) {
+        this.monsterAreaState = monsterAreaState;
+    }
+
+    public HashMap<Integer, String> getSpellAreaState() {
+        return spellAreaState;
+    }
+
+    public void setSpellAreaState(HashMap<Integer, String> spellAreaState) {
+        this.spellAreaState = spellAreaState;
+    }
+
+    public String getGraveyardState() {
+        return graveyardState;
+    }
+
+    public void setGraveyardState(String graveyardState) {
+        this.graveyardState = graveyardState;
+    }
+
+    public String getFieldZoneState() {
+        return fieldZoneState;
+    }
+
+    public void setFieldZoneState(String fieldZoneState) {
+        this.fieldZoneState = fieldZoneState;
+    }
 }

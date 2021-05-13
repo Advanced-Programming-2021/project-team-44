@@ -18,6 +18,7 @@ abstract public class DuelMenuProcessor extends Processor {
     protected Player player2;
     protected Board player1Board;
     protected Board player2Board;
+    protected Card selectedCard;
 
     public DuelMenuProcessor(Menus Name) {
         super(Name);
@@ -97,6 +98,7 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String selectCardErrorChecker(String arguments) { //user and opponent
+
         return null;
     }
 
@@ -264,6 +266,14 @@ abstract public class DuelMenuProcessor extends Processor {
         return switch (playerNumber) {
             case 1 -> player1;
             case 2 -> player2;
+            default -> null;
+        };
+    }
+
+    protected Board getPlayerBoardByNumber(int playerNumber) {
+        return switch (playerNumber) {
+            case 1 -> player1Board;
+            case 2 -> player2Board;
             default -> null;
         };
     }
