@@ -98,22 +98,26 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String selectCardErrorChecker(String arguments) { //user and opponent
-        String response;
+        String response = "";
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         enum SelectType {MONSTER, SPELL, FIELD, HAND}
         SelectType type = null;
         Boolean ofOpponent = null;
+        String selectedPositionString = null;
+        Integer selectedPosition = null;
         //Invalid Command
         while (matcher.find()) {
             switch (matcher.group(1)) {
                 case "--monster", "-m" -> {
                     if (type != null) return "invalid command";
                     type = SelectType.MONSTER;
+                    selectedPositionString = matcher.group(2);
                 }
                 case "--spell", "-s" -> {
                     if (type != null) return "invalid command";
                     type = SelectType.SPELL;
+                    selectedPositionString = matcher.group(2);
                 }
                 case "--field", "-f" -> {
                     if (type != null) return "invalid command";
@@ -122,6 +126,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "--hand", "-h" -> {
                     if (type != null) return "invalid command";
                     type = SelectType.HAND;
+                    selectedPositionString = matcher.group(2);
                 }
                 case "--opponent", "-o" -> {
                     if (ofOpponent != null) return "invalid command";
@@ -134,8 +139,28 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         if (ofOpponent == null) ofOpponent = false;
         if (type == null) return "invalid command";
+        if (type == SelectType.HAND && ofOpponent) return "invalid command";
+        if (type == SelectType.MONSTER || type == SelectType.SPELL || type == SelectType.HAND) {
+            try {
+                selectedPosition = Integer.parseInt(selectedPositionString);
+            } catch (Exception e) {
+                return "invalid command";
+            }
+        }
 
-        return null;
+        if ((type == SelectType.MONSTER || type == SelectType.SPELL) && (selectedPosition < 1 || selectedPosition > 5))
+            response = "invalid selection";
+        else if (type == SelectType.HAND && (selectedPosition < 1 || selectedPosition > 6))
+            response = "invalid selection";
+        else {
+            switch (type) {
+                case MONSTER -> response = selectCard("monster", selectedPosition, ofOpponent);
+                case SPELL -> response = selectCard("spell", selectedPosition, ofOpponent);
+                case FIELD -> response = selectCard("field", null, ofOpponent);
+                case HAND -> response = selectCard("hand", selectedPosition, null);
+            }
+        }
+        return response;
     }
 
     protected String deselectErrorChecker(String arguments) {
@@ -205,8 +230,31 @@ abstract public class DuelMenuProcessor extends Processor {
         return Card.getCardByName(cardName).getStringForShow();
     }
 
-    protected String selectCard(String arguments) { //user and opponent
-        return null;
+    protected String selectCard(String set, Integer position, Boolean ofOpponent) { //user and opponent
+        String response = "card selected";
+        Card tmpCard = null;
+        switch (set) {
+            case "monster" -> {
+                if (ofOpponent) tmpCard = getOtherPlayerBoard().getCardFromMonsterArea(position);
+                else tmpCard = getActingPlayerBoard().getCardFromMonsterArea(position);
+            }
+            case "spell" -> {
+                if (ofOpponent) tmpCard = getOtherPlayerBoard().getCardFromMagicArea(position);
+                else tmpCard = getActingPlayerBoard().getCardFromMagicArea(position);
+            }
+            case "field" -> {
+                if (ofOpponent) tmpCard = getOtherPlayerBoard().getCardFromFieldZone();
+                else tmpCard = getActingPlayerBoard().getCardFromFieldZone();
+            }
+            case "hand" -> {
+                if (ofOpponent) tmpCard = getOtherPlayerBoard().getCardFromHandArea(position);
+                else tmpCard = getActingPlayerBoard().getCardFromHandArea(position);
+
+            }
+        }
+        if (tmpCard == null) response = "no card found in the given position";
+        else selectedCard = tmpCard;
+        return response;
     }
 
     protected String deselect(String arguments) {
@@ -255,9 +303,9 @@ abstract public class DuelMenuProcessor extends Processor {
 
     ////Cheats
     protected String useCheat() {
-        if (getPlayerByNumber(whoseTurn).isCheatActivated()) return "cheats already activated";
+        if (getActingPlayer().isCheatActivated()) return "cheats already activated";
         else {
-            getPlayerByNumber(whoseTurn).setCheatActivated(true);
+            getActingPlayer().setCheatActivated(true);
             return "cheats activated successfully";
         }
     }
@@ -306,12 +354,34 @@ abstract public class DuelMenuProcessor extends Processor {
         };
     }
 
+    protected Player getActingPlayer() {
+        return getPlayerByNumber(whoseTurn);
+    }
+
+    protected Player getOtherPlayer() {
+        int other;
+        if (whoseTurn == 1) other = 2;
+        else other = 1;
+        return getPlayerByNumber(other);
+    }
+
     protected Board getPlayerBoardByNumber(int playerNumber) {
         return switch (playerNumber) {
             case 1 -> player1Board;
             case 2 -> player2Board;
             default -> null;
         };
+    }
+
+    protected Board getActingPlayerBoard() {
+        return getPlayerBoardByNumber(whoseTurn);
+    }
+
+    protected Board getOtherPlayerBoard() {
+        int other;
+        if (whoseTurn == 1) other = 2;
+        else other = 1;
+        return getPlayerBoardByNumber(other);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package models;
 
+import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
 
@@ -10,6 +11,8 @@ public class Board {
     private Player player;
     private HashMap<Integer, MonsterCard> monsterArea;
     private HashMap<Integer, MagicCard> magicArea;
+    private HashMap<Integer, Card> handArea;
+    private Card fieldZone;
     private HashMap<Integer, String> monsterAreaState;
     private HashMap<Integer, String> magicAreaState;
     private String graveyardState;
@@ -19,6 +22,8 @@ public class Board {
         this.player = player;
         this.monsterArea = new HashMap<>();
         this.magicArea = new HashMap<>();
+        this.handArea = new HashMap<>();
+        this.fieldZone = null;
         this.monsterAreaState = new HashMap<>();
         this.magicAreaState = new HashMap<>();
         this.graveyardState = "GY";
@@ -52,20 +57,28 @@ public class Board {
         return player;
     }
 
-    public HashMap<Integer, MonsterCard> getMonsterArea() {
-        return monsterArea;
+    public MonsterCard getCardFromMonsterArea(int position) {
+        return monsterArea.get(position);
     }
 
     public void setCardInMonsterArea(MonsterCard monsterCard, int position) {
         monsterArea.put(position, monsterCard);
     }
 
-    public HashMap<Integer, MagicCard> getMagicArea() {
-        return magicArea;
+    public MagicCard getCardFromMagicArea(int position) {
+        return magicArea.get(position);
     }
 
     public void setCardInMagicArea(MagicCard magicCard, int position) {
         magicArea.put(position, magicCard);
+    }
+
+    public Card getCardFromHandArea(int position) {
+        return handArea.get(position);
+    }
+
+    public void setCardInHandArea(Card card, int position) {
+        handArea.put(position, card);
     }
 
     public HashMap<Integer, String> getMonsterAreaState() {
@@ -100,11 +113,11 @@ public class Board {
         this.fieldZoneState = fieldZoneState;
     }
 
-    public MonsterCard getMonsterCardAtPosition(int positionNumber) {
-        return monsterArea.get(positionNumber);
+    public Card getCardFromFieldZone() {
+        return fieldZone;
     }
 
-    public MagicCard getMagicCardAtPosition(int positionNumber) {
-        return magicArea.get(positionNumber);
+    public void setFieldZone(Card fieldZone) {
+        this.fieldZone = fieldZone;
     }
 }
