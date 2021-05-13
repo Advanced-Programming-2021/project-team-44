@@ -95,7 +95,7 @@ abstract public class DuelMenuProcessor extends Processor {
             response = showCard(arguments);
         }
         return response;
-    }
+    } //done
 
     protected String selectCardErrorChecker(String arguments) { //user and opponent
         String response = "";
@@ -161,10 +161,16 @@ abstract public class DuelMenuProcessor extends Processor {
             }
         }
         return response;
-    }
+    } //done
 
-    protected String deselectErrorChecker(String arguments) {
-        return null;
+    protected String deselectErrorChecker() {
+        String response;
+        if (selectedCard == null) response = "no card is selected yet";
+        else {
+            response = "card deselected";
+            deselect();
+        }
+        return response;
     }
 
     protected String summonErrorChecker(String arguments) {
@@ -257,8 +263,8 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     }
 
-    protected String deselect(String arguments) {
-        return null;
+    protected void deselect() {
+        selectedCard = null;
     }
 
     protected String summon(String arguments) {
@@ -396,7 +402,7 @@ abstract public class DuelMenuProcessor extends Processor {
             case 2 -> response = showMenu();
             case 3 -> response = showCardErrorChecker(commandArguments);
             case 4 -> response = selectCardErrorChecker(commandArguments);
-            case 5 -> response = deselectErrorChecker(commandArguments);
+            case 5 -> response = deselectErrorChecker();
             case 6 -> response = changePhase();
             case 7 -> response = summonErrorChecker(commandArguments);
             case 8 -> response = setErrorChecker(commandArguments);
