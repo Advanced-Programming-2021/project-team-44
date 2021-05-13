@@ -98,6 +98,42 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String selectCardErrorChecker(String arguments) { //user and opponent
+        String response;
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
+        Matcher matcher = pattern.matcher(arguments);
+        enum SelectType {MONSTER, SPELL, FIELD, HAND}
+        SelectType type = null;
+        Boolean ofOpponent = null;
+        //Invalid Command
+        while (matcher.find()) {
+            switch (matcher.group(1)) {
+                case "--monster", "-m" -> {
+                    if (type != null) return "invalid command";
+                    type = SelectType.MONSTER;
+                }
+                case "--spell", "-s" -> {
+                    if (type != null) return "invalid command";
+                    type = SelectType.SPELL;
+                }
+                case "--field", "-f" -> {
+                    if (type != null) return "invalid command";
+                    type = SelectType.FIELD;
+                }
+                case "--hand", "-h" -> {
+                    if (type != null) return "invalid command";
+                    type = SelectType.HAND;
+                }
+                case "--opponent", "-o" -> {
+                    if (ofOpponent != null) return "invalid command";
+                    ofOpponent = true;
+                }
+                default -> {
+                    return "invalid command";
+                }
+            }
+        }
+        if (ofOpponent == null) ofOpponent = false;
+        if (type == null) return "invalid command";
 
         return null;
     }
