@@ -5,6 +5,7 @@ import models.*;
 import models.cards.Card;
 import view.menus.Menus;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -104,16 +105,20 @@ abstract public class DuelMenuProcessor extends Processor {
         enum SelectType {MONSTER, SPELL, FIELD, HAND}
         SelectType type = null;
         Boolean ofOpponent = null;
+        String selectedPositionString = null;
+        Integer selectedPosition = null;
         //Invalid Command
         while (matcher.find()) {
             switch (matcher.group(1)) {
                 case "--monster", "-m" -> {
                     if (type != null) return "invalid command";
                     type = SelectType.MONSTER;
+                    selectedPositionString = matcher.group(2);
                 }
                 case "--spell", "-s" -> {
                     if (type != null) return "invalid command";
                     type = SelectType.SPELL;
+                    selectedPositionString = matcher.group(2);
                 }
                 case "--field", "-f" -> {
                     if (type != null) return "invalid command";
@@ -122,6 +127,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "--hand", "-h" -> {
                     if (type != null) return "invalid command";
                     type = SelectType.HAND;
+                    selectedPositionString = matcher.group(2);
                 }
                 case "--opponent", "-o" -> {
                     if (ofOpponent != null) return "invalid command";
@@ -134,8 +140,29 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         if (ofOpponent == null) ofOpponent = false;
         if (type == null) return "invalid command";
+        if (type == SelectType.HAND && ofOpponent) return "invalid command";
+        if (type == SelectType.MONSTER || type == SelectType.SPELL || type == SelectType.HAND) {
+            try {
+                selectedPosition = Integer.parseInt(selectedPositionString);
+            } catch (Exception e) {
+                return "invalid command";
+            }
+        }
 
-        return null;
+        if ((type == SelectType.MONSTER || type == SelectType.SPELL) && (selectedPosition < 1 || selectedPosition > 5))
+            response = "invalid selection";
+        else if (type == SelectType.HAND && (selectedPosition < 1 || selectedPosition > 6))
+            response = "invalid selection";
+        else {
+            response = "card selected";
+            switch (type) {
+                case MONSTER -> selectCard("monster", selectedPosition, ofOpponent);
+                case SPELL -> selectCard("spell", selectedPosition, ofOpponent);
+                case FIELD -> selectCard("field", null, ofOpponent);
+                case HAND -> selectCard("hand", selectedPosition, null);
+            }
+        }
+        return response;
     }
 
     protected String deselectErrorChecker(String arguments) {
@@ -205,7 +232,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return Card.getCardByName(cardName).getStringForShow();
     }
 
-    protected String selectCard(String arguments) { //user and opponent
+    protected String selectCard(String whatSet, Integer position, Boolean ofOpponent) { //user and opponent
         return null;
     }
 
