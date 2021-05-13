@@ -110,12 +110,4 @@ public class Board {
     public void setFieldZoneState(String fieldZoneState) {
         this.fieldZoneState = fieldZoneState;
     }
-
-    public MonsterCard getMonsterCardAtPosition(int positionNumber) {
-        return monsterArea.get(positionNumber);
-    }
-
-    public MagicCard getMagicCardAtPosition(int positionNumber) {
-        return magicArea.get(positionNumber);
-    }
 }
