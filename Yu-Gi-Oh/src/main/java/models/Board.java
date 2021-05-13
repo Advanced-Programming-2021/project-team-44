@@ -12,6 +12,7 @@ public class Board {
     private HashMap<Integer, MonsterCard> monsterArea;
     private HashMap<Integer, MagicCard> magicArea;
     private HashMap<Integer, Card> handArea;
+    private Card fieldZone;
     private HashMap<Integer, String> monsterAreaState;
     private HashMap<Integer, String> magicAreaState;
     private String graveyardState;
@@ -22,6 +23,7 @@ public class Board {
         this.monsterArea = new HashMap<>();
         this.magicArea = new HashMap<>();
         this.handArea = new HashMap<>();
+        this.fieldZone = null;
         this.monsterAreaState = new HashMap<>();
         this.magicAreaState = new HashMap<>();
         this.graveyardState = "GY";
@@ -109,5 +111,13 @@ public class Board {
 
     public void setFieldZoneState(String fieldZoneState) {
         this.fieldZoneState = fieldZoneState;
+    }
+
+    public Card getCardFromFieldZone() {
+        return fieldZone;
+    }
+
+    public void setFieldZone(Card fieldZone) {
+        this.fieldZone = fieldZone;
     }
 }
