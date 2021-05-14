@@ -171,7 +171,7 @@ abstract public class DuelMenuProcessor extends Processor {
             deselect();
         }
         return response;
-    }
+    } //done
 
     protected String summonErrorChecker(String arguments) {
         return null;
@@ -234,7 +234,7 @@ abstract public class DuelMenuProcessor extends Processor {
     ////Main
     protected String showCard(String cardName) {
         return Card.getCardByName(cardName).getStringForShow();
-    }
+    } //done
 
     protected String selectCard(String set, Integer position, Boolean ofOpponent) { //user and opponent
         String response = "card selected";
@@ -261,17 +261,32 @@ abstract public class DuelMenuProcessor extends Processor {
         if (tmpCard == null) response = "no card found in the given position";
         else selectedCard = tmpCard;
         return response;
-    }
+    } //done
 
     protected void deselect() {
         selectedCard = null;
-    }
-
-    protected String summon(String arguments) {
-        return null;
-    }
+    } //done
 
     protected String changePhase() {
+        String response = "";
+        switch (phase) {
+            case DRAW -> phase = Phases.STANDBY;
+            case STANDBY -> phase = Phases.MAIN1;
+            case MAIN1 -> phase = Phases.BATTLE;
+            case BATTLE -> phase = Phases.MAIN2;
+            case MAIN2 -> phase = Phases.END;
+            case END -> phase = Phases.DRAW;
+        }
+        response = "phase: " + phase.stringName;
+        if (phase == Phases.DRAW) {
+            if (whoseTurn == 1) whoseTurn = 2;
+            else if (whoseTurn == 2) whoseTurn = 1;
+            response += "\n" + "its " + getActingPlayer().getAccount().getNickname() + "'s turn";
+        }
+        return response;
+    } //done
+
+    protected String summon(String arguments) {
         return null;
     }
 
@@ -334,7 +349,7 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String showPhase() {
-        return phase.name;
+        return phase.stringName;
     }
 
     protected int showPlayerPoints(Player player) {

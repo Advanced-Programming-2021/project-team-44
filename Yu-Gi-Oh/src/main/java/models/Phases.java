@@ -5,12 +5,12 @@ public enum Phases {
     STANDBY("Standby Phase"),
     MAIN1("Main Phase 1"),
     BATTLE("Battle Phase"),
-    MAIN2("Main PHase 2"),
+    MAIN2("Main Phase 2"),
     END("End Phase");
 
-    public final String name;
+    public final String stringName;
 
-    Phases(String name) {
-        this.name = name;
+    Phases(String stringName) {
+        this.stringName = stringName;
     }
 }
