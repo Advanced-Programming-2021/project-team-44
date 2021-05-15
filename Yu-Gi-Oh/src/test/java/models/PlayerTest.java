@@ -31,11 +31,7 @@ class PlayerTest {
 
     @Test
     void getDeckTest() {
-        Account account = new Account("palermo", "p123", "boomBoomCiao");
-        Deck deck = new Deck("active deck");
-        account.setActiveDeck(deck);
-        Player player = new Player(account);
-        Assertions.assertEquals(player.getDeck(), deck);
+
     }
 
     @Test
