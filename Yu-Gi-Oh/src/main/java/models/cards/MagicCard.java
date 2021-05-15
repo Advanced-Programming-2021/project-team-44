@@ -23,7 +23,7 @@ public class MagicCard extends Card{
         magicCards = new ArrayList<>();
     }
 
-    protected MagicCard() {
+    private MagicCard() {
     }
 
     public static MagicCard createMagicCard(String name) {
@@ -166,7 +166,7 @@ public class MagicCard extends Card{
     }
 
     @Override
-    protected Object clone() {
+    public Object clone() {
         MagicCard dummy = new MagicCard();
         dummy.name = this.name;
         dummy.description = this.description;

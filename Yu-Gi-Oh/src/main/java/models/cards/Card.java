@@ -74,4 +74,11 @@ abstract public class Card {
     public String getStringForAllCardsShow() {
         return this.name + ":" + this.description;
     }
+
+    @Override
+    public Object clone() {
+        if (this instanceof MonsterCard) return ((MonsterCard) this).clone();
+        else if (this instanceof MagicCard) return ((MagicCard) this).clone();
+        else return null;
+    }
 }

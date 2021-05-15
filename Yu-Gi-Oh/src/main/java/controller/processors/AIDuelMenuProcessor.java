@@ -32,10 +32,11 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
 
     @Override
     public void execute() {
+        //TODO
         if (whoseTurn == whichPlayerIsAI) {
 
         } else {
-            String command = duelScanner.nextLine();
+            String command = getActingPlayer().getCommand("duel");
             String[] dividedCommand = commandHandler(command);
             String response = commandDistributor(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
             UserInterface.returnResponse(response);

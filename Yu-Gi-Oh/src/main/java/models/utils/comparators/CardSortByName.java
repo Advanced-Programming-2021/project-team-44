@@ -1,8 +1,7 @@
-package models.comparators;
+package models.utils.comparators;
 
 import models.cards.Card;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 public class CardSortByName implements Comparator<Card> {

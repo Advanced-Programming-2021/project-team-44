@@ -1,7 +1,7 @@
 package models;
 
 import models.cards.Card;
-import models.comparators.CardSortByName;
+import models.utils.comparators.CardSortByName;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;

@@ -26,7 +26,7 @@ public class MonsterCard extends Card {
         monsterCards = new ArrayList<>();
     }
 
-    protected MonsterCard() {
+    private MonsterCard() {
     }
 
     public static MonsterCard createMonsterCard(String name) {
@@ -158,6 +158,27 @@ public class MonsterCard extends Card {
         return defensePoint;
     }
 
+    public boolean isAvailableForNormalSummon() {
+        return switch (this.name) {
+            case "Crab Turtle", "Skull Guardian", "Gate Guardian", "The Tricky" -> false;
+            default -> true;
+        };
+    }
+
+    public boolean isAvailableForSpecialSummon() {
+        return switch (this.name) {
+            case "Gate Guardian", "The Tricky" -> true;
+            default -> false;
+        };
+    }
+
+    public boolean isAvailableForRitualSummon() {
+        return switch (this.name) {
+            case "Crab Turtle", "Skull Guardian" -> true;
+            default -> false;
+        };
+    }
+
 
     @Override
     public String getStringForShow() {
@@ -187,7 +208,7 @@ public class MonsterCard extends Card {
     }
 
     @Override
-    protected Object clone() {
+    public Object clone() {
         MonsterCard dummy = new MonsterCard();
         dummy.name = this.name;
         dummy.description = this.description;

@@ -1,6 +1,5 @@
 package controller.processors;
 
-import controller.Core;
 import models.Account;
 import models.Board;
 import models.Phases;
@@ -18,6 +17,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
     public void gameInitialization(Account player1, Account player2, int rounds) {
         phase = Phases.DRAW;
         whoseTurn = 1;
+        isSummonOrSetActionAvailable = true;
         this.player1 = new Player(player1);
         this.player2 = new Player(player2);
         this.player1Board = new Board(this.player1);
@@ -26,7 +26,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
 
     @Override
     public void execute() {
-        String command = duelScanner.nextLine();
+        String command = getActingPlayer().getCommand("duel");
         String[] dividedCommand = commandHandler(command);
         String response = commandDistributor(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
         UserInterface.returnResponse(response);
