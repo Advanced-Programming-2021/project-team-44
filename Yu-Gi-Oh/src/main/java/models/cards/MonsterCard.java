@@ -26,7 +26,7 @@ public class MonsterCard extends Card {
         monsterCards = new ArrayList<>();
     }
 
-    protected MonsterCard() {
+    public MonsterCard() {
     }
 
     public static MonsterCard createMonsterCard(String name) {

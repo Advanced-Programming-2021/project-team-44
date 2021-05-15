@@ -1,8 +1,11 @@
 package models;
 
 import models.cards.Card;
+import models.cards.MonsterCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 class AccountTest {
     //Utils
@@ -141,6 +144,49 @@ class AccountTest {
         Assertions.assertEquals(test1.getStringForScoreboard(), "karai1: 300");
     }
 
+    @Test
+    void getDeckByNameTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        Deck deck1 = new Deck("deck 1");
+        Deck deck2 = new Deck("deck 2");
+        test1.addDeck(deck1);
+        test1.addDeck(deck2);
+        Assertions.assertEquals(test1.getDeckByName("deck 1"), deck1);
+        Assertions.assertEquals(test1.getDeckByName("deck 2"), deck2);
+        Assertions.assertNull(test1.getDeckByName("deck 3"));
+    }
+
+    @Test
+    void getCardByNameTest(){
+
+    }
+
+    @Test
+    void showSpareCardsTest(){
+        Account test1 = new Account("karaii", "karai2465", "karai13");
+        Card monsterCard = new MonsterCard();
+        monsterCard.setDescription("second player's ping will rise to 2000 or more");
+        monsterCard.setName("Jahromi The Great");
+        test1.addCard(monsterCard);
+        Assertions.assertEquals(test1.showSpareCards(), "Jahromi The Great:second player's ping will rise to 2000 or more");
+    }
+
+    @Test
+    void getOtherDecksTest(){
+        Account test1 = new Account("karaii", "karai2465", "karai13");
+        Deck deck1 = new Deck("active");
+        Deck deck2 = new Deck("My Best");
+        Deck deck3 = new Deck("Trash");
+        test1.addDeck(deck1);
+        test1.addDeck(deck2);
+        test1.addDeck(deck3);
+        test1.setActiveDeck(deck1);
+        ArrayList<Deck> other = new ArrayList<>();
+        other.add(deck2);
+        other.add(deck3);
+        Assertions.assertEquals(test1.getOtherDecks(), other);
+    }
+
     //Setters
     @Test
     void setPasswordTest(){
@@ -178,6 +224,36 @@ class AccountTest {
         test1.increaseCoin(1000);
         test1.decreaseCoin(200);
         Assertions.assertEquals(test1.getCoin(), 800);
+    }
+
+    @Test
+    void setActiveDeckTest(){
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        Deck deck = new Deck("abas");
+        test1.setActiveDeck(deck);
+        Assertions.assertEquals(test1.getActiveDeck().getName(), deck.getName());
+    }
+
+    @Test
+    void removeDeckTest(){
+        Account test1 = new Account("karaii", "karai2465", "karai13");
+        Deck deck = new Deck("Best");
+        test1.addDeck(deck);
+        Assertions.assertEquals(test1.getDeckByName("Best"), deck);
+        test1.removeDeck(deck);
+        Assertions.assertNull(test1.getDeckByName("Best"));
+    }
+
+    @Test
+    void addOrRemoveCardTest(){
+        Account test1 = new Account("karaii", "karai2465", "karai13");
+        Card monsterCard = new MonsterCard();
+        monsterCard.setName("Jahromi The Great");
+        test1.addCard(monsterCard);
+        Assertions.assertEquals(test1.getCardByName("Jahromi The Great"), monsterCard);
+        Assertions.assertNull(test1.getCardByName("Rostam"));
+        test1.removeCard(monsterCard);
+        Assertions.assertNull(test1.getCardByName("Jahromi The Great"));
     }
 
 
