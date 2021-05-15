@@ -27,9 +27,9 @@ public class Deck {
     }
 
     public void removeCardFromMainDeck(String cardName) {
-        for (Card card : mainDeckCards) {
+        for (Card card : this.mainDeckCards) {
             if (card.getName().equals(cardName)) {
-                mainDeckCards.remove(card);
+                this.mainDeckCards.remove(card);
                 return;
             }
         }
