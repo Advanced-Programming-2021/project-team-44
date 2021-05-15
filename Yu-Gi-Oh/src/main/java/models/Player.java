@@ -20,15 +20,15 @@ public class Player {
     private boolean isCheatActivated;
 
     public Player(Account account) {
-        this.account = account;
-        this.deck = this.account.getActiveDeck();
+        this.setAccount(account);
+        this.setDeck(account.getActiveDeck());
         this.monsterArea = new HashMap<>();
         this.spellArea = new HashMap<>();
         ArrayList<Card> tmpList = this.deck.getMainDeckCards();
         Collections.shuffle(tmpList);
         this.deckCards = tmpList;
         this.handCards = new ArrayList<>();
-        setHandCards();
+        //setHandCards();
         this.graveyardCards = new ArrayList<>();
         this.fieldZone = null;
     }
@@ -66,7 +66,7 @@ public class Player {
     }
 
     public Deck getDeck() {
-        return deck;
+        return this.deck;
     }
 
     public void setDeck(Deck deck) {
