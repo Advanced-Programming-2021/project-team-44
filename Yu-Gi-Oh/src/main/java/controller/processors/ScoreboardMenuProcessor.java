@@ -2,8 +2,8 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import models.comparators.AccountSortByNickname;
-import models.comparators.AccountSortByScore;
+import models.utils.comparators.AccountSortByNickname;
+import models.utils.comparators.AccountSortByScore;
 import view.menus.Menus;
 
 public class ScoreboardMenuProcessor extends Processor { //DONE

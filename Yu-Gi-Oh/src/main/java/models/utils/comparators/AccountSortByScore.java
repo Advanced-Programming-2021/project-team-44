@@ -1,4 +1,4 @@
-package models.comparators;
+package models.utils.comparators;
 
 import models.Account;
 

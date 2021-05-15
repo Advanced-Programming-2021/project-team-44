@@ -1,12 +1,9 @@
 package controller.processors;
 
 import controller.Core;
-import models.Account;
 import models.cards.Card;
-import models.comparators.CardSortByName;
+import models.utils.comparators.CardSortByName;
 import view.menus.Menus;
-import models.cards.MagicCard;
-import models.cards.MonsterCard;
 
 public class ShopMenuProcessor extends Processor { //DONE
 

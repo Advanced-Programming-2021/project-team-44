@@ -5,27 +5,20 @@ import models.cards.MagicCard;
 import models.cards.MonsterCard;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
-    public static int[] areasNumber = new int[]{5, 3, 1, 2, 4};
     private Player player;
-    private HashMap<Integer, MonsterCard> monsterArea;
-    private HashMap<Integer, MagicCard> magicArea;
-    private HashMap<Integer, Card> handArea;
-    private Card fieldZone;
-    private HashMap<Integer, String> monsterAreaState;
-    private HashMap<Integer, String> magicAreaState;
+    private HashMap<Integer, String> monsterZoneState;
+    private HashMap<Integer, String> magicZoneState;
     private String graveyardState;
     private String fieldZoneState;
 
     public Board(Player player) {
         this.player = player;
-        this.monsterArea = new HashMap<>();
-        this.magicArea = new HashMap<>();
-        this.handArea = new HashMap<>();
-        this.fieldZone = null;
-        this.monsterAreaState = new HashMap<>();
-        this.magicAreaState = new HashMap<>();
+
+        this.monsterZoneState = new HashMap<>();
+        this.magicZoneState = new HashMap<>();
         this.graveyardState = "GY";
         this.fieldZoneState = "FZ";
     }
@@ -34,18 +27,11 @@ public class Board {
         String output = "";
         //TODO
 
-        //Monsters Area
-        String monstersArea = "";
-        for (int number : areasNumber)
-
-
-            output = fieldZoneState + "\\t\\t\\t\\t\\t\\t" + graveyardState
-                    + "\\t\\t" + "\\t\\t"
-                    ;
         return output;
     }
 
     public String printAsOpponent() {
+        //TODO
         return null;
     }
 
@@ -57,52 +43,20 @@ public class Board {
         return player;
     }
 
-    public MonsterCard getCardFromMonsterArea(int position) {
-        return monsterArea.get(position);
+    public String getMonsterZoneState(int position) {
+        return monsterZoneState.get(position);
     }
 
-    public void setCardInMonsterArea(MonsterCard monsterCard, int position) {
-        monsterArea.put(position, monsterCard);
+    public void setMonsterZoneState(int position, String state) {
+        this.monsterZoneState.put(position, state);
     }
 
-    public MagicCard getCardFromMagicArea(int position) {
-        return magicArea.get(position);
+    public String getMagicZoneState(int position) {
+        return magicZoneState.get(position);
     }
 
-    public void setCardInMagicArea(MagicCard magicCard, int position) {
-        magicArea.put(position, magicCard);
-    }
-
-    public Card getCardFromHandArea(int position) {
-        return handArea.get(position);
-    }
-
-    public void setCardInHandArea(Card card, int position) {
-        handArea.put(position, card);
-    }
-
-    public HashMap<Integer, String> getMonsterAreaState() {
-        return monsterAreaState;
-    }
-
-    public void setMonsterAreaState(HashMap<Integer, String> monsterAreaState) {
-        this.monsterAreaState = monsterAreaState;
-    }
-
-    public HashMap<Integer, String> getMagicAreaState() {
-        return magicAreaState;
-    }
-
-    public void setMagicAreaState(HashMap<Integer, String> magicAreaState) {
-        this.magicAreaState = magicAreaState;
-    }
-
-    public String getGraveyardState() {
-        return graveyardState;
-    }
-
-    public void setGraveyardState(String graveyardState) {
-        this.graveyardState = graveyardState;
+    public void setMagicZoneState(int position, String state) {
+        this.magicZoneState.put(position, state);
     }
 
     public String getFieldZoneState() {
@@ -113,11 +67,12 @@ public class Board {
         this.fieldZoneState = fieldZoneState;
     }
 
-    public Card getCardFromFieldZone() {
-        return fieldZone;
+    ////Graveyard
+    public String getGraveyardState() {
+        return graveyardState;
     }
 
-    public void setFieldZone(Card fieldZone) {
-        this.fieldZone = fieldZone;
+    public void setGraveyardState(String graveyardState) {
+        this.graveyardState = graveyardState;
     }
 }
