@@ -4,15 +4,15 @@ import controller.processors.DuelMenuProcessor;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import models.utils.Utils;
 
 import java.util.*;
 
 public class Player {
     private Account account;
+    private Board board;
     private int lp;
     private Deck deck;
-    private ArrayList<Card> deckCards;
+    private ArrayList<Card> mainDeckCards;
     private HashMap<Integer, MonsterCard> monsterZone;
     private HashMap<Integer, MagicCard> magicZone;
     private HashMap<Integer, Card> handZone;
@@ -22,10 +22,11 @@ public class Player {
 
     public Player(Account account) {
         this.account = account;
-        this.deck = this.account.getActiveDeck();
-        ArrayList<Card> tmpList = Utils.cardArrayListDeepClone(this.deck.getMainDeckCards());
-        Collections.shuffle(tmpList);
-        this.deckCards = tmpList;
+        this.board = new Board(this);
+        this.deck = (Deck) (this.account.getActiveDeck()).clone();
+        this.mainDeckCards = this.deck.getMainDeckCards();
+        Collections.shuffle(this.mainDeckCards);
+
         this.monsterZone = new HashMap<>();
         this.monsterZone.put(1, null);
         this.monsterZone.put(2, null);
@@ -41,6 +42,8 @@ public class Player {
         this.magicZone.put(5, null);
 
         this.handZone = new HashMap<>();
+        setHandCards();
+
         this.fieldZone = null;
         this.graveyardCards = new ArrayList<>();
     }
@@ -49,7 +52,7 @@ public class Player {
         String consoleMessage = account.getNickname() + "@" + dir + ":" + DuelMenuProcessor.phase + "$ ";
         System.out.print(consoleMessage);
         Scanner scanner = new Scanner(System.in);
-        String command = scanner.nextLine();
+        String command = scanner.nextLine().trim();
         scanner.close();
         return command;
     }
@@ -61,6 +64,10 @@ public class Player {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public int getLp() {
@@ -160,13 +167,12 @@ public class Player {
     }
 
     private void setHandCards() {
-        this.handZone.put(1, null);
-        this.handZone.put(2, null);
-        this.handZone.put(3, null);
-        this.handZone.put(4, null);
-        this.handZone.put(5, null);
-        this.handZone.put(6, null);
-
+        for (int i = 1; i <= 6; i++) {
+            if (handZone.get(i) == null){
+                handZone.put(i, mainDeckCards.get(0));
+                mainDeckCards.remove(0);
+            }
+        }
     }
 
     public int getFirstFreePositionInHandZone() {

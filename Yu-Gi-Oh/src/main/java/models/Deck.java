@@ -150,4 +150,14 @@ public class Deck {
                 flag++;
         return flag >= 3;
     }
+
+    @Override
+    public Object clone() {
+        Deck dummy = new Deck(this.name);
+        for (Card card : this.mainDeckCards)
+            dummy.addCardToMainDeck((Card) card.clone());
+        for (Card card : this.sideDeckCards)
+            dummy.addCardToSideDeck((Card) card.clone());
+        return dummy;
+    }
 }

@@ -67,7 +67,6 @@ public class Board {
         this.fieldZoneState = fieldZoneState;
     }
 
-    ////Graveyard
     public String getGraveyardState() {
         return graveyardState;
     }
