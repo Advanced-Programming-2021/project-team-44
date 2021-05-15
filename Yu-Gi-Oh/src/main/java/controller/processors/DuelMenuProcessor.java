@@ -16,8 +16,6 @@ abstract public class DuelMenuProcessor extends Processor {
     protected int whoseTurn;
     protected Player player1;
     protected Player player2;
-    protected Board player1Board;
-    protected Board player2Board;
     protected Card selectedCard;
     protected boolean isSummonOrSetActionAvailable;
 
@@ -313,7 +311,11 @@ abstract public class DuelMenuProcessor extends Processor {
                 Scanner tmpScanner = new Scanner(System.in);
                 System.out.print("Choose a card to tribute: ");
                 int tributeIndex = tmpScanner.nextInt();
-                System.out.println();
+                if (getActingPlayer().getCardFromMonsterZone(tributeIndex) == null)
+                    response = "there are no monsters on this address";
+                else {
+
+                }
             }
         } else {
 
@@ -418,23 +420,12 @@ abstract public class DuelMenuProcessor extends Processor {
         return getPlayerByNumber(other);
     } //done
 
-    protected Board getPlayerBoardByNumber(int playerNumber) {
-        return switch (playerNumber) {
-            case 1 -> player1Board;
-            case 2 -> player2Board;
-            default -> null;
-        };
-    } //done
-
     protected Board getActingPlayerBoard() {
-        return getPlayerBoardByNumber(whoseTurn);
+        return getActingPlayer().getBoard();
     } //done
 
     protected Board getOtherPlayerBoard() {
-        int other;
-        if (whoseTurn == 1) other = 2;
-        else other = 1;
-        return getPlayerBoardByNumber(other);
+        return getOtherPlayer().getBoard();
     } //done
 
     @Override

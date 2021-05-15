@@ -95,6 +95,7 @@ public class MonsterCard extends Card {
                 return response;
             }
         response += "All monster cards added successfully!";
+        Card.allCards.addAll(monsterCards);
         return response;
     }
 

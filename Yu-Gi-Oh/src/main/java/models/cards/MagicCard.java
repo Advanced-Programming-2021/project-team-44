@@ -98,6 +98,7 @@ public class MagicCard extends Card{
                 return response;
             }
         response += "All magic cards added successfully!";
+        Card.allCards.addAll(magicCards);
         return response;
     }
 

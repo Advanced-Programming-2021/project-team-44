@@ -20,8 +20,6 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         isSummonOrSetActionAvailable = true;
         this.player1 = new Player(player1);
         this.player2 = new Player(player2);
-        this.player1Board = new Board(this.player1);
-        this.player2Board = new Board(this.player2);
     }
 
     @Override
