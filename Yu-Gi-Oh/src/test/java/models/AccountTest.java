@@ -1,13 +1,16 @@
 package models;
 
+import controller.Core;
 import models.cards.Card;
 import models.cards.MonsterCard;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 class AccountTest {
+
     //Utils
     @Test
     void isUsernameValidTest() {
@@ -164,11 +167,10 @@ class AccountTest {
     @Test
     void showSpareCardsTest(){
         Account test1 = new Account("karaii", "karai2465", "karai13");
-        Card monsterCard = new MonsterCard();
-        monsterCard.setDescription("second player's ping will rise to 2000 or more");
-        monsterCard.setName("Jahromi The Great");
-        test1.addCard(monsterCard);
-        Assertions.assertEquals(test1.showSpareCards(), "Jahromi The Great:second player's ping will rise to 2000 or more");
+        Core.Initializer();
+        test1.addCard(MonsterCard.getMonsterCardByName("Axe Raider"));
+        Assertions.assertNotNull(test1.getCardByName("Axe Raider"));
+        Assertions.assertEquals(test1.showSpareCards(), "Axe Raider:An axe-wielding monster of tremendous strength and agility.");
     }
 
     @Test
@@ -247,13 +249,13 @@ class AccountTest {
     @Test
     void addOrRemoveCardTest(){
         Account test1 = new Account("karaii", "karai2465", "karai13");
-        Card monsterCard = new MonsterCard();
-        monsterCard.setName("Jahromi The Great");
-        test1.addCard(monsterCard);
-        Assertions.assertEquals(test1.getCardByName("Jahromi The Great"), monsterCard);
-        Assertions.assertNull(test1.getCardByName("Rostam"));
-        test1.removeCard(monsterCard);
-        Assertions.assertNull(test1.getCardByName("Jahromi The Great"));
+        Core.Initializer();
+        test1.addCard(MonsterCard.getMonsterCardByName("Axe Raider"));
+        Card card = MonsterCard.getMonsterCardByName("Axe Raider");
+        Assertions.assertEquals(test1.getCardByName("Axe Raider"), card);
+        Assertions.assertNull(test1.getCardByName("Baby dragon"));
+        test1.removeCard(MonsterCard.getMonsterCardByName("Axe Raider"));
+        Assertions.assertNull(test1.getCardByName("Axe Raider"));
     }
 
 
