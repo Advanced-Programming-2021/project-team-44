@@ -43,6 +43,7 @@ public class DeckMenu extends Menu { //DONE
 
             }
             output[1] = matcher.group(2);
+            if (output[1] == null) output[1] = "";
         }
         return output;
     }

@@ -23,6 +23,7 @@ public class ScoreboardMenu extends Menu { //DONE
                 case "scoreboard show" -> output[0] = "3";
             }
             output[1] = matcher.group(2);
+            if (output[1] == null) output[1] = "";
         }
         return output;
     }
