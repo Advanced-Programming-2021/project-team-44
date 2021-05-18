@@ -27,6 +27,7 @@ public class LoginMenu extends Menu { //DONE
                 case "user login" -> output[0] = "4";
             }
             output[1] = matcher.group(2);
+            if (output[1] == null) output[1] = "";
         }
         return output;
     }

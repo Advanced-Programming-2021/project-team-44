@@ -33,6 +33,7 @@ public class MainMenu extends Menu { //DONE
                 case "duel --new --ai" -> output[0] = "5";
             }
             output[1] = matcher.group(2);
+            if (output[1] == null) output[1] = "";
         }
         return output;
     }

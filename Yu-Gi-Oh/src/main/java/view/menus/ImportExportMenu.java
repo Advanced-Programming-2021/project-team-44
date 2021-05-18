@@ -24,6 +24,7 @@ public class ImportExportMenu extends Menu { //DONE
                 case "export card" -> output[0] = "4";
             }
             output[1] = matcher.group(2);
+            if (output[1] == null) output[1] = "";
         }
         return output;
     }
