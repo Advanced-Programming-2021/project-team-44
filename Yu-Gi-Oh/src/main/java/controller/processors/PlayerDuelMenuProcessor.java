@@ -1,11 +1,12 @@
 package controller.processors;
 
 import models.Account;
-import models.Board;
 import models.Phases;
 import models.Player;
 import view.UserInterface;
 import view.menus.Menus;
+
+import java.util.ArrayList;
 
 public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
 
@@ -18,6 +19,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         phase = Phases.DRAW;
         whoseTurn = 1;
         isSummonOrSetActionAvailable = true;
+        monsterActiveContinuousEffects = new ArrayList<>();
         this.player1 = new Player(player1);
         this.player2 = new Player(player2);
     }
@@ -26,7 +28,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
     public void execute() {
         String command = getActingPlayer().getCommand("duel");
         String[] dividedCommand = commandHandler(command);
-        String response = commandDistributor(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
+        String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
         UserInterface.returnResponse(response);
 
         if (!checkForDuelEnd()) execute();

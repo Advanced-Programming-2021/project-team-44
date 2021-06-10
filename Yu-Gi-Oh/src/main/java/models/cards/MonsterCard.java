@@ -115,7 +115,7 @@ public class MonsterCard extends Card {
     }
 
     public static String generateJsonByHashMap(HashMap<String, String> hashMap) {
-        String jsonData = "{\"name\":\"" + hashMap.get("Name") + "\", " +
+        return "{\"name\":\"" + hashMap.get("Name") + "\", " +
                 "\"level\":" + Integer.parseInt(hashMap.get("Level")) + ", " +
                 "\"attribute\":\"" + hashMap.get("Attribute") + "\", " +
                 "\"monsterType\":\"" + hashMap.get("Monster Type") + "\", " +
@@ -124,10 +124,9 @@ public class MonsterCard extends Card {
                 "\"defensePoint\":" + Integer.parseInt(hashMap.get("Defense")) + ", " +
                 "\"description\":\"" + hashMap.get("Description") + "\", " +
                 "\"price\":" + Integer.parseInt(hashMap.get("Price")) + "}";
-        return jsonData;
     }
 
-    //Getters and Setters
+    //Getters
     public static MonsterCard getMonsterCardByName(String name) {
         for (MonsterCard card : monsterCards)
             if (name.equals(card.getName()))
@@ -180,6 +179,28 @@ public class MonsterCard extends Card {
         };
     }
 
+    public String getEffectType() {
+        if (this.cardType.equals("Effect")) {
+            switch (this.getName()) {
+                case "Command Knight", "Herald of Creation", "Mirage Dragon", "Texchanger" , "Marshmallon", "Scanner" -> {
+                    return "Continuous";
+                }
+                default -> {
+                    return "One-Time";
+                }
+            }
+        }
+        return null;
+    }
+
+    //Setters
+    public void increaseAttackPoint(int amount) {
+        this.attackPoint += amount;
+    }
+
+    public void increaseDefensePoint(int amount) {
+        this.defensePoint += amount;
+    }
 
     @Override
     public String getStringForShow() {
@@ -221,5 +242,18 @@ public class MonsterCard extends Card {
         dummy.attackPoint = this.attackPoint;
         dummy.defensePoint = this.defensePoint;
         return dummy;
+    }
+
+    public boolean equals(MonsterCard monsterCard) {
+        if (!this.name.equals(monsterCard.name)) return false;
+        if (!this.description.equals(monsterCard.description)) return false;
+        if (this.price != monsterCard.price) return false;
+        if (this.level != monsterCard.level) return false;
+        if (this.attribute != monsterCard.attribute) return false;
+        if (!this.monsterType.equals(monsterCard.monsterType)) return false;
+        if (!this.cardType.equals(monsterCard.cardType)) return false;
+        if (this.attackPoint != monsterCard.attackPoint) return false;
+        if (this.defensePoint != monsterCard.defensePoint) return false;
+        return true;
     }
 }

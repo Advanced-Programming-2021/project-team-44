@@ -18,6 +18,8 @@ abstract public class DuelMenuProcessor extends Processor {
     protected Player player2;
     protected Card selectedCard;
     protected boolean isSummonOrSetActionAvailable;
+    protected ArrayList<MonsterCard> monsterActiveContinuousEffects;
+    protected ArrayList<MonsterCard> monsterEffectsQueue;
 
     public DuelMenuProcessor(Menus Name) {
         super(Name);
@@ -52,7 +54,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 "show graveyard|" +
                 "card show --selected|" + "card show -s|" +
                 "cancel|" +
-                "surrender|" +
+                "surrender" +
                 ")\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
@@ -81,6 +83,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "duel set-winner" -> output[0] = "21";
             }
             output[1] = matcher.group(2);
+            if (output[1] == null) output[1] = "";
         }
         return output;
     }
@@ -304,6 +307,8 @@ abstract public class DuelMenuProcessor extends Processor {
         if (((MonsterCard) selectedCard).getLevel() <= 4) {
             getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
             getActingPlayer().removeCardFromHandZone(selectedCard);
+            activateSummonEffect((MonsterCard) selectedCard);
+            selectedCard = null;
             getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
         } else if (((MonsterCard) selectedCard).getLevel() <= 6){
             if (getActingPlayer().howManyMonstersInTheGame() == 0) response = "there are not enough cards for tribute";
@@ -311,14 +316,40 @@ abstract public class DuelMenuProcessor extends Processor {
                 Scanner tmpScanner = new Scanner(System.in);
                 System.out.print("Choose a card to tribute: ");
                 int tributeIndex = tmpScanner.nextInt();
+                tmpScanner.close();
                 if (getActingPlayer().getCardFromMonsterZone(tributeIndex) == null)
                     response = "there are no monsters on this address";
                 else {
-
+                    getActingPlayer().destroyMonster(tributeIndex);
+                    getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
+                    getActingPlayer().removeCardFromHandZone(selectedCard);
+                    activateSummonEffect((MonsterCard) selectedCard);
+                    selectedCard = null;
+                    getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
                 }
             }
         } else {
-
+            if (getActingPlayer().howManyMonstersInTheGame() < 2) response = "there are not enough cards for tribute";
+            else {
+                Scanner tmpScanner = new Scanner(System.in);
+                System.out.print("Choose first card to tribute: ");
+                int firstTributeIndex = tmpScanner.nextInt();
+                System.out.print("Choose second card to tribute: ");
+                int secondTributeIndex = tmpScanner.nextInt();
+                tmpScanner.close();
+                if (getActingPlayer().getCardFromMonsterZone(firstTributeIndex) == null ||
+                        getActingPlayer().getCardFromMonsterZone(secondTributeIndex) == null)
+                    response = "there is no monster on one of these addresses";
+                else {
+                    getActingPlayer().destroyMonster(firstTributeIndex);
+                    getActingPlayer().destroyMonster(secondTributeIndex);
+                    getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
+                    getActingPlayer().removeCardFromHandZone(selectedCard);
+                    activateSummonEffect((MonsterCard) selectedCard);
+                    selectedCard = null;
+                    getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
+                }
+            }
         }
 
         return response;
@@ -390,9 +421,13 @@ abstract public class DuelMenuProcessor extends Processor {
         return 0;
     }
 
-    protected ArrayList<Card> checkForCardEffectActivation() {
-        return null;
-    }
+    protected void monsterEffectsActivator() {
+        for (MonsterCard card : monsterEffectsQueue) {
+            if (card.getEffectType().equals("Continuous")) monsterActiveContinuousEffects.add(card);
+            getActingPlayer().activateSelfSummonEffect(card);
+            getOtherPlayer().activateOpponentSummonEffect(card);
+        }
+    } //done
 
     protected boolean checkForDuelEnd() {
         return false;
@@ -400,6 +435,14 @@ abstract public class DuelMenuProcessor extends Processor {
 
     protected void endDuel() {
     }
+
+    protected void activateSummonEffect(MonsterCard card) {
+        //Called from summon method
+        if ("Effect".equals(card.getCardType())) {
+            monsterEffectsQueue.add(card);
+            monsterEffectsActivator();
+        }
+    } //done
 
     protected Player getPlayerByNumber(int playerNumber) {
         return switch (playerNumber) {
@@ -429,7 +472,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     @Override
-    public String commandDistributor(int commandId, String commandArguments) {
+    public String process(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
             case 0 -> response = enterMenuErrorChecker(commandArguments);

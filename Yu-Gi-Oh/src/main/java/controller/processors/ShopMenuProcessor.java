@@ -52,7 +52,7 @@ public class ShopMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    public String commandDistributor(int commandId, String commandArguments) {
+    public String process(int commandId, String commandArguments) {
         String response = "invalid command";
         switch (commandId) {
             case 0 -> response = enterMenuErrorChecker(commandArguments);

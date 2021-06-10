@@ -1,6 +1,5 @@
 package controller.processors;
 
-import controller.Core;
 import models.Account;
 import models.Phases;
 import models.Player;
@@ -38,7 +37,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
         } else {
             String command = getActingPlayer().getCommand("duel");
             String[] dividedCommand = commandHandler(command);
-            String response = commandDistributor(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
+            String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
             UserInterface.returnResponse(response);
         }
 
