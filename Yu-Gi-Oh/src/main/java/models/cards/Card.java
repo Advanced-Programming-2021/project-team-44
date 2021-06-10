@@ -84,4 +84,11 @@ abstract public class Card {
         else if (this instanceof MagicCard) return ((MagicCard) this).clone();
         else return null;
     }
+
+    public boolean equals(Card card) {
+        if (this == card) return true;
+        if (this instanceof MonsterCard && card instanceof MonsterCard) return ((MonsterCard) this).equals((MonsterCard) card);
+        else if (this instanceof MagicCard && card instanceof MagicCard) return ((MagicCard) this).equals((MagicCard) card);
+        return false;
+    }
 }

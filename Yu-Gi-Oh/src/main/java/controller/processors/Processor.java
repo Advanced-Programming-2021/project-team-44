@@ -27,7 +27,7 @@ public abstract class Processor {
         return null;
     }
 
-    public abstract String commandDistributor(int commandId, String commandArguments);
+    public abstract String process(int commandId, String commandArguments);
 
     //Error Checker
     protected abstract String enterMenuErrorChecker(String input);

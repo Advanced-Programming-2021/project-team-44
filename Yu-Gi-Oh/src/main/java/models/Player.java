@@ -4,6 +4,7 @@ import controller.processors.DuelMenuProcessor;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
+import models.utils.Utils;
 
 import java.util.*;
 
@@ -17,13 +18,13 @@ public class Player {
     private HashMap<Integer, MagicCard> magicZone;
     private HashMap<Integer, Card> handZone;
     private Card fieldZone;
-    private ArrayList<Card> graveyardCards;
+    private ArrayList<Card> graveyardZone;
     private boolean isCheatActivated;
 
     public Player(Account account) {
         this.account = account;
         this.board = new Board(this);
-        this.deck = (Deck) (this.account.getActiveDeck()).clone();
+        this.deck = (Deck) Utils.deepClone(this.account.getActiveDeck());
         this.mainDeckCards = this.deck.getMainDeckCards();
         Collections.shuffle(this.mainDeckCards);
 
@@ -45,7 +46,7 @@ public class Player {
         setHandCards();
 
         this.fieldZone = null;
-        this.graveyardCards = new ArrayList<>();
+        this.graveyardZone = new ArrayList<>();
     }
 
     public String getCommand(String dir) {
@@ -86,6 +87,10 @@ public class Player {
         isCheatActivated = cheatActivated;
     }
 
+    public int getMainDeckCount() {
+        return this.mainDeckCards.size();
+    }
+
     ////Monster Zone
     public MonsterCard getCardFromMonsterZone(int position) {
         return monsterZone.get(position);
@@ -119,6 +124,25 @@ public class Player {
         return sum;
     }
 
+    public void destroyMonster(int position) {
+        graveyardZone.add(monsterZone.get(position));
+        monsterZone.put(position, null);
+    }
+
+    public void activateSelfSummonEffect(MonsterCard card) { //TODO
+        switch (card.getName()) {
+            case "Command Knight" -> {
+
+            }
+        }
+    }
+
+    public void activateOpponentSummonEffect(MonsterCard card) { //TODO
+        switch (card.getName()) {
+
+        }
+    }
+
     ////Magic Zone
     public MagicCard getCardFromMagicZone(int position) {
         return magicZone.get(position);
@@ -141,6 +165,10 @@ public class Player {
                 return i;
         }
         return -1;
+    }
+
+    public void destroyMagic(int position) {
+        magicZone.put(position, null);
     }
 
     ////Hand Zone
@@ -168,7 +196,7 @@ public class Player {
 
     private void setHandCards() {
         for (int i = 1; i <= 6; i++) {
-            if (handZone.get(i) == null){
+            if (handZone.get(i) == null) {
                 handZone.put(i, mainDeckCards.get(0));
                 mainDeckCards.remove(0);
             }
@@ -183,6 +211,14 @@ public class Player {
         return -1;
     }
 
+    public int getHandZoneCount() {
+        int count = 0;
+        for (int i = 0; i < handZone.size(); i++)
+            if (handZone.get(i) != null)
+                count++;
+        return count;
+    }
+
     ////Field Zone
     public Card getCardFromFieldZone() {
         return fieldZone;
@@ -190,5 +226,10 @@ public class Player {
 
     public void setFieldZone(Card fieldZone) {
         this.fieldZone = fieldZone;
+    }
+
+    ////Graveyard
+    public ArrayList<Card> getGraveyardZone() {
+        return graveyardZone;
     }
 }

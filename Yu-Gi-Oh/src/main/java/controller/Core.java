@@ -32,7 +32,7 @@ public class Core {//0
     } //done
 
     public static String menuDistributor(int inputId, String commandArguments) {
-        return Objects.requireNonNull(Processor.getProcessorByName(currentMenu)).commandDistributor(inputId, commandArguments.trim());
+        return Objects.requireNonNull(Processor.getProcessorByName(currentMenu)).process(inputId, commandArguments.trim());
     }
 
     public static void Initializer() {

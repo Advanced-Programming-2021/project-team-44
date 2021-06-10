@@ -1,7 +1,6 @@
 package models.cards;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,7 +35,6 @@ public class MagicCard extends Card{
     public static String magicCardsJsonParser() {
         //Generates Json files from csv file
         //TODO LOG
-        ArrayList<Card> magicCards = new ArrayList<>();
         String path = "src/main/resources/static/cards/SpellTrap.csv";
         try {
             File source = new File(path);
@@ -115,13 +113,13 @@ public class MagicCard extends Card{
     }
 
     public static String generateJSONByHashMap(HashMap<String, String> hashMap) {
-        String jsonData = "{\"name\":\"" + hashMap.get("Name") + "\", " +
+
+        return "{\"name\":\"" + hashMap.get("Name") + "\", " +
                 "\"type\":\"" + hashMap.get("Type") + "\", " +
                 "\"icon\":\"" + hashMap.get("Icon") + "\", " +
                 "\"description\":\"" + hashMap.get("Description") + "\", " +
                 "\"status\":\"" + hashMap.get("Status") + "\", " +
                 "\"price\":" + Integer.parseInt(hashMap.get("Price")) + "}";
-        return jsonData;
     }
 
     //Getters and Setters
@@ -143,6 +141,8 @@ public class MagicCard extends Card{
     public String getStatus() {
         return status;
     }
+
+
 
     @Override
     public String getStringForShow() {
@@ -176,5 +176,15 @@ public class MagicCard extends Card{
         dummy.icon = this.icon;
         dummy.status = this.status;
         return dummy;
+    }
+
+    public boolean equals(MagicCard magicCard) {
+        if (!this.name.equals(magicCard.name)) return false;
+        if (!this.description.equals(magicCard.description)) return false;
+        if (this.price != magicCard.price) return false;
+        if (this.type != magicCard.type) return false;
+        if (this.icon != magicCard.icon) return false;
+        if (!this.status.equals(magicCard.status)) return false;
+        return true;
     }
 }
