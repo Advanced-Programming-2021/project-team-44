@@ -1,17 +1,34 @@
 package controller.processors;
 
 import controller.Core;
-import models.*;
+import models.Account;
+import models.Board;
+import models.Phases;
+import models.Player;
 import models.cards.Card;
+import models.cards.MagicCard;
+import models.cards.MagicType;
 import models.cards.MonsterCard;
 import view.menus.Menus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 abstract public class DuelMenuProcessor extends Processor {
+    private static HashMap<AuxiliaryIdentifiers, Object> auxiliaryObjectMap;
+    private static enum AuxiliaryIdentifiers{
+        IS_SUMMON_OR_SET_ACTION_AVAILABLE(),
+        CHANGE_POSITION_ACTION_AVAILABLE
+    }
+    /**
+     * Auxiliary Object Map:
+     * This map is used for checking the conditions in actions without adding more decentralized parameters.
+     *
+     *
+     */
     public static Phases phase;
     protected int whoseTurn;
     protected Player player1;
@@ -21,8 +38,8 @@ abstract public class DuelMenuProcessor extends Processor {
     protected ArrayList<MonsterCard> monsterActiveContinuousEffects;
     protected ArrayList<MonsterCard> monsterEffectsQueue;
 
-    public DuelMenuProcessor(Menus Name) {
-        super(Name);
+    public DuelMenuProcessor(Menus name) {
+        super(name);
     }
 
     abstract public void gameInitialization(Account player1, Account player2, int rounds);
@@ -178,7 +195,7 @@ abstract public class DuelMenuProcessor extends Processor {
     protected String summonErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
-        else if (getActingPlayer().ifHandContains(selectedCard)) response = "you can't summon this card";
+        else if (!getActingPlayer().ifHandContains(selectedCard)) response = "you can't summon this card";
         else if (!(selectedCard instanceof MonsterCard)) response = "you can't summon this card";
         else if (!((MonsterCard) selectedCard).isAvailableForNormalSummon()) response = "you can't summon this card";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) response = "action not allowed in this phase";
@@ -190,12 +207,48 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String setErrorChecker(String arguments) { //monster and spell and trap
-        return null;
-    }
+    protected String setErrorChecker() { //monster and spell and trap
+        String response;
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (!getActingPlayer().ifHandContains(selectedCard)) response = "you can't set this card";
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) response = "you can't do this action in this phase";
+        else if (!isSummonOrSetActionAvailable) response = "you already summoned/set on this turn";
+        else {
+            response = set();
+        }
+        return response;
+    } //done
 
     protected String setPositionErrorChecker(String arguments) {
-        return null;
+        String response = "";
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
+        Matcher matcher = pattern.matcher(arguments);
+        enum SelectState{ATTACK, DEFENSE}
+        SelectState selectState = null;
+        //Invalid Command
+        while (matcher.find()) {
+            switch (matcher.group(1)) {
+                case "--position", "-p" -> {
+                    if (selectState != null) return "invalid command";
+                    String selectedState = matcher.group(2).trim();
+                    if (selectedState.equals("attack")) selectState = SelectState.ATTACK;
+                    else if (selectedState.equals("defense")) selectState = SelectState.DEFENSE;
+                    else return "invalid command";
+                }
+                default -> {
+                    return "invalid command";
+                }
+            }
+        }
+        if (selectState == null) return "invalid command";
+
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (selectedCard instanceof MonsterCard
+                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+            response = "you can't change this card's position";
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) response = "you can't do this action in this phase";
+
+        return response;
     }
 
     protected String flipSummonErrorChecker(String arguments) {
@@ -254,21 +307,20 @@ abstract public class DuelMenuProcessor extends Processor {
         Card tmpCard = null;
         switch (set) {
             case "monster" -> {
-                if (ofOpponent) tmpCard = getActingPlayer().getCardFromMonsterZone(position);
+                if (ofOpponent) tmpCard = getOtherPlayer().getCardFromMonsterZone(position);
                 else tmpCard = getActingPlayer().getCardFromMonsterZone(position);
             }
             case "spell" -> {
-                if (ofOpponent) tmpCard = getActingPlayer().getCardFromMagicZone(position);
+                if (ofOpponent) tmpCard = getOtherPlayer().getCardFromMagicZone(position);
                 else tmpCard = getActingPlayer().getCardFromMagicZone(position);
             }
             case "field" -> {
-                if (ofOpponent) tmpCard = getActingPlayer().getCardFromFieldZone();
+                if (ofOpponent) tmpCard = getOtherPlayer().getCardFromFieldZone();
                 else tmpCard = getActingPlayer().getCardFromFieldZone();
             }
             case "hand" -> {
-                if (ofOpponent) tmpCard = getActingPlayer().getCardFromHandZone(position);
+                if (ofOpponent) tmpCard = getOtherPlayer().getCardFromHandZone(position);
                 else tmpCard = getActingPlayer().getCardFromHandZone(position);
-
             }
         }
         if (tmpCard == null) response = "no card found in the given position";
@@ -310,15 +362,15 @@ abstract public class DuelMenuProcessor extends Processor {
             activateSummonEffect((MonsterCard) selectedCard);
             selectedCard = null;
             getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
-        } else if (((MonsterCard) selectedCard).getLevel() <= 6){
-            if (getActingPlayer().howManyMonstersInTheGame() == 0) response = "there are not enough cards for tribute";
+        } else if (((MonsterCard) selectedCard).getLevel() <= 6) {
+            if (getActingPlayer().howManyMonstersInTheGame() == 0) return "there are not enough cards for tribute";
             else {
                 Scanner tmpScanner = new Scanner(System.in);
                 System.out.print("Choose a card to tribute: ");
                 int tributeIndex = tmpScanner.nextInt();
                 tmpScanner.close();
                 if (getActingPlayer().getCardFromMonsterZone(tributeIndex) == null)
-                    response = "there are no monsters on this address";
+                    return "there are no monsters on this address";
                 else {
                     getActingPlayer().destroyMonster(tributeIndex);
                     getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
@@ -329,7 +381,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 }
             }
         } else {
-            if (getActingPlayer().howManyMonstersInTheGame() < 2) response = "there are not enough cards for tribute";
+            if (getActingPlayer().howManyMonstersInTheGame() < 2) return "there are not enough cards for tribute";
             else {
                 Scanner tmpScanner = new Scanner(System.in);
                 System.out.print("Choose first card to tribute: ");
@@ -339,7 +391,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 tmpScanner.close();
                 if (getActingPlayer().getCardFromMonsterZone(firstTributeIndex) == null ||
                         getActingPlayer().getCardFromMonsterZone(secondTributeIndex) == null)
-                    response = "there is no monster on one of these addresses";
+                    return "there is no monster on one of these addresses";
                 else {
                     getActingPlayer().destroyMonster(firstTributeIndex);
                     getActingPlayer().destroyMonster(secondTributeIndex);
@@ -351,13 +403,35 @@ abstract public class DuelMenuProcessor extends Processor {
                 }
             }
         }
-
+        isSummonOrSetActionAvailable = false;
         return response;
-    }
+    } //done
 
-    protected String set(String arguments) { //monster and spell and trap
-        return null;
-    }
+    protected String set() { //monster and spell and trap
+        String response = "set successfully";
+        if (selectedCard instanceof MonsterCard) {
+            if (getActingPlayer().isMonsterZoneFull()) return "monster card zone is full";
+
+            int emptyPosition = getActingPlayer().getFirstFreePositionInMonsterZone();
+            assert emptyPosition != -1;
+
+            getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
+            getActingPlayer().removeCardFromHandZone(selectedCard);
+            selectedCard = null;
+            getActingPlayerBoard().setMonsterZoneState(emptyPosition, "DH");
+        } else {
+            if (getActingPlayer().isMagicZoneFull()) return "spell card zone is full";
+
+            int emptyPosition = getActingPlayer().getFirstFreePositionInMagicZone();
+            assert emptyPosition != -1;
+
+            getActingPlayer().setCardInMagicZone((MagicCard) selectedCard, emptyPosition);
+            getActingPlayer().removeCardFromHandZone(selectedCard);
+            selectedCard = null;
+            getActingPlayerBoard().setMagicZoneState(emptyPosition, "H");
+        }
+        return response;
+    } //done
 
     protected String setPosition(String arguments) {
         return null;
@@ -486,7 +560,7 @@ abstract public class DuelMenuProcessor extends Processor {
             case 5 -> response = deselectErrorChecker();
             case 6 -> response = changePhase();
             case 7 -> response = summonErrorChecker();
-            case 8 -> response = setErrorChecker(commandArguments);
+            case 8 -> response = setErrorChecker();
             case 9 -> response = setPositionErrorChecker(commandArguments);
             case 10 -> response = flipSummonErrorChecker(commandArguments);
             case 11 -> response = attackErrorChecker(commandArguments);
