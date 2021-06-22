@@ -129,19 +129,23 @@ public class Player {
         monsterZone.put(position, null);
     }
 
-    public void activateSelfSummonEffect(MonsterCard card) { //TODO
+    public boolean ifMonsterZoneContains(MonsterCard card) {
+        return monsterZone.containsValue(card);
+    }
+
+    public void activateSelfSummonEffect(MonsterCard card) {
         switch (card.getName()) {
             case "Command Knight" -> {
 
             }
         }
-    }
+    } //TODO Summon Effect
 
-    public void activateOpponentSummonEffect(MonsterCard card) { //TODO
+    public void activateOpponentSummonEffect(MonsterCard card) {
         switch (card.getName()) {
 
         }
-    }
+    } //TODO Summon Effect
 
     ////Magic Zone
     public MagicCard getCardFromMagicZone(int position) {
@@ -169,6 +173,10 @@ public class Player {
 
     public void destroyMagic(int position) {
         magicZone.put(position, null);
+    }
+
+    public boolean ifMagicZoneContains(MagicCard card) {
+        return magicZone.containsValue(card);
     }
 
     ////Hand Zone
@@ -204,7 +212,7 @@ public class Player {
     }
 
     public int getFirstFreePositionInHandZone() {
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 6; i++) {
             if (getCardFromHandZone(i) == null)
                 return i;
         }
