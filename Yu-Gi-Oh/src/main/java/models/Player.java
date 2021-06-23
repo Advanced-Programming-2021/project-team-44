@@ -133,6 +133,13 @@ public class Player {
         return monsterZone.containsValue(card);
     }
 
+    public int getMonsterCardIndex(MonsterCard card) {
+        for (int i = 1; i < 6; i++) {
+            if (monsterZone.get(i) == card) return i;
+        }
+        return -1;
+    }
+
     public void activateSelfSummonEffect(MonsterCard card) {
         switch (card.getName()) {
             case "Command Knight" -> {
@@ -177,6 +184,13 @@ public class Player {
 
     public boolean ifMagicZoneContains(MagicCard card) {
         return magicZone.containsValue(card);
+    }
+
+    public int getMagicCardIndex(MagicCard card) {
+        for (int i = 1; i < 6; i++) {
+            if (magicZone.get(i) == card) return i;
+        }
+        return -1;
     }
 
     ////Hand Zone

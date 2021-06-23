@@ -7,34 +7,36 @@ import models.Phases;
 import models.Player;
 import models.cards.Card;
 import models.cards.MagicCard;
-import models.cards.MagicType;
 import models.cards.MonsterCard;
 import view.menus.Menus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 abstract public class DuelMenuProcessor extends Processor {
-    private static HashMap<AuxiliaryIdentifiers, Object> auxiliaryObjectMap;
-    private static enum AuxiliaryIdentifiers{
-        IS_SUMMON_OR_SET_ACTION_AVAILABLE(),
-        CHANGE_POSITION_ACTION_AVAILABLE
-    }
-    /**
-     * Auxiliary Object Map:
-     * This map is used for checking the conditions in actions without adding more decentralized parameters.
-     *
-     *
-     */
+//    /**
+//     * Auxiliary Object Map:
+//     * This map is used for checking the conditions in actions without adding more decentralized parameters.
+//     *
+//     *
+//     */
+//    private static HashMap<AuxiliaryIdentifiers, Object> auxiliaryObjectMap;
+//    private static enum AuxiliaryIdentifiers{
+//        IS_SUMMON_OR_SET_ACTION_AVAILABLE,
+//        CHANGE_POSITION_ACTION_AVAILABLE
+//    }
+
     public static Phases phase;
     protected int whoseTurn;
     protected Player player1;
     protected Player player2;
     protected Card selectedCard;
     protected boolean isSummonOrSetActionAvailable;
+    protected ArrayList<Card> hasChangedPositionInThisTurn;
+    protected ArrayList<Card> isNewlySet;
+    protected ArrayList<Card> hasAttackedInThisTurn;
     protected ArrayList<MonsterCard> monsterActiveContinuousEffects;
     protected ArrayList<MonsterCard> monsterEffectsQueue;
 
@@ -223,7 +225,7 @@ abstract public class DuelMenuProcessor extends Processor {
         String response = "";
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
-        enum SelectState{ATTACK, DEFENSE}
+        enum SelectState {ATTACK, DEFENSE}
         SelectState selectState = null;
         //Invalid Command
         while (matcher.find()) {
@@ -246,18 +248,65 @@ abstract public class DuelMenuProcessor extends Processor {
         else if (selectedCard instanceof MonsterCard
                 && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you can't change this card's position";
-        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) response = "you can't do this action in this phase";
-
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
+            response = "you can't do this action in this phase";
+        else if ((selectState == SelectState.ATTACK
+                && !getActingPlayerBoard().getMonsterZoneState(getActingPlayer().getMonsterCardIndex((MonsterCard) selectedCard)).equals("DO"))
+                || (selectState == SelectState.DEFENSE
+                && !getActingPlayerBoard().getMonsterZoneState(getActingPlayer().getMonsterCardIndex((MonsterCard) selectedCard)).equals("OO")))
+            response = "the card is already in the wanted position";
+        else if (hasChangedPositionInThisTurn.contains(selectedCard))
+            response = "you already changed this card position in this turn";
+        else {
+            String dummy;
+            if (selectState == SelectState.ATTACK) dummy = "attack";
+            else dummy = "defense";
+            response = setPosition(dummy);
+        }
         return response;
     }
 
-    protected String flipSummonErrorChecker(String arguments) {
-        return null;
-    }
+    protected String flipSummonErrorChecker() {
+        String response;
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (selectedCard instanceof MonsterCard
+                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+            response = "you can't change this card's position";
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
+            response = "you can't do this action in this phase";
+        else if (!getActingPlayerBoard().getMonsterZoneState(getActingPlayer().getMonsterCardIndex((MonsterCard) selectedCard)).equals("DH")
+                || isNewlySet.contains(selectedCard))
+            response = "you can't flip summon this card";
+        else {
+            response = flipSummon();
+        }
+        return response;
+    } //done
 
     protected String attackErrorChecker(String arguments) {
-        return null;
-    }
+        String response;
+        int toBeAttacked;
+        try {
+            toBeAttacked = Integer.parseInt(arguments.trim());
+        } catch (Exception e) {
+            return "invalid command";
+        }
+        if (toBeAttacked > 5 || toBeAttacked < 1) return "invalid command";
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (selectedCard instanceof MonsterCard
+                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+            response = "you  can't attack with this card";
+        else if (phase != Phases.BATTLE)
+            response = "you can't do this action in this phase";
+        else if (hasAttackedInThisTurn.contains(selectedCard))
+            response = "this card already attacked";
+        else if (getOtherPlayer().getCardFromMonsterZone(toBeAttacked) == null)
+            response = "there is no card to attack here";
+        else {
+            response = attack(toBeAttacked);
+        }
+        return response;
+    } //done
 
     protected String directAttackErrorChecker(String arguments) {
         return null;
@@ -417,6 +466,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
             getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
             getActingPlayer().removeCardFromHandZone(selectedCard);
+            isNewlySet.add(selectedCard);
             selectedCard = null;
             getActingPlayerBoard().setMonsterZoneState(emptyPosition, "DH");
         } else {
@@ -427,22 +477,32 @@ abstract public class DuelMenuProcessor extends Processor {
 
             getActingPlayer().setCardInMagicZone((MagicCard) selectedCard, emptyPosition);
             getActingPlayer().removeCardFromHandZone(selectedCard);
+            isNewlySet.add(selectedCard);
             selectedCard = null;
             getActingPlayerBoard().setMagicZoneState(emptyPosition, "H");
         }
         return response;
     } //done
 
-    protected String setPosition(String arguments) {
-        return null;
-    }
+    protected String setPosition(String position) {
+        MonsterCard dummy = (MonsterCard) selectedCard;
+        if (position.equals("attack"))
+            getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex(dummy), "OO");
+        else if (position.equals("defense"))
+            getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex(dummy), "DO");
+        hasChangedPositionInThisTurn.add(selectedCard);
+        selectedCard = null;
+        return "monster card position changed successfully";
+    } //done
 
-    protected String flipSummon(String input) {
-        return null;
-    }
+    protected String flipSummon() {
+        getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex((MonsterCard) selectedCard), "OO");
+        selectedCard = null;
+        return "flip summoned successfully";
+    } //done
 
-    protected String attack(String input) {
-        return null;
+    protected String attack(int toBeAttackedIndex) {
+        MonsterCard toBeAttackedCard = getOtherPlayer().getCardFromMonsterZone(toBeAttackedIndex);
     }
 
     protected String directAttack(String input) {
@@ -562,7 +622,7 @@ abstract public class DuelMenuProcessor extends Processor {
             case 7 -> response = summonErrorChecker();
             case 8 -> response = setErrorChecker();
             case 9 -> response = setPositionErrorChecker(commandArguments);
-            case 10 -> response = flipSummonErrorChecker(commandArguments);
+            case 10 -> response = flipSummonErrorChecker();
             case 11 -> response = attackErrorChecker(commandArguments);
             case 12 -> response = directAttackErrorChecker(commandArguments);
             case 13 -> response = activateEffectErrorChecker(commandArguments);
