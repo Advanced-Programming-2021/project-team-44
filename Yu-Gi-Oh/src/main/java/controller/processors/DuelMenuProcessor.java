@@ -118,7 +118,8 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String selectCardErrorChecker(String arguments) { //user and opponent
+    protected String selectCardErrorChecker(String arguments) {
+        //user and opponent
         String response = "";
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -209,7 +210,8 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String setErrorChecker() { //monster and spell and trap
+    protected String setErrorChecker() {
+        //monster and spell and trap
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else if (!getActingPlayer().ifHandContains(selectedCard)) response = "you can't set this card";
@@ -222,7 +224,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String setPositionErrorChecker(String arguments) {
-        String response = "";
+        String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         enum SelectState {ATTACK, DEFENSE}
@@ -308,8 +310,22 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String directAttackErrorChecker(String arguments) {
-        return null;
+    protected String directAttackErrorChecker() {
+        String response;
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (selectedCard instanceof MonsterCard
+                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+            response = "you  can't attack with this card";
+        else if (phase != Phases.BATTLE)
+            response = "you can't do this action in this phase";
+        else if (hasAttackedInThisTurn.contains(selectedCard))
+            response = "this card already attacked";
+        else if (getOtherPlayer().howManyMonstersInTheGame() > 0)
+            response = "you can't attack the opponent directly";
+        else {
+            response = directAttack();
+        }
+        return response;
     }
 
     protected String activateEffectErrorChecker(String arguments) {
@@ -351,7 +367,8 @@ abstract public class DuelMenuProcessor extends Processor {
         return Card.getCardByName(cardName).getStringForShow();
     } //done
 
-    protected String selectCard(String set, Integer position, Boolean ofOpponent) { //user and opponent
+    protected String selectCard(String set, Integer position, Boolean ofOpponent) {
+        //user and opponent
         String response = "card selected";
         Card tmpCard = null;
         switch (set) {
@@ -409,7 +426,7 @@ abstract public class DuelMenuProcessor extends Processor {
             getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
             getActingPlayer().removeCardFromHandZone(selectedCard);
             activateSummonEffect((MonsterCard) selectedCard);
-            selectedCard = null;
+            deselect();
             getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
         } else if (((MonsterCard) selectedCard).getLevel() <= 6) {
             if (getActingPlayer().howManyMonstersInTheGame() == 0) return "there are not enough cards for tribute";
@@ -425,7 +442,7 @@ abstract public class DuelMenuProcessor extends Processor {
                     getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
                     getActingPlayer().removeCardFromHandZone(selectedCard);
                     activateSummonEffect((MonsterCard) selectedCard);
-                    selectedCard = null;
+                    deselect();
                     getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
                 }
             }
@@ -447,7 +464,7 @@ abstract public class DuelMenuProcessor extends Processor {
                     getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
                     getActingPlayer().removeCardFromHandZone(selectedCard);
                     activateSummonEffect((MonsterCard) selectedCard);
-                    selectedCard = null;
+                    deselect();
                     getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
                 }
             }
@@ -456,7 +473,8 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String set() { //monster and spell and trap
+    protected String set() {
+        //monster and spell and trap
         String response = "set successfully";
         if (selectedCard instanceof MonsterCard) {
             if (getActingPlayer().isMonsterZoneFull()) return "monster card zone is full";
@@ -467,7 +485,7 @@ abstract public class DuelMenuProcessor extends Processor {
             getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
             getActingPlayer().removeCardFromHandZone(selectedCard);
             isNewlySet.add(selectedCard);
-            selectedCard = null;
+            deselect();
             getActingPlayerBoard().setMonsterZoneState(emptyPosition, "DH");
         } else {
             if (getActingPlayer().isMagicZoneFull()) return "spell card zone is full";
@@ -478,7 +496,7 @@ abstract public class DuelMenuProcessor extends Processor {
             getActingPlayer().setCardInMagicZone((MagicCard) selectedCard, emptyPosition);
             getActingPlayer().removeCardFromHandZone(selectedCard);
             isNewlySet.add(selectedCard);
-            selectedCard = null;
+            deselect();
             getActingPlayerBoard().setMagicZoneState(emptyPosition, "H");
         }
         return response;
@@ -491,23 +509,85 @@ abstract public class DuelMenuProcessor extends Processor {
         else if (position.equals("defense"))
             getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex(dummy), "DO");
         hasChangedPositionInThisTurn.add(selectedCard);
-        selectedCard = null;
+        deselect();
         return "monster card position changed successfully";
     } //done
 
     protected String flipSummon() {
         getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex((MonsterCard) selectedCard), "OO");
-        selectedCard = null;
+        deselect();
         return "flip summoned successfully";
     } //done
 
     protected String attack(int toBeAttackedIndex) {
+        MonsterCard attackingCard = (MonsterCard) selectedCard;
+        hasAttackedInThisTurn.add(selectedCard);
+        deselect();
         MonsterCard toBeAttackedCard = getOtherPlayer().getCardFromMonsterZone(toBeAttackedIndex);
-    }
+        String toBeAttackedCardState = getOtherPlayerBoard().getMonsterZoneState(toBeAttackedIndex);
+        if (toBeAttackedCardState.equals("OO")) {
+            int difference = Math.abs(toBeAttackedCard.getAttackPoint() - attackingCard.getAttackPoint());
+            if (toBeAttackedCard.getAttackPoint() < attackingCard.getAttackPoint()) {
+                getOtherPlayer().increaseLp(-1 * difference);
+                getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                return "your opponent's monster is destroyed and your opponent receives "
+                        + difference
+                        + " battle damage";
+            } else if (toBeAttackedCard.getAttackPoint() == attackingCard.getAttackPoint()) {
+                getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
+                return "both you and your opponent monster cards are destroyed and no one receives damage";
+            } else {
+                getActingPlayer().increaseLp(-1 * difference);
+                getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
+                return "your monster is destroyed and you received "
+                        + difference
+                        + " battle damage";
+            }
+        } else if (toBeAttackedCardState.equals("DO")) {
+            int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
+            if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
+                getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                return "the defense position monster is destroyed";
+            } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
+                return "no card is destroyed";
+            } else {
+                getActingPlayer().increaseLp(-1 * difference);
+                return "no card is destroyed and you received "
+                        + difference
+                        + " battle damage";
+            }
+        } else if (toBeAttackedCardState.equals("DH")) {
+            String response = "opponent's monster card was " + toBeAttackedCard.getName() + " and ";
+            int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
+            if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
+                getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                return response
+                        + "the defense position monster is destroyed";
+            } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
+                return response
+                        + "no card is destroyed";
+            } else {
+                getActingPlayer().increaseLp(-1 * difference);
+                return response
+                        + "no card is destroyed and you received "
+                        + difference
+                        + " battle damage";
+            }
+        } else {
+            return "";
+        }
+    } //done
 
-    protected String directAttack(String input) {
-        return null;
-    }
+    protected String directAttack() {
+        MonsterCard attackingCard = (MonsterCard) selectedCard;
+        hasAttackedInThisTurn.add(selectedCard);
+        deselect();
+        getOtherPlayer().increaseLp(-1 * attackingCard.getAttackPoint());
+        return "your opponent receives "
+                + attackingCard.getAttackPoint()
+                + " battle damage";
+    } //done
 
     protected String activateEffect(String input) {
         return null;
@@ -545,7 +625,7 @@ abstract public class DuelMenuProcessor extends Processor {
     //Utils
     protected String showBoard(Account selfAccount, Account opponentAccount) {
         return null;
-    }
+    } //TODO show board
 
     protected String showPhase() {
         return phase.stringName;
@@ -553,7 +633,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     protected int showPlayerPoints(Player player) {
         return 0;
-    }
+    } //TODO game points calculate
 
     protected void monsterEffectsActivator() {
         for (MonsterCard card : monsterEffectsQueue) {
@@ -565,10 +645,10 @@ abstract public class DuelMenuProcessor extends Processor {
 
     protected boolean checkForDuelEnd() {
         return false;
-    }
+    } //TODO Check for end
 
     protected void endDuel() {
-    }
+    } //TODO End duel
 
     protected void activateSummonEffect(MonsterCard card) {
         //Called from summon method
@@ -624,7 +704,7 @@ abstract public class DuelMenuProcessor extends Processor {
             case 9 -> response = setPositionErrorChecker(commandArguments);
             case 10 -> response = flipSummonErrorChecker();
             case 11 -> response = attackErrorChecker(commandArguments);
-            case 12 -> response = directAttackErrorChecker(commandArguments);
+            case 12 -> response = directAttackErrorChecker();
             case 13 -> response = activateEffectErrorChecker(commandArguments);
             case 14 -> response = showGraveyardErrorChecker(commandArguments);
             case 15 -> response = showSelectedCardErrorChecker(commandArguments);
