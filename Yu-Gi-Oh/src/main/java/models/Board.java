@@ -14,6 +14,10 @@ public class Board {
         this.player = player;
         this.monsterZoneState = new HashMap<>();
         this.magicZoneState = new HashMap<>();
+        for (int i = 1; i < 6; i++) {
+            monsterZoneState.put(i, "E");
+            magicZoneState.put(i, "E");
+        }
         this.graveyardState = "0";
         this.fieldZoneState = "E";
         this.deckCountState = String.valueOf(player.getMainDeckCount());
@@ -48,7 +52,7 @@ public class Board {
             output.append(player.getAccount().getNickname()).append(":").append(player.getLp());
         }
         return output.toString();
-    }
+    } //done
 
     public String getStringAsOpponent() {
         this.update();
@@ -78,7 +82,7 @@ public class Board {
             output.append("\n");
         }
         return output.toString();
-    }
+    } //done
 
     public void update() {
         //Field Zone

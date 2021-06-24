@@ -127,6 +127,8 @@ public class Player {
     public void destroyMonster(int position) {
         graveyardZone.add(monsterZone.get(position));
         monsterZone.put(position, null);
+        board.setMonsterZoneState(position, "E");
+        board.update();
     }
 
     public boolean ifMonsterZoneContains(MonsterCard card) {
