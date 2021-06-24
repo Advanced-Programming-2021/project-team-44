@@ -247,8 +247,8 @@ abstract public class DuelMenuProcessor extends Processor {
         if (selectState == null) return "invalid command";
 
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you can't change this card's position";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
             response = "you can't do this action in this phase";
@@ -271,8 +271,8 @@ abstract public class DuelMenuProcessor extends Processor {
     protected String flipSummonErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you can't change this card's position";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
             response = "you can't do this action in this phase";
@@ -295,8 +295,8 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         if (toBeAttacked > 5 || toBeAttacked < 1) return "invalid command";
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you  can't attack with this card";
         else if (phase != Phases.BATTLE)
             response = "you can't do this action in this phase";
@@ -313,8 +313,8 @@ abstract public class DuelMenuProcessor extends Processor {
     protected String directAttackErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you  can't attack with this card";
         else if (phase != Phases.BATTLE)
             response = "you can't do this action in this phase";
@@ -326,10 +326,13 @@ abstract public class DuelMenuProcessor extends Processor {
             response = directAttack();
         }
         return response;
-    }
+    } //done
 
     protected String activateEffectErrorChecker(String arguments) {
-        return null;
+        String response;
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (!(selectedCard instanceof MagicCard))
+        return response;
     }
 
     protected String showGraveyardErrorChecker(String arguments) {
