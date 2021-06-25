@@ -91,6 +91,28 @@ public class Player {
         return this.mainDeckCards.size();
     }
 
+    public boolean ownsCard(Card givenCard) {
+        for (int i = 1; i < 6; i++) {
+            if (monsterZone.get(i) == givenCard) return true;
+            if (magicZone.get(i) == givenCard) return true;
+        }
+        for (int i = 1; i < 7; i++) {
+            if (handZone.get(i) == givenCard) return true;
+        }
+        if (fieldZone == givenCard) return true;
+        return false;
+    }
+
+    public String getCardState(Card givenCard) {
+        assert ownsCard(givenCard);
+        for (int i = 1; i < 6; i++) {
+            if (monsterZone.get(i) == givenCard) return board.getMonsterZoneState(i);
+            if (magicZone.get(i) == givenCard) return board.getMagicZoneState(i);
+        }
+        if (fieldZone == givenCard) return board.getFieldZoneState();
+        return null;
+    }
+
     ////Monster Zone
     public MonsterCard getCardFromMonsterZone(int position) {
         return monsterZone.get(position);

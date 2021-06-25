@@ -364,8 +364,12 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String showSelectedCardErrorChecker() {
-        return null;
-    }
+        if (selectedCard == null) return "no card is selected yet";
+        if (getOtherPlayer().ownsCard(selectedCard)
+                && getOtherPlayer().getCardState(selectedCard).charAt(getOtherPlayer().getCardState(selectedCard).length()-1) == 'H')
+            return "card not visible";
+        return showSelectedCard();
+    } //done
 
     protected String cancelErrorChecker(String arguments) {
         return null;
@@ -640,9 +644,9 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected String showSelectedCard(String input) {
-        return null;
-    }
+    protected String showSelectedCard() {
+        return showCard(selectedCard.getName());
+    } //done
 
     ////Cheats
     protected String useCheat() {
