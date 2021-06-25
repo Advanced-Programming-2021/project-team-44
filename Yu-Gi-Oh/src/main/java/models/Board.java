@@ -29,7 +29,6 @@ public class Board {
         StringBuilder output = new StringBuilder();
         //Construction
         {
-            output.append("\n");
             output.append(fieldZoneState).append("\t\t\t\t\t\t").append(graveyardState).append("\n");
             output.append("\t")
                     .append(monsterZoneState.get(4)).append("\t")
@@ -79,7 +78,6 @@ public class Board {
                     .append(monsterZoneState.get(4)).append("\t")
                     .append("\t").append("\n");
             output.append(graveyardState).append("\t\t\t\t\t\t").append(fieldZoneState).append("\n");
-            output.append("\n");
         }
         return output.toString();
     } //done

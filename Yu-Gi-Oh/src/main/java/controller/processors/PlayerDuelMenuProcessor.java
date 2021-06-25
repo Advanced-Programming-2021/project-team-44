@@ -31,7 +31,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
         UserInterface.returnResponse(response);
 
-        if (!checkForDuelEnd()) execute();
-        else endDuel();
+        if (!ifDuelHasEnded()) execute();
+        else endDuel(getWinner(), getLoser());
     }
 }

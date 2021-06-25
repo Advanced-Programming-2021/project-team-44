@@ -41,7 +41,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
             UserInterface.returnResponse(response);
         }
 
-        if (!checkForDuelEnd()) execute();
-        else endDuel();
+        if (!ifDuelHasEnded()) execute();
+        else endDuel(getWinner(), getLoser());
     }
 }
