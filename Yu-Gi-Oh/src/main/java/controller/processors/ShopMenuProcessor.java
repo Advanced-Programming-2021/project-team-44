@@ -51,6 +51,18 @@ public class ShopMenuProcessor extends Processor { //DONE
         return response.toString();
     }
 
+    private String increaseMoneyByCheat(String arguments) {
+        //Cheat Enhanced
+        int amount;
+        try {
+            amount = Integer.parseInt(arguments);
+        } catch (Exception e) {
+            return "invalid value";
+        }
+        loggedInUser.increaseCoin(amount);
+        return amount + " coins was successfully added to your account, of course by cheats! shame on cheater!";
+    }
+
     @Override
     public String process(int commandId, String commandArguments) {
         String response = "invalid command";
@@ -64,6 +76,7 @@ public class ShopMenuProcessor extends Processor { //DONE
             case 3 -> response = buyCardErrorChecker(commandArguments);
             case 4 -> response = showAllCards();
             case 5 -> response = showCardErrorChecker(commandArguments);
+            case 6 -> response = increaseMoneyByCheat(commandArguments);
         }
         return response;
     }

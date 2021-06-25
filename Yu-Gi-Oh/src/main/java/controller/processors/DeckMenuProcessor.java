@@ -1,8 +1,8 @@
 package controller.processors;
 
 import controller.Core;
-import models.cards.Card;
 import models.Deck;
+import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
 import view.menus.Menus;
@@ -64,12 +64,14 @@ public class DeckMenuProcessor extends Processor { //DONE
     }
 
     private String addCardToDeckErrorChecker(String arguments) {
+        //Cheat Enhanced
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String cardName = null;
         String deckName = null;
         Boolean isSideDeck = null;
+        Boolean isForced = null;
         //Invalid Command
         while (matcher.find()) {
             switch (matcher.group(1)) {
@@ -85,12 +87,17 @@ public class DeckMenuProcessor extends Processor { //DONE
                     if (isSideDeck != null) return "invalid command";
                     isSideDeck = true;
                 }
+                case "--force", "-f" -> {
+                    if (isForced != null) return "invalid command";
+                    isForced = true;
+                }
                 default -> {
                     return "invalid command";
                 }
             }
         }
         if (isSideDeck == null) isSideDeck = false;
+        if (isForced == null) isForced = false;
         if (cardName == null || deckName == null) return "invalid command";
 
         if (Processor.loggedInUser.getCardByName(cardName) == null)
@@ -107,12 +114,15 @@ public class DeckMenuProcessor extends Processor { //DONE
                 fullState = Processor.loggedInUser.getDeckByName(deckName).isMainDeckFull();
                 whichDeck = "main";
             }
-            if (fullState) response = whichDeck + " deck is full";
-            else if (Processor.loggedInUser.getDeckByName(deckName).ifMaxOfCardIsReached(cardName))
+            if (fullState && !isForced) response = whichDeck + " deck is full";
+            else if (Processor.loggedInUser.getDeckByName(deckName).ifMaxOfCardIsReached(cardName) && !isForced)
                 response = "there are already three cards with name " + cardName + " in deck" + deckName;
             else {
                 addCardToDeck(deckName, cardName, whichDeck);
-                response = "card added to deck successfully";
+                if (isForced)
+                    response = "card added to deck forcefully! shame on cheater!";
+                else
+                    response = "card added to deck successfully";
             }
         }
         return response;

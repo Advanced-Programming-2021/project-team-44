@@ -16,17 +16,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 abstract public class DuelMenuProcessor extends Processor {
-//    /**
-//     * Auxiliary Object Map:
-//     * This map is used for checking the conditions in actions without adding more decentralized parameters.
-//     *
-//     *
-//     */
-//    private static HashMap<AuxiliaryIdentifiers, Object> auxiliaryObjectMap;
-//    private static enum AuxiliaryIdentifiers{
-//        IS_SUMMON_OR_SET_ACTION_AVAILABLE,
-//        CHANGE_POSITION_ACTION_AVAILABLE
-//    }
 
     public static Phases phase;
     protected int whoseTurn;
@@ -57,8 +46,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 "card show|" +
                 //Cheats
                 "use cheat|" +
-                "increase|" +
-                "select --hand|" +
+                "increase --LP|" +
                 "duel set-winner|" +
                 //Main
                 "select -d|" +
@@ -98,9 +86,8 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "cancel" -> output[0] = "16";
                 case "surrender" -> output[0] = "17";
                 case "use cheat" -> output[0] = "18";
-                case "increase" -> output[0] = "19";
-                case "select --hand" -> output[0] = "20";
-                case "duel set-winner" -> output[0] = "21";
+                case "duel set-winner" -> output[0] = "19";
+                case "increase --LP" -> output[0] = "20";
             }
             output[1] = matcher.group(2);
             if (output[1] == null) output[1] = "";
@@ -343,20 +330,13 @@ abstract public class DuelMenuProcessor extends Processor {
             response = "you can't activate an effect on this turn";
         else if (activeMagicEffects.contains((MagicCard) selectedCard))
             response = "you have already activated this card";
-        else if (getActingPlayer().getFirstFreePositionInMagicZone() == -1)
+        else if (getActingPlayer().isMagicZoneFull())
             response = "spell card zone is full";
         else {
-            //TODO Spell effect activation
-//            if (conditions) {
-//                response = "preparations of this spell are not done yet";
-//            }
-//            else {
-//                response = activateEffect();
-//            }
-            response = "";
+            response = activateEffect();
         }
         return response;
-    } //TODO Spell effect activation
+    } //done
 
     protected String showGraveyardErrorChecker() {
         showGraveyard();
@@ -366,7 +346,7 @@ abstract public class DuelMenuProcessor extends Processor {
     protected String showSelectedCardErrorChecker() {
         if (selectedCard == null) return "no card is selected yet";
         if (getOtherPlayer().ownsCard(selectedCard)
-                && getOtherPlayer().getCardState(selectedCard).charAt(getOtherPlayer().getCardState(selectedCard).length()-1) == 'H')
+                && getOtherPlayer().getCardState(selectedCard).charAt(getOtherPlayer().getCardState(selectedCard).length() - 1) == 'H')
             return "card not visible";
         return showSelectedCard();
     } //done
@@ -380,17 +360,23 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     ////Cheats
-    protected String increasePropertyErrorChecker(String arguments) {
-        return null;
-    }
-
-    protected String selectHandErrorChecker(String arguments) {
-        return null;
-    }
+    protected String increaseLpErrorChecker(String arguments) {
+        int amount;
+        try {
+            amount = Integer.parseInt(arguments);
+        } catch (Exception e) {
+            return "invalid value";
+        }
+        return increaseLp(amount);
+    } //done
 
     protected String setWinnerErrorChecker(String arguments) {
-        return null;
-    }
+        if (!getActingPlayer().getAccount().getNickname().equals(arguments)
+                && !getOtherPlayer().getAccount().getNickname().equals(arguments))
+            return "no player with this nickname in the game";
+        setWinnerCheat(arguments);
+        return "shame on cheater!";
+    } //done
 
     //Command Performer
     ////Main
@@ -429,6 +415,16 @@ abstract public class DuelMenuProcessor extends Processor {
         selectedCard = null;
     } //done
 
+    protected void changeTurn() {
+        if (whoseTurn == 1) whoseTurn = 2;
+        else if (whoseTurn == 2) whoseTurn = 1;
+        isSummonOrSetActionAvailable = true;
+        hasChangedPositionInThisTurn = new ArrayList<>();
+        isNewlySet = new ArrayList<>();
+        hasAttackedInThisTurn = new ArrayList<>();
+        deselect();
+    } //done
+
     protected String changePhase() {
         String response;
         switch (phase) {
@@ -441,10 +437,8 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         response = "phase: " + phase.stringName;
         if (phase == Phases.DRAW) {
-            if (whoseTurn == 1) whoseTurn = 2;
-            else if (whoseTurn == 2) whoseTurn = 1;
+            changeTurn();
             response += "\n" + "its " + getActingPlayer().getAccount().getNickname() + "'s turn";
-            isSummonOrSetActionAvailable = true;
         }
         return response;
     } //done
@@ -462,10 +456,9 @@ abstract public class DuelMenuProcessor extends Processor {
         } else if (((MonsterCard) selectedCard).getLevel() <= 6) {
             if (getActingPlayer().howManyMonstersInTheGame() == 0) return "there are not enough cards for tribute";
             else {
-                Scanner tmpScanner = new Scanner(System.in);
                 System.out.print("Choose a card to tribute: ");
-                int tributeIndex = tmpScanner.nextInt();
-                tmpScanner.close();
+                Integer tributeIndex = getTribute();
+                if (tributeIndex == null) return "Summon Canceled";
                 if (getActingPlayer().getCardFromMonsterZone(tributeIndex) == null)
                     return "there are no monsters on this address";
                 else {
@@ -480,12 +473,12 @@ abstract public class DuelMenuProcessor extends Processor {
         } else {
             if (getActingPlayer().howManyMonstersInTheGame() < 2) return "there are not enough cards for tribute";
             else {
-                Scanner tmpScanner = new Scanner(System.in);
                 System.out.print("Choose first card to tribute: ");
-                int firstTributeIndex = tmpScanner.nextInt();
+                Integer firstTributeIndex = getTribute();
+                if (firstTributeIndex == null) return "Summon Canceled";
                 System.out.print("Choose second card to tribute: ");
-                int secondTributeIndex = tmpScanner.nextInt();
-                tmpScanner.close();
+                Integer secondTributeIndex = getTribute();
+                if (secondTributeIndex == null) return "Summon Canceled";
                 if (getActingPlayer().getCardFromMonsterZone(firstTributeIndex) == null ||
                         getActingPlayer().getCardFromMonsterZone(secondTributeIndex) == null)
                     return "there is no monster on one of these addresses";
@@ -503,6 +496,28 @@ abstract public class DuelMenuProcessor extends Processor {
         isSummonOrSetActionAvailable = false;
         return response;
     } //done
+
+    //Util
+    // {
+    private Integer getTribute() {
+        Scanner tmpScanner = new Scanner(System.in);
+        Integer tributeIndex = null;
+        String input;
+        while (!(input = tmpScanner.nextLine().trim()).equals("cancel")) {
+            try {
+                tributeIndex = Integer.parseInt(input);
+                assert tributeIndex <= 5;
+            } catch (Exception e) {
+                System.out.println("Invalid card index");
+                continue;
+            }
+            break;
+        }
+        if (input.equals("cancel")) return null;
+        tmpScanner.close();
+        return tributeIndex;
+    } //done
+    // }
 
     protected String set() {
         //monster and spell and trap
@@ -617,6 +632,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String activateEffect() {
+        //TODO Spell effect activation preparations check
         return "spell activated";
     }  //TODO activate effect
 
@@ -656,26 +672,26 @@ abstract public class DuelMenuProcessor extends Processor {
             return "cheats activated successfully";
         }
     }
+    
+    protected String increaseLp(int amount) {
+        getActingPlayer().increaseLp(amount);
+        return amount + " Lp was successfully added to you";
+    } //done
 
-    protected String increaseProperty(String arguments) {
-        return null;
-    }
-
-    protected String selectHand(String arguments) {
-        return null;
-    }
-
-    protected String setWinnerCheat(String arguments) {
-        return null;
-    }
+    protected void setWinnerCheat(String winnerNickname) {
+        if (getActingPlayer().getAccount().getNickname().equals(winnerNickname))
+            endDuel(getActingPlayer(), getOtherPlayer());
+        else
+            endDuel(getOtherPlayer(), getActingPlayer());
+    } //done
 
     //Utils
-    protected String showBoard(Account selfAccount, Account opponentAccount) {
-        return null;
-    } //TODO show board
-
-    protected String showPhase() {
-        return phase.stringName;
+    protected String showBoard() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getOtherPlayerBoard().getStringAsOpponent());
+        stringBuilder.append("\n").append("--------------------------").append("\n").append("\n");
+        stringBuilder.append(getActingPlayerBoard().getStringAsSelf());
+        return stringBuilder.toString();
     } //done
 
     protected int showPlayerPoints(Player player) {
@@ -690,12 +706,20 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected boolean checkForDuelEnd() {
+    protected boolean ifDuelHasEnded() {
         return false;
     } //TODO Check for end
 
-    protected void endDuel() {
+    protected void endDuel(Player winner, Player loser) {
     } //TODO End duel
+
+    protected Player getWinner() {
+        return null;
+    } //TODO Winner finder
+
+    protected Player getLoser() {
+        return null;
+    } //TODO Loser finder
 
     protected void activateSummonEffect(MonsterCard card) {
         //Called from summon method
@@ -734,6 +758,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     @Override
     public String process(int commandId, String commandArguments) {
+        commandArguments = commandArguments.trim();
         String response = "invalid command";
         switch (commandId) {
             case 0 -> response = enterMenuErrorChecker(commandArguments);
@@ -758,9 +783,8 @@ abstract public class DuelMenuProcessor extends Processor {
             case 16 -> response = cancelErrorChecker(commandArguments);
             case 17 -> response = surrenderErrorChecker(commandArguments);
             case 18 -> response = useCheat();
-            case 19 -> response = increasePropertyErrorChecker(commandArguments);
-            case 20 -> response = selectHandErrorChecker(commandArguments);
-            case 21 -> response = setWinnerErrorChecker(commandArguments);
+            case 19 -> response = setWinnerErrorChecker(commandArguments);
+            case 20 -> response = increaseLpErrorChecker(commandArguments);
         }
         return response;
     }

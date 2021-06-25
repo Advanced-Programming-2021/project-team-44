@@ -13,7 +13,7 @@ public class ShopMenu extends Menu { //DONE
     @Override
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|shop buy|shop show --all|card show)\\b(?:\\s+(.*))?$");
+        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|shop buy|shop show --all|increase --money|card show)\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             switch (matcher.group(1)) {
@@ -23,6 +23,7 @@ public class ShopMenu extends Menu { //DONE
                 case "shop buy" -> output[0] = "3";
                 case "shop show --all" -> output[0] = "4";
                 case "card show" -> output[0] = "5";
+                case "increase --money" -> output[0] = "6";
             }
             output[1] = matcher.group(2);
             if (output[1] == null) output[1] = "";
