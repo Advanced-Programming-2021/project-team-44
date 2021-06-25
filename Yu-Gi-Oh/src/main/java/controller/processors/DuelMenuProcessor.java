@@ -39,6 +39,7 @@ abstract public class DuelMenuProcessor extends Processor {
     protected ArrayList<Card> hasAttackedInThisTurn;
     protected ArrayList<MonsterCard> monsterActiveContinuousEffects;
     protected ArrayList<MonsterCard> monsterEffectsQueue;
+    protected ArrayList<MagicCard> activeMagicEffects;
 
     public DuelMenuProcessor(Menus name) {
         super(name);
@@ -218,6 +219,11 @@ abstract public class DuelMenuProcessor extends Processor {
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) response = "you can't do this action in this phase";
         else if (!isSummonOrSetActionAvailable) response = "you already summoned/set on this turn";
         else {
+            if (selectedCard instanceof MonsterCard) {
+                if (getActingPlayer().isMonsterZoneFull()) return "monster card zone is full";
+            } else {
+                if (getActingPlayer().isMagicZoneFull()) return "spell card zone is full";
+            }
             response = set();
         }
         return response;
@@ -247,8 +253,8 @@ abstract public class DuelMenuProcessor extends Processor {
         if (selectState == null) return "invalid command";
 
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you can't change this card's position";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
             response = "you can't do this action in this phase";
@@ -271,8 +277,8 @@ abstract public class DuelMenuProcessor extends Processor {
     protected String flipSummonErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you can't change this card's position";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
             response = "you can't do this action in this phase";
@@ -295,8 +301,8 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         if (toBeAttacked > 5 || toBeAttacked < 1) return "invalid command";
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you  can't attack with this card";
         else if (phase != Phases.BATTLE)
             response = "you can't do this action in this phase";
@@ -313,8 +319,8 @@ abstract public class DuelMenuProcessor extends Processor {
     protected String directAttackErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
-        else if (selectedCard instanceof MonsterCard
-                && !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
+        else if (!(selectedCard instanceof MonsterCard)
+                || !getActingPlayer().ifMonsterZoneContains((MonsterCard) selectedCard))
             response = "you  can't attack with this card";
         else if (phase != Phases.BATTLE)
             response = "you can't do this action in this phase";
@@ -326,19 +332,44 @@ abstract public class DuelMenuProcessor extends Processor {
             response = directAttack();
         }
         return response;
-    }
+    } //done
 
     protected String activateEffectErrorChecker(String arguments) {
-        return null;
-    }
+        String response;
+        if (selectedCard == null) response = "no card is selected yet";
+        else if (!(selectedCard instanceof MagicCard))
+            response = "activate effect is only for spell cards";
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2)
+            response = "you can't activate an effect on this turn";
+        else if (activeMagicEffects.contains((MagicCard) selectedCard))
+            response = "you have already activated this card";
+        else if (getActingPlayer().getFirstFreePositionInMagicZone() == -1)
+            response = "spell card zone is full";
+        else {
+            //TODO Spell effect activation
+//            if (conditions) {
+//                response = "preparations of this spell are not done yet";
+//            }
+//            else {
+//                response = activateEffect();
+//            }
+            response = "";
+        }
+        return response;
+    } //TODO Spell effect activation
 
-    protected String showGraveyardErrorChecker(String arguments) {
-        return null;
-    }
+    protected String showGraveyardErrorChecker() {
+        showGraveyard();
+        return "";
+    } //done
 
-    protected String showSelectedCardErrorChecker(String arguments) {
-        return null;
-    }
+    protected String showSelectedCardErrorChecker() {
+        if (selectedCard == null) return "no card is selected yet";
+        if (getOtherPlayer().ownsCard(selectedCard)
+                && getOtherPlayer().getCardState(selectedCard).charAt(getOtherPlayer().getCardState(selectedCard).length()-1) == 'H')
+            return "card not visible";
+        return showSelectedCard();
+    } //done
 
     protected String cancelErrorChecker(String arguments) {
         return null;
@@ -477,8 +508,6 @@ abstract public class DuelMenuProcessor extends Processor {
         //monster and spell and trap
         String response = "set successfully";
         if (selectedCard instanceof MonsterCard) {
-            if (getActingPlayer().isMonsterZoneFull()) return "monster card zone is full";
-
             int emptyPosition = getActingPlayer().getFirstFreePositionInMonsterZone();
             assert emptyPosition != -1;
 
@@ -488,8 +517,6 @@ abstract public class DuelMenuProcessor extends Processor {
             deselect();
             getActingPlayerBoard().setMonsterZoneState(emptyPosition, "DH");
         } else {
-            if (getActingPlayer().isMagicZoneFull()) return "spell card zone is full";
-
             int emptyPosition = getActingPlayer().getFirstFreePositionInMagicZone();
             assert emptyPosition != -1;
 
@@ -589,17 +616,37 @@ abstract public class DuelMenuProcessor extends Processor {
                 + " battle damage";
     } //done
 
-    protected String activateEffect(String input) {
-        return null;
-    }
+    protected String activateEffect() {
+        return "spell activated";
+    }  //TODO activate effect
 
-    protected String showGraveyard(String input) {
-        return null;
-    }
+    //TODO spell activation in other player's turn
 
-    protected String showSelectedCard(String input) {
-        return null;
-    }
+    //TODO ritual summon
+    //TODO special summon
+
+    protected void showGraveyard() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (getActingPlayer().getGraveyardZone().size() == 0)
+            System.out.println("graveyard empty");
+        else {
+            for (Card card : getActingPlayer().getGraveyardZone()) {
+                stringBuilder.append(card.getName());
+                stringBuilder.append(":");
+                stringBuilder.append(card.getDescription());
+                stringBuilder.append("\n");
+            }
+            System.out.print(stringBuilder);
+        }
+        Scanner tmpScanner = new Scanner(System.in);
+        while (!tmpScanner.nextLine().equals("back")) {
+            System.out.println("use back command to go back to game");
+        }
+    } //done
+
+    protected String showSelectedCard() {
+        return showCard(selectedCard.getName());
+    } //done
 
     ////Cheats
     protected String useCheat() {
@@ -706,8 +753,8 @@ abstract public class DuelMenuProcessor extends Processor {
             case 11 -> response = attackErrorChecker(commandArguments);
             case 12 -> response = directAttackErrorChecker();
             case 13 -> response = activateEffectErrorChecker(commandArguments);
-            case 14 -> response = showGraveyardErrorChecker(commandArguments);
-            case 15 -> response = showSelectedCardErrorChecker(commandArguments);
+            case 14 -> response = showGraveyardErrorChecker();
+            case 15 -> response = showSelectedCardErrorChecker();
             case 16 -> response = cancelErrorChecker(commandArguments);
             case 17 -> response = surrenderErrorChecker(commandArguments);
             case 18 -> response = useCheat();
