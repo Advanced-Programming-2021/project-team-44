@@ -178,6 +178,10 @@ public class Player {
         }
     } //TODO Summon Effect
 
+    public boolean isMainDeckCardEmpty() {
+        return mainDeckCards.size() == 0;
+    }
+
     ////Magic Zone
     public MagicCard getCardFromMagicZone(int position) {
         return magicZone.get(position);
@@ -240,7 +244,7 @@ public class Player {
         return handZone.containsValue(card);
     }
 
-    private void setHandCards() {
+    public void setHandCards() {
         for (int i = 1; i <= 6; i++) {
             if (handZone.get(i) == null) {
                 handZone.put(i, mainDeckCards.get(0));

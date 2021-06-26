@@ -16,7 +16,7 @@ public class LoginMenu extends Menu { //DONE
     @Override
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|user create|user login)\\b(?:\\s+(.*))?$");
+        Pattern pattern = Pattern.compile("^(help|menu enter|menu exit|menu show-current|user create|user login)\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             switch (matcher.group(1)) {
@@ -25,6 +25,7 @@ public class LoginMenu extends Menu { //DONE
                 case "menu show-current" -> output[0] = "2";
                 case "user create" -> output[0] = "3";
                 case "user login" -> output[0] = "4";
+                case "help" -> output[0] = "99";
             }
             output[1] = matcher.group(2);
             if (output[1] == null) output[1] = "";

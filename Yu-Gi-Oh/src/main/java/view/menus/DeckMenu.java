@@ -13,7 +13,8 @@ public class DeckMenu extends Menu { //DONE
     @Override
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|" +
+        Pattern pattern = Pattern.compile("^(help|" +
+                "menu enter|" +
                 "menu exit|" +
                 "menu show-current|" +
                 "deck create|" +
@@ -40,6 +41,7 @@ public class DeckMenu extends Menu { //DONE
                 case "deck show --cards" -> output[0] = "9";
                 case "deck show" -> output[0] = "10";
                 case "card show" -> output[0] = "11";
+                case "help" -> output[0] = "99";
 
             }
             output[1] = matcher.group(2);

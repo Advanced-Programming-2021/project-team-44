@@ -13,7 +13,7 @@ public class ImportExportMenu extends Menu { //DONE
     @Override
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|menu exit|menu show-current|import card|export card)\\b(?:\\s+(.*))?$");
+        Pattern pattern = Pattern.compile("^(help|menu enter|menu exit|menu show-current|import card|export card)\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
             switch (matcher.group(1)) {
@@ -22,6 +22,7 @@ public class ImportExportMenu extends Menu { //DONE
                 case "menu show-current" -> output[0] = "2";
                 case "import card" -> output[0] = "3";
                 case "export card" -> output[0] = "4";
+                case "help" -> output[0] = "99";
             }
             output[1] = matcher.group(2);
             if (output[1] == null) output[1] = "";

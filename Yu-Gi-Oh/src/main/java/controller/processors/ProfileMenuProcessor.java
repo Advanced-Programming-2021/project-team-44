@@ -113,6 +113,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
             case 3 -> response = changePasswordErrorChecker(commandArguments);
             case 4 -> response = changeNicknameErrorChecker(commandArguments);
             case 5 -> response = showProfile();
+            case 99 -> response = help();
         }
         return response;
     }
@@ -120,6 +121,19 @@ public class ProfileMenuProcessor extends Processor { //DONE
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                profile change --nickname <new nickname>
+                profile change --password <old password> <new password>
+                help
+                """;
     }
 
     @Override

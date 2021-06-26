@@ -4,6 +4,7 @@ import controller.Core;
 import models.Account;
 import view.menus.Menus;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +17,7 @@ public class LoginMenuProcessor extends Processor { //DONE
     //Error Checkers
     private String createUserErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String username = null;
         String nickname = null;
@@ -60,7 +61,7 @@ public class LoginMenuProcessor extends Processor { //DONE
 
     private String loginUserErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String username = null;
         String password = null;
@@ -87,7 +88,7 @@ public class LoginMenuProcessor extends Processor { //DONE
         else if (!Account.isPasswordValid(password)) response = "invalid password";
         else if (Account.getAccountByUsername(username) == null)
             response = "Username and password did not match!";
-        else if (!Account.getAccountByUsername(username).getPassword().equals(password))
+        else if (!Objects.requireNonNull(Account.getAccountByUsername(username)).getPassword().equals(password))
             response = "Username and password did not match!";
         else {
             loginUser(username);
@@ -118,6 +119,7 @@ public class LoginMenuProcessor extends Processor { //DONE
             case 2 -> response = showMenu();
             case 3 -> response = createUserErrorChecker(commandArguments);
             case 4 -> response = loginUserErrorChecker(commandArguments);
+            case 99 -> response = help();
         }
         return response;
     }
@@ -125,6 +127,19 @@ public class LoginMenuProcessor extends Processor { //DONE
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "please login first";
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                user create <username> <nickname> <password>
+                use login <username> <password>
+                help
+                """;
     }
 
     @Override

@@ -18,6 +18,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
     public void gameInitialization(Account player1, Account player2, int rounds) {
         phase = Phases.DRAW;
         whoseTurn = 1;
+        remainingRounds = rounds;
         isSummonOrSetActionAvailable = true;
         monsterActiveContinuousEffects = new ArrayList<>();
         this.player1 = new Player(player1);

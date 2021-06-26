@@ -141,6 +141,7 @@ public class MainMenuProcessor extends Processor { //DONE
             case 3 -> response = userLogout();
             case 4 -> response = duelStartErrorChecker(commandArguments);
             case 5 -> response = duelStartWithAIErrorChecker(commandArguments);
+            case 99 -> response = help();
         }
         return response;
     }
@@ -176,6 +177,20 @@ public class MainMenuProcessor extends Processor { //DONE
             default -> response = "invalid menu name";
         }
         return response;
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                user logout
+                duel --new <opponent username> <rounds> 
+                duel --new --ai <rounds>
+                help
+                """;
     }
 
     @Override
