@@ -138,6 +138,15 @@ public class Player {
         return -1;
     }
 
+    public int countMonstersInMonsterZone(){
+        int count = 0;
+        for (int i = 1; i <= 5; i++) {
+            if (getCardFromMonsterZone(i) != null)
+                count++;
+        }
+        return count;
+    }
+
     public int howManyMonstersInTheGame() {
         int sum = 0;
         for (Map.Entry<Integer, MonsterCard> entry : monsterZone.entrySet())

@@ -36,7 +36,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
         //Invalid Command Arguments
         if (!Account.isNicknameValid(newNickname)) response = "invalid Nickname";
         else if (Account.getAccountByNickname(newNickname) != null)
-            response = "user with nickname" + newNickname + "already exists";
+            response = "user with nickname " + newNickname + " already exists";
         else {
             changeNickname(newNickname);
             response = "nickname changed successfully!";
