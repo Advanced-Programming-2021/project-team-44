@@ -216,7 +216,7 @@ public class DeckMenuProcessor extends Processor { //DONE
 
     //Command Performer
     private String showCard(String cardName) {
-        return Card.getCardByName(cardName).getStringForShow();
+        return Objects.requireNonNull(Card.getCardByName(cardName)).getStringForShow();
     }
 
     private void createDeck(String deckName) {
@@ -307,6 +307,26 @@ public class DeckMenuProcessor extends Processor { //DONE
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                deck create <name>
+                deck delete <name>
+                deck set-activate <name>
+                deck add-card <card name> <deck name> [side/main]
+                deck rm-card <card name> <deck name> [side/main]
+                deck show --all
+                deck show --cards
+                deck show <name> [side/main]
+                card show <name>
+                help
+                """;
     }
 
     @Override

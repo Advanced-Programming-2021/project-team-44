@@ -77,6 +77,7 @@ public class ShopMenuProcessor extends Processor { //DONE
             case 4 -> response = showAllCards();
             case 5 -> response = showCardErrorChecker(commandArguments);
             case 6 -> response = increaseMoneyByCheat(commandArguments);
+            case 99 -> response = help();
         }
         return response;
     }
@@ -84,6 +85,20 @@ public class ShopMenuProcessor extends Processor { //DONE
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                card show <name>
+                shop buy <name>
+                shop show --all
+                help
+                """;
     }
 
     @Override

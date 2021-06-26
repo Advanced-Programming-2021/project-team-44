@@ -33,6 +33,8 @@ public abstract class Processor {
     protected abstract String enterMenuErrorChecker(String input);
 
     //Command Performer
+    protected abstract String help();
+
     protected abstract void enterMenu(Menus menu);
 
     protected abstract void exitMenu();

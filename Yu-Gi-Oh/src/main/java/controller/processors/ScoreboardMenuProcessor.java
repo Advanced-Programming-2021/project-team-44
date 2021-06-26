@@ -44,6 +44,7 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
             }
             case 2 -> response = showMenu();
             case 3 -> response = showScoreboard();
+            case 99 -> response = help();
         }
         return response;
     }
@@ -51,6 +52,18 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                scoreboard show
+                help
+                """;
     }
 
     @Override

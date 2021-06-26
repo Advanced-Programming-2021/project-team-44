@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 abstract public class DuelMenuProcessor extends Processor {
 
     public static Phases phase;
+    public static int remainingRounds;
     protected int whoseTurn;
     protected Player player1;
     protected Player player2;
@@ -40,7 +41,8 @@ abstract public class DuelMenuProcessor extends Processor {
 
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
-        Pattern pattern = Pattern.compile("^(menu enter|" +
+        Pattern pattern = Pattern.compile("^(help|" +
+                "menu enter|" +
                 "menu exit|" +
                 "menu show-current|" +
                 "card show|" +
@@ -88,6 +90,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "use cheat" -> output[0] = "18";
                 case "duel set-winner" -> output[0] = "19";
                 case "increase --LP" -> output[0] = "20";
+                case "help" -> output[0] = "99";
             }
             output[1] = matcher.group(2);
             if (output[1] == null) output[1] = "";
@@ -361,6 +364,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     ////Cheats
     protected String increaseLpErrorChecker(String arguments) {
+        if (!getActingPlayer().isCheatActivated()) return "you can't use cheats";
         int amount;
         try {
             amount = Integer.parseInt(arguments);
@@ -371,6 +375,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String setWinnerErrorChecker(String arguments) {
+        if (!getActingPlayer().isCheatActivated()) return "you can't use cheats";
         if (!getActingPlayer().getAccount().getNickname().equals(arguments)
                 && !getOtherPlayer().getAccount().getNickname().equals(arguments))
             return "no player with this nickname in the game";
@@ -426,21 +431,26 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String changePhase() {
-        String response;
-        switch (phase) {
-            case DRAW -> phase = Phases.STANDBY;
-            case STANDBY -> phase = Phases.MAIN1;
-            case MAIN1 -> phase = Phases.BATTLE;
-            case BATTLE -> phase = Phases.MAIN2;
-            case MAIN2 -> phase = Phases.END;
-            case END -> phase = Phases.DRAW;
+        if (!ifDuelHasEnded()) {
+            String response;
+            switch (phase) {
+                case DRAW -> phase = Phases.STANDBY;
+                case STANDBY -> phase = Phases.MAIN1;
+                case MAIN1 -> phase = Phases.BATTLE;
+                case BATTLE -> phase = Phases.MAIN2;
+                case MAIN2 -> phase = Phases.END;
+                case END -> phase = Phases.DRAW;
+            }
+            response = "phase: " + phase.stringName;
+            if (phase == Phases.DRAW) {
+                changeTurn();
+                response += "\n" + "its " + getActingPlayer().getAccount().getNickname() + "'s turn";
+                getActingPlayer().setHandCards();
+            }
+            return response;
         }
-        response = "phase: " + phase.stringName;
-        if (phase == Phases.DRAW) {
-            changeTurn();
-            response += "\n" + "its " + getActingPlayer().getAccount().getNickname() + "'s turn";
-        }
-        return response;
+        else endDuel(getWinner(), getLoser());
+        return "";
     } //done
 
     protected String summon() {
@@ -672,7 +682,7 @@ abstract public class DuelMenuProcessor extends Processor {
             return "cheats activated successfully";
         }
     }
-    
+
     protected String increaseLp(int amount) {
         getActingPlayer().increaseLp(amount);
         return amount + " Lp was successfully added to you";
@@ -785,8 +795,37 @@ abstract public class DuelMenuProcessor extends Processor {
             case 18 -> response = useCheat();
             case 19 -> response = setWinnerErrorChecker(commandArguments);
             case 20 -> response = increaseLpErrorChecker(commandArguments);
+            case 99 -> response = help();
         }
         return response;
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                card show <name>
+                select <monster/spell/field/hand> <index> [opponent]
+                select -d
+                summon
+                set
+                set --position
+                flip-summon
+                attack
+                attack direct
+                activate effect
+                show graveyard
+                card show --selected
+                surrender
+                cancel [only usable in  in-command chain inputs]
+                use cheat
+                increase --LP <amount>
+                duel set-winner <nickname>
+                help
+                """;
     }
 
     @Override

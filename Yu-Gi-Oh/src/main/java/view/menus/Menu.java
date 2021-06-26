@@ -15,6 +15,7 @@ public abstract class Menu {//0
     protected HashMap<Integer, Menu> subMenus;
     protected static Scanner scanner;
     public static ArrayList<Menu> menus;
+    private boolean firstTime;
 
     //Initialization Block
     static {
@@ -25,6 +26,7 @@ public abstract class Menu {//0
         this.name = name;
         this.parentMenu = parentMenu;
         menus.add(this);
+        this.firstTime = true;
     }
 
     public static Menu getMenuByName(Menus name) {
@@ -47,12 +49,16 @@ public abstract class Menu {//0
     }
 
     public void execute() {
-        UserInterface.returnResponse(Objects.requireNonNull(Processor.getProcessorByName(this.name)).showMenu());
+        if (firstTime) {
+            UserInterface.returnResponse(Objects.requireNonNull(Processor.getProcessorByName(this.name)).showMenu());
+            firstTime = false;
+        }
         Menu nextMenu;
         String input = scanner.nextLine().trim();
         String[] commandId = commandHandler(input);
         String response = Core.menuDistributor(Integer.parseInt(commandId[0]), commandId[1]);
         nextMenu = Objects.requireNonNull(Menu.getMenuByName(Core.currentMenu));
+        if (nextMenu != this) firstTime = true;
         UserInterface.returnResponse(response);
         nextMenu.execute();
     }

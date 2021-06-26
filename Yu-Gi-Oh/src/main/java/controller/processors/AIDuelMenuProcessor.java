@@ -17,6 +17,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
     public void gameInitialization(Account player1, Account player2, int rounds) {
         phase = Phases.DRAW;
         whoseTurn = 1;
+        remainingRounds = rounds;
         if (player1 == null) {
             this.player1 = null;
             this.player2 = new Player(player2);

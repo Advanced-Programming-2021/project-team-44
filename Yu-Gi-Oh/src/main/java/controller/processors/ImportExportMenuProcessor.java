@@ -8,12 +8,10 @@ import models.cards.MonsterCard;
 import view.menus.Menus;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,6 +50,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         return response;
     }
 
+
     //Command Performer
     private String importCard(String path) {
         Scanner tmpScanner = new Scanner(System.in);
@@ -59,7 +58,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         String response = tmpScanner.nextLine();
         tmpScanner.close();
         File cardJsonFile = new File(path);
-        String cardJson = null;
+        String cardJson;
         try {
             cardJson = Files.readString(Paths.get(cardJsonFile.getPath()));
         } catch (IOException e) {
@@ -86,14 +85,12 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         try {
             Card toBeExportedCard = Card.getCardByName(cardName);
             String exportedCardData;
-            if (toBeExportedCard instanceof MonsterCard) {
-                MonsterCard toBeExportedMonsterCard = (MonsterCard) toBeExportedCard;
+            if (toBeExportedCard instanceof MonsterCard toBeExportedMonsterCard) {
                 exportedCardData = MonsterCard.generateJsonByHashMap(toBeExportedMonsterCard.getHashMap());
                 FileWriter importedCardWriter = new FileWriter(exportedCardFile.getPath());
                 importedCardWriter.write(exportedCardData);
                 importedCardWriter.close();
-            } else if (toBeExportedCard instanceof MagicCard) {
-                MagicCard toBeExportedMagicCard = (MagicCard) toBeExportedCard;
+            } else if (toBeExportedCard instanceof MagicCard toBeExportedMagicCard) {
                 exportedCardData = MagicCard.generateJSONByHashMap(toBeExportedMagicCard.getHashMap());
                 FileWriter importedCardWriter = new FileWriter(exportedCardFile.getPath());
                 importedCardWriter.write(exportedCardData);
@@ -115,6 +112,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
             case 2 -> response = showMenu();
             case 3 -> response = importCardErrorChecker(commandArguments);
             case 4 -> response = exportCardErrorChecker(commandArguments);
+            case 99 -> response = help();
         }
         return response;
     }
@@ -122,6 +120,19 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     @Override
     protected String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
+    }
+
+    @Override
+    protected String help() {
+        return """
+                * Commands in this Menu:
+                menu enter <name>
+                menu exit
+                menu show-current
+                import card <name>
+                export card <name>
+                help
+                """;
     }
 
     @Override
