@@ -40,6 +40,6 @@ public abstract class Processor {
     protected abstract void exitMenu();
 
     public String showMenu()  {
-        return this.name.toBePrintedName;
+        return this.name.toBePrintedName + "\n";
     }
 }

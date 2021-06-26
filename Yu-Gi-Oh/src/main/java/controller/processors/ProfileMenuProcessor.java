@@ -16,7 +16,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
     //Error Checker
     private String changeNicknameErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String newNickname = null;
         //Invalid Command
@@ -46,7 +46,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
 
     private String changePasswordErrorChecker(String arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?=(?: -[-]?)|(?:$))");
+        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
         String currentPassword = null;
         String newPassword = null;
@@ -110,8 +110,8 @@ public class ProfileMenuProcessor extends Processor { //DONE
                 exitMenu();
             }
             case 2 -> response = showMenu();
-            case 3 -> response = changePasswordErrorChecker(commandArguments);
-            case 4 -> response = changeNicknameErrorChecker(commandArguments);
+            case 3 -> response = changeNicknameErrorChecker(commandArguments);
+            case 4 -> response = changePasswordErrorChecker(commandArguments);
             case 5 -> response = showProfile();
             case 99 -> response = help();
         }
@@ -130,6 +130,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
                 menu enter <name>
                 menu exit
                 menu show-current
+                show profile
                 profile change --nickname <new nickname>
                 profile change --password <old password> <new password>
                 help

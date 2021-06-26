@@ -50,10 +50,11 @@ public abstract class Menu {//0
 
     public void execute() {
         if (firstTime) {
-            UserInterface.returnResponse(Objects.requireNonNull(Processor.getProcessorByName(this.name)).showMenu());
+            UserInterface.returnResponse("\n" + Objects.requireNonNull(Processor.getProcessorByName(this.name)).showMenu());
             firstTime = false;
         }
         Menu nextMenu;
+        System.out.print("$ ");
         String input = scanner.nextLine().trim();
         String[] commandId = commandHandler(input);
         String response = Core.menuDistributor(Integer.parseInt(commandId[0]), commandId[1]);
