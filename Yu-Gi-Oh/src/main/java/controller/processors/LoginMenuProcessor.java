@@ -137,7 +137,7 @@ public class LoginMenuProcessor extends Processor { //DONE
                 menu exit
                 menu show-current
                 user create <username> <nickname> <password>
-                use login <username> <password>
+                user login <username> <password>
                 help
                 """;
     }
