@@ -11,6 +11,7 @@ import models.cards.MonsterCard;
 import view.menus.Menus;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +28,7 @@ abstract public class DuelMenuProcessor extends Processor {
     protected ArrayList<Card> hasChangedPositionInThisTurn;
     protected ArrayList<Card> isNewlySet;
     protected ArrayList<Card> hasAttackedInThisTurn;
-    protected ArrayList<MonsterCard> monsterActiveContinuousEffects;
+    protected ArrayList<MonsterCard> activeMonsterContinuousEffects;
     protected ArrayList<MonsterCard> monsterEffectsQueue;
     protected ArrayList<MagicCard> activeMagicEffects;
 
@@ -63,7 +64,6 @@ abstract public class DuelMenuProcessor extends Processor {
                 "activate effect|" +
                 "show graveyard|" +
                 "card show --selected|" + "card show -s|" +
-                "cancel|" +
                 "surrender" +
                 ")\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
@@ -85,7 +85,6 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "activate effect" -> output[0] = "13";
                 case "show graveyard" -> output[0] = "14";
                 case "card show --selected", "card show -s" -> output[0] = "15";
-                case "cancel" -> output[0] = "16";
                 case "surrender" -> output[0] = "17";
                 case "use cheat" -> output[0] = "18";
                 case "duel set-winner" -> output[0] = "19";
@@ -324,7 +323,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String activateEffectErrorChecker(String arguments) {
+    protected String activateEffectErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else if (!(selectedCard instanceof MagicCard))
@@ -354,14 +353,6 @@ abstract public class DuelMenuProcessor extends Processor {
         return showSelectedCard();
     } //done
 
-    protected String cancelErrorChecker(String arguments) {
-        return null;
-    }
-
-    protected String surrenderErrorChecker(String arguments) {
-        return null;
-    }
-
     ////Cheats
     protected String increaseLpErrorChecker(String arguments) {
         if (!getActingPlayer().isCheatActivated()) return "you can't use cheats";
@@ -386,7 +377,7 @@ abstract public class DuelMenuProcessor extends Processor {
     //Command Performer
     ////Main
     protected String showCard(String cardName) {
-        return Card.getCardByName(cardName).getStringForShow();
+        return Objects.requireNonNull(Card.getCardByName(cardName)).getStringForShow();
     } //done
 
     protected String selectCard(String set, Integer position, Boolean ofOpponent) {
@@ -448,8 +439,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 getActingPlayer().setHandCards();
             }
             return response;
-        }
-        else endDuel(getWinner(), getLoser());
+        } else endDuel(getWinner(), getLoser());
         return "";
     } //done
 
@@ -577,57 +567,62 @@ abstract public class DuelMenuProcessor extends Processor {
         deselect();
         MonsterCard toBeAttackedCard = getOtherPlayer().getCardFromMonsterZone(toBeAttackedIndex);
         String toBeAttackedCardState = getOtherPlayerBoard().getMonsterZoneState(toBeAttackedIndex);
-        if (toBeAttackedCardState.equals("OO")) {
-            int difference = Math.abs(toBeAttackedCard.getAttackPoint() - attackingCard.getAttackPoint());
-            if (toBeAttackedCard.getAttackPoint() < attackingCard.getAttackPoint()) {
-                getOtherPlayer().increaseLp(-1 * difference);
-                getOtherPlayer().destroyMonster(toBeAttackedIndex);
-                return "your opponent's monster is destroyed and your opponent receives "
-                        + difference
-                        + " battle damage";
-            } else if (toBeAttackedCard.getAttackPoint() == attackingCard.getAttackPoint()) {
-                getOtherPlayer().destroyMonster(toBeAttackedIndex);
-                getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
-                return "both you and your opponent monster cards are destroyed and no one receives damage";
-            } else {
-                getActingPlayer().increaseLp(-1 * difference);
-                getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
-                return "your monster is destroyed and you received "
-                        + difference
-                        + " battle damage";
+        switch (toBeAttackedCardState) {
+            case "OO" -> {
+                int difference = Math.abs(toBeAttackedCard.getAttackPoint() - attackingCard.getAttackPoint());
+                if (toBeAttackedCard.getAttackPoint() < attackingCard.getAttackPoint()) {
+                    getOtherPlayer().increaseLp(-1 * difference);
+                    getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    return "your opponent's monster is destroyed and your opponent receives "
+                            + difference
+                            + " battle damage";
+                } else if (toBeAttackedCard.getAttackPoint() == attackingCard.getAttackPoint()) {
+                    getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
+                    return "both you and your opponent monster cards are destroyed and no one receives damage";
+                } else {
+                    getActingPlayer().increaseLp(-1 * difference);
+                    getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
+                    return "your monster is destroyed and you received "
+                            + difference
+                            + " battle damage";
+                }
             }
-        } else if (toBeAttackedCardState.equals("DO")) {
-            int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
-            if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
-                getOtherPlayer().destroyMonster(toBeAttackedIndex);
-                return "the defense position monster is destroyed";
-            } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
-                return "no card is destroyed";
-            } else {
-                getActingPlayer().increaseLp(-1 * difference);
-                return "no card is destroyed and you received "
-                        + difference
-                        + " battle damage";
+            case "DO" -> {
+                int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
+                if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
+                    getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    return "the defense position monster is destroyed";
+                } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
+                    return "no card is destroyed";
+                } else {
+                    getActingPlayer().increaseLp(-1 * difference);
+                    return "no card is destroyed and you received "
+                            + difference
+                            + " battle damage";
+                }
             }
-        } else if (toBeAttackedCardState.equals("DH")) {
-            String response = "opponent's monster card was " + toBeAttackedCard.getName() + " and ";
-            int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
-            if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
-                getOtherPlayer().destroyMonster(toBeAttackedIndex);
-                return response
-                        + "the defense position monster is destroyed";
-            } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
-                return response
-                        + "no card is destroyed";
-            } else {
-                getActingPlayer().increaseLp(-1 * difference);
-                return response
-                        + "no card is destroyed and you received "
-                        + difference
-                        + " battle damage";
+            case "DH" -> {
+                String response = "opponent's monster card was " + toBeAttackedCard.getName() + " and ";
+                int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
+                if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
+                    getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    return response
+                            + "the defense position monster is destroyed";
+                } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
+                    return response
+                            + "no card is destroyed";
+                } else {
+                    getActingPlayer().increaseLp(-1 * difference);
+                    return response
+                            + "no card is destroyed and you received "
+                            + difference
+                            + " battle damage";
+                }
             }
-        } else {
-            return "";
+            default -> {
+                return "";
+            }
         }
     } //done
 
@@ -674,6 +669,10 @@ abstract public class DuelMenuProcessor extends Processor {
         return showCard(selectedCard.getName());
     } //done
 
+    protected String surrender() {
+        return null;
+    }//TODO Surrender
+
     ////Cheats
     protected String useCheat() {
         if (getActingPlayer().isCheatActivated()) return "cheats already activated";
@@ -697,11 +696,9 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Utils
     protected String showBoard() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getOtherPlayerBoard().getStringAsOpponent());
-        stringBuilder.append("\n").append("--------------------------").append("\n").append("\n");
-        stringBuilder.append(getActingPlayerBoard().getStringAsSelf());
-        return stringBuilder.toString();
+        return getOtherPlayerBoard().getStringAsOpponent() +
+                "\n" + "--------------------------" + "\n" + "\n" +
+                getActingPlayerBoard().getStringAsSelf();
     } //done
 
     protected int showPlayerPoints(Player player) {
@@ -710,7 +707,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     protected void monsterEffectsActivator() {
         for (MonsterCard card : monsterEffectsQueue) {
-            if (card.getEffectType().equals("Continuous")) monsterActiveContinuousEffects.add(card);
+            if (card.getEffectType().equals("Continuous")) activeMonsterContinuousEffects.add(card);
             getActingPlayer().activateSelfSummonEffect(card);
             getOtherPlayer().activateOpponentSummonEffect(card);
         }
@@ -787,11 +784,10 @@ abstract public class DuelMenuProcessor extends Processor {
             case 10 -> response = flipSummonErrorChecker();
             case 11 -> response = attackErrorChecker(commandArguments);
             case 12 -> response = directAttackErrorChecker();
-            case 13 -> response = activateEffectErrorChecker(commandArguments);
+            case 13 -> response = activateEffectErrorChecker();
             case 14 -> response = showGraveyardErrorChecker();
             case 15 -> response = showSelectedCardErrorChecker();
-            case 16 -> response = cancelErrorChecker(commandArguments);
-            case 17 -> response = surrenderErrorChecker(commandArguments);
+            case 17 -> response = surrender();
             case 18 -> response = useCheat();
             case 19 -> response = setWinnerErrorChecker(commandArguments);
             case 20 -> response = increaseLpErrorChecker(commandArguments);

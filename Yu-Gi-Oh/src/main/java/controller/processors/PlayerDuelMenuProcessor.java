@@ -20,7 +20,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         whoseTurn = 1;
         remainingRounds = rounds;
         isSummonOrSetActionAvailable = true;
-        monsterActiveContinuousEffects = new ArrayList<>();
+        activeMonsterContinuousEffects = new ArrayList<>();
         this.player1 = new Player(player1);
         this.player2 = new Player(player2);
     }
