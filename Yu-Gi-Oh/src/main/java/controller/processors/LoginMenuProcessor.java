@@ -49,9 +49,9 @@ public class LoginMenuProcessor extends Processor { //DONE
         else if (!Account.isNicknameValid(nickname)) response = "invalid nickname";
         else if (!Account.isPasswordValid(password)) response = "invalid password";
         else if (Account.getAccountByUsername(username) != null)
-            response = "user with username " + username + "already exists";
+            response = "user with username " + username + " already exists";
         else if (Account.getAccountByNickname(nickname) != null)
-            response = "user with nickname " + nickname + "already exists";
+            response = "user with nickname " + nickname + " already exists";
         else {
             createUser(username, password, nickname);
             response = "user created successfully!";
