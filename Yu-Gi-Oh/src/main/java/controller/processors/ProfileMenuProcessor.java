@@ -131,7 +131,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
                 menu exit
                 menu show-current
                 show profile
-                profile change --nickname <new nickname>
+                profile change <new nickname>
                 profile change --password <old password> <new password>
                 help
                 """;

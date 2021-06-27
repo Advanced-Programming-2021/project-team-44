@@ -3,7 +3,6 @@ package controller.processors;
 import models.Account;
 import models.Phases;
 import models.Player;
-import models.cards.Card;
 import models.cards.MonsterCard;
 import view.UserInterface;
 import view.menus.Menus;
@@ -38,14 +37,34 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
         if (whoseTurn == whichPlayerIsAI) {
             AIGetCommand(DuelMenuProcessor.phase);
         } else {
-            String command = getActingPlayer().getCommand("duel");
+            String command = getActingPlayer().getCommand();
             String[] dividedCommand = commandHandler(command);
             String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
             UserInterface.returnResponse(response);
         }
 
-        if (!ifDuelHasEnded()) execute();
-        else endDuel(getWinner(), getLoser());
+        if (!ifRoundHasEnded()) execute();
+        else cheatEndRound(getWinner(), getLoser());
+    }
+
+    @Override
+    public void executeRound() {
+
+    }
+
+    @Override
+    public void executeTurn() {
+
+    }
+
+    @Override
+    public void endGame() {
+
+    }
+
+    @Override
+    public void endRound(Player winner, Player loser) {
+
     }
 
     public void AIGetCommand(Phases phases) {

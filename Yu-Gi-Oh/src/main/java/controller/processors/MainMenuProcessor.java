@@ -4,6 +4,7 @@ import controller.Core;
 import models.Account;
 import view.menus.Menus;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Random;
@@ -44,11 +45,11 @@ public class MainMenuProcessor extends Processor { //DONE
             response = "there is no player with this username";
         else if (Processor.loggedInUser.getActiveDeck() == null)
             response = Processor.loggedInUser.getUsername() + " has no active deck";
-        else if (Account.getAccountByUsername(secondPLayerUsername).getActiveDeck() == null)
+        else if (Objects.requireNonNull(Account.getAccountByUsername(secondPLayerUsername)).getActiveDeck() == null)
             response = secondPLayerUsername + " has no active deck";
         else if (!Processor.loggedInUser.getActiveDeck().isDeckValid())
             response = Processor.loggedInUser.getUsername() + " deck is invalid";
-        else if (!Account.getAccountByUsername(secondPLayerUsername).getActiveDeck().isDeckValid())
+        else if (!Objects.requireNonNull(Account.getAccountByUsername(secondPLayerUsername)).getActiveDeck().isDeckValid())
             response = secondPLayerUsername + " deck is invalid";
         else if (!rounds.equals("1") && !rounds.equals("3"))
             response = "number of rounds is not supported";
@@ -105,11 +106,11 @@ public class MainMenuProcessor extends Processor { //DONE
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
             Account player2 = Account.getAccountByUsername(player2Username);
-            ((PlayerDuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
+            ((PlayerDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.PLAYER_DUEL))).gameInitialization(player1, player2, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
             Account player1 = Account.getAccountByUsername(player2Username);
-            ((PlayerDuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).gameInitialization(player1, player2, rounds);
+            ((PlayerDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.PLAYER_DUEL))).gameInitialization(player1, player2, rounds);
         }
     }
 
@@ -119,10 +120,10 @@ public class MainMenuProcessor extends Processor { //DONE
         Core.currentMenu = Menus.AI_DUEL;
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
-            ((AIDuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(player1, null, rounds);
+            ((AIDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.AI_DUEL))).gameInitialization(player1, null, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
-            ((AIDuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).gameInitialization(null, player2, rounds);
+            ((AIDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.AI_DUEL))).gameInitialization(null, player2, rounds);
         }
         //TODO AI
     }
@@ -187,7 +188,7 @@ public class MainMenuProcessor extends Processor { //DONE
                 menu exit
                 menu show-current
                 user logout
-                duel --new <opponent username> <rounds> 
+                duel --new <opponent username> <rounds>
                 duel --new --ai <rounds>
                 help
                 """;

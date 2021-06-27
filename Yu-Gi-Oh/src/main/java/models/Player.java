@@ -11,6 +11,9 @@ import java.util.*;
 public class Player {
     private Account account;
     private Board board;
+    private int score;
+    private int roundsWon;
+    private int maxLp;
     private int lp;
     private Deck deck;
     private ArrayList<Card> mainDeckCards;
@@ -24,6 +27,12 @@ public class Player {
     public Player(Account account) {
         this.account = account;
         this.board = new Board(this);
+        this.isCheatActivated = false;
+        newRoundInitialize();
+    }
+
+    public void newRoundInitialize() {
+        this.lp = 8000;
         this.deck = (Deck) Utils.deepClone(this.account.getActiveDeck());
         this.mainDeckCards = this.deck.getMainDeckCards();
         Collections.shuffle(this.mainDeckCards);
@@ -43,14 +52,19 @@ public class Player {
         this.magicZone.put(5, null);
 
         this.handZone = new HashMap<>();
-        setHandCards();
+        this.handZone.put(1, null);
+        this.handZone.put(2, null);
+        this.handZone.put(3, null);
+        this.handZone.put(4, null);
+        this.handZone.put(5, null);
+        this.handZone.put(6, null);
 
         this.fieldZone = null;
         this.graveyardZone = new ArrayList<>();
     }
 
-    public String getCommand(String dir) {
-        String consoleMessage = account.getNickname() + "@" + dir + ":" + DuelMenuProcessor.phase + "$ ";
+    public String getCommand() {
+        String consoleMessage = account.getNickname() + ":" + DuelMenuProcessor.phase + "$ ";
         System.out.print(consoleMessage);
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine().trim();
@@ -99,8 +113,7 @@ public class Player {
         for (int i = 1; i < 7; i++) {
             if (handZone.get(i) == givenCard) return true;
         }
-        if (fieldZone == givenCard) return true;
-        return false;
+        return fieldZone == givenCard;
     }
 
     public String getCardState(Card givenCard) {
@@ -111,6 +124,32 @@ public class Player {
         }
         if (fieldZone == givenCard) return board.getFieldZoneState();
         return null;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void increaseScore(int amount) {
+        this.score += amount;
+    }
+
+    public int getRoundsWon() {
+        return roundsWon;
+    }
+
+    public void winsRound() {
+        increaseScore(1000);
+        this.roundsWon++;
+        if (lp > maxLp) setMaxLp(lp);
+    }
+
+    public int getMaxLp() {
+        return maxLp;
+    }
+
+    public void setMaxLp(int maxLp) {
+        this.maxLp = maxLp;
     }
 
     ////Monster Zone
@@ -138,7 +177,7 @@ public class Player {
         return -1;
     }
 
-    public int countMonstersInMonsterZone(){
+    public int countMonstersInMonsterZone() {
         int count = 0;
         for (int i = 1; i <= 5; i++) {
             if (getCardFromMonsterZone(i) != null)
@@ -186,10 +225,6 @@ public class Player {
 
         }
     } //TODO Summon Effect
-
-    public boolean isMainDeckCardEmpty() {
-        return mainDeckCards.size() == 0;
-    }
 
     ////Magic Zone
     public MagicCard getCardFromMagicZone(int position) {
@@ -254,11 +289,17 @@ public class Player {
     }
 
     public void setHandCards() {
+        boolean wasFull = true;
         for (int i = 1; i <= 6; i++) {
             if (handZone.get(i) == null) {
+                wasFull = false;
                 handZone.put(i, mainDeckCards.get(0));
                 mainDeckCards.remove(0);
             }
+        }
+        if (wasFull) {
+            handZone.put(7, mainDeckCards.get(0));
+            mainDeckCards.remove(0);
         }
     }
 

@@ -21,8 +21,10 @@ public class DuelMenu extends Menu {
     @Override
     public void execute() {
         Menu nextMenu;
-        if (Core.currentMenu == Menus.PLAYER_DUEL) ((PlayerDuelMenuProcessor) Processor.getProcessorByName(Menus.PLAYER_DUEL)).execute();
-        else ((AIDuelMenuProcessor) Processor.getProcessorByName(Menus.AI_DUEL)).execute();
+        //Duel Start
+        if (Core.currentMenu == Menus.PLAYER_DUEL) ((PlayerDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.PLAYER_DUEL))).execute();
+        else ((AIDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.AI_DUEL))).execute();
+        //Duel End
         nextMenu = Objects.requireNonNull(Menu.getMenuByName(Core.currentMenu));
         nextMenu.execute();
     }
