@@ -1,6 +1,5 @@
 package controller.processors;
 
-import controller.Core;
 import models.Account;
 import models.Board;
 import models.Phases;
@@ -40,7 +39,7 @@ abstract public class DuelMenuProcessor extends Processor {
         super(name);
     }
 
-    protected void newRoundInitializer() { //TODO initializer
+    protected void newRoundInitializer() {
         remainingRounds--;
 
         Player dummy = player1;
@@ -52,6 +51,7 @@ abstract public class DuelMenuProcessor extends Processor {
         hasAnyoneSurrendered = false;
         cheatEndRound = false;
         ifRoundHasEnded = false;
+        deselect();
         isSummonOrSetActionAvailable = true;
         hasChangedPositionInThisTurn = new ArrayList<>();
         isNewlySet = new ArrayList<>();
@@ -746,9 +746,11 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Utils
     protected String showBoard() {
-        return getOtherPlayerBoard().getStringAsOpponent() +
-                "\n" + "--------------------------" + "\n" + "\n" +
-                getActingPlayerBoard().getStringAsSelf();
+        return "\n" + getOtherPlayerBoard().getStringAsOpponent() + "\n" +
+                "\n" +
+                "--------------------------" + "\n" +
+                "\n" +
+                getActingPlayerBoard().getStringAsSelf() + "\n";
     } //done
 
     protected void monsterEffectsActivator() {
@@ -766,12 +768,22 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected Player getWinner() {
-        return null;
-    } //TODO Winner finder
+        if (getActingPlayer().getLp() == 0 && getOtherPlayer().getLp() > 0)
+            return getOtherPlayer();
+        else if (getActingPlayer().getLp() > 0 && getOtherPlayer().getLp() == 0)
+            return getActingPlayer();
+        else
+            return null;
+    } //done
 
     protected Player getLoser() {
-        return null;
-    } //TODO Loser finder
+        if (getActingPlayer().getLp() == 0 && getOtherPlayer().getLp() > 0)
+            return getActingPlayer();
+        else if (getActingPlayer().getLp() > 0 && getOtherPlayer().getLp() == 0)
+            return getOtherPlayer();
+        else
+            return null;
+    } //done
 
     protected void activateSummonEffect(MonsterCard card) {
         //Called from summon method
@@ -880,6 +892,6 @@ abstract public class DuelMenuProcessor extends Processor {
 
     @Override
     protected void exitMenu() {
-        Core.currentMenu = Menus.MAIN;
+        System.out.println("\nmenu navigation is not possible\n");
     }
 }

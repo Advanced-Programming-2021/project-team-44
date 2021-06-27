@@ -29,7 +29,9 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
 
     @Override
     public void executeRound() {
+        showBoard(); //Before command
         executeTurn();
+        showBoard(); //After command
         if (hasAnyoneSurrendered) return;
         if (ifRoundHasEnded()) {
             if (remainingRounds > 0) {

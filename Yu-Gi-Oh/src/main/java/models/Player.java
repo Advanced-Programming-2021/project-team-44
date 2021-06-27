@@ -91,6 +91,7 @@ public class Player {
 
     public void increaseLp(int amount) {
         this.lp += amount;
+        if (this.lp < 0) lp = 0;
     }
 
     public boolean isCheatActivated() {
