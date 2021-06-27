@@ -19,7 +19,11 @@ import java.util.regex.Pattern;
 abstract public class DuelMenuProcessor extends Processor {
 
     public static Phases phase;
+    public static int allRounds;
     public static int remainingRounds;
+    protected static boolean hasAnyoneSurrendered = false;
+    protected static boolean cheatEndRound = false;
+    protected static boolean ifRoundHasEnded = false;
     protected int whoseTurn;
     protected Player player1;
     protected Player player2;
@@ -36,9 +40,38 @@ abstract public class DuelMenuProcessor extends Processor {
         super(name);
     }
 
+    protected void newRoundInitializer() { //TODO initializer
+        remainingRounds--;
+
+        Player dummy = player1;
+        player1 = player2;
+        player2 = dummy;
+
+        phase = Phases.DRAW;
+        whoseTurn = 1;
+        hasAnyoneSurrendered = false;
+        cheatEndRound = false;
+        ifRoundHasEnded = false;
+        isSummonOrSetActionAvailable = true;
+        hasChangedPositionInThisTurn = new ArrayList<>();
+        isNewlySet = new ArrayList<>();
+        hasAttackedInThisTurn = new ArrayList<>();
+        activeMonsterContinuousEffects = new ArrayList<>();
+        monsterEffectsQueue = new ArrayList<>();
+        activeMagicEffects = new ArrayList<>();
+    }
+
     abstract public void gameInitialization(Account player1, Account player2, int rounds);
 
     abstract public void execute();
+
+    abstract public void executeRound();
+
+    abstract public void executeTurn();
+
+    abstract public void endGame();
+
+    abstract public void endRound(Player winner, Player loser);
 
     public String[] commandHandler(String input) {
         String[] output = {"-1", ""};
@@ -206,7 +239,8 @@ abstract public class DuelMenuProcessor extends Processor {
         if (selectedCard == null) response = "no card is selected yet";
         else if (!getActingPlayer().ifHandContains(selectedCard)) response = "you can't set this card";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) response = "you can't do this action in this phase";
-        else if (!isSummonOrSetActionAvailable) response = "you already summoned/set on this turn";
+        else if (selectedCard instanceof MonsterCard && !isSummonOrSetActionAvailable)
+            response = "you already summoned/set on this turn";
         else {
             if (selectedCard instanceof MonsterCard) {
                 if (getActingPlayer().isMonsterZoneFull()) return "monster card zone is full";
@@ -422,25 +456,28 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String changePhase() {
-        if (!ifDuelHasEnded()) {
-            String response;
-            switch (phase) {
-                case DRAW -> phase = Phases.STANDBY;
-                case STANDBY -> phase = Phases.MAIN1;
-                case MAIN1 -> phase = Phases.BATTLE;
-                case BATTLE -> phase = Phases.MAIN2;
-                case MAIN2 -> phase = Phases.END;
-                case END -> phase = Phases.DRAW;
-            }
-            response = "phase: " + phase.stringName;
-            if (phase == Phases.DRAW) {
-                changeTurn();
-                response += "\n" + "its " + getActingPlayer().getAccount().getNickname() + "'s turn";
-                getActingPlayer().setHandCards();
-            }
-            return response;
-        } else endDuel(getWinner(), getLoser());
-        return "";
+        String response;
+        switch (phase) {
+            case DRAW -> phase = Phases.STANDBY;
+            case STANDBY -> phase = Phases.MAIN1;
+            case MAIN1 -> phase = Phases.BATTLE;
+            case BATTLE -> phase = Phases.MAIN2;
+            case MAIN2 -> phase = Phases.END;
+            case END -> phase = Phases.DRAW;
+        }
+        response = "phase: " + phase.stringName;
+        if (phase == Phases.DRAW) {
+            changeTurn();
+            response += "\n" + "its " + getActingPlayer().getAccount().getNickname() + "'s turn";
+            if (getActingPlayer().getMainDeckCount() == 0) endRound(getOtherPlayer(), getActingPlayer());
+            else getActingPlayer().setHandCards();
+        } else if (phase == Phases.STANDBY) {
+            //TODO main effect: card effects
+        } else if (phase == Phases.END) {
+            //TODO check for than 6 cards in hand
+            //TODO check for cards effects in this phase
+        }
+        return response;
     } //done
 
     protected String summon() {
@@ -670,8 +707,16 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String surrender() {
-        return null;
-    }//TODO Surrender
+        hasAnyoneSurrendered = true;
+        getOtherPlayer().winsRound();
+        int score1 = getOtherPlayer().getScore();
+        int score2 = getActingPlayer().getScore();
+        return getOtherPlayer().getAccount().getUsername()
+                + " won the game and the score is: "
+                + score1
+                + " - "
+                + score2;
+    } //done
 
     ////Cheats
     protected String useCheat() {
@@ -680,7 +725,7 @@ abstract public class DuelMenuProcessor extends Processor {
             getActingPlayer().setCheatActivated(true);
             return "cheats activated successfully";
         }
-    }
+    } //done
 
     protected String increaseLp(int amount) {
         getActingPlayer().increaseLp(amount);
@@ -689,9 +734,14 @@ abstract public class DuelMenuProcessor extends Processor {
 
     protected void setWinnerCheat(String winnerNickname) {
         if (getActingPlayer().getAccount().getNickname().equals(winnerNickname))
-            endDuel(getActingPlayer(), getOtherPlayer());
+            cheatEndRound(getActingPlayer(), getOtherPlayer());
         else
-            endDuel(getOtherPlayer(), getActingPlayer());
+            cheatEndRound(getOtherPlayer(), getActingPlayer());
+    } //done
+
+    protected void cheatEndRound(Player winner, Player loser) {
+        cheatEndRound = true;
+        endRound(winner, loser);
     } //done
 
     //Utils
@@ -701,10 +751,6 @@ abstract public class DuelMenuProcessor extends Processor {
                 getActingPlayerBoard().getStringAsSelf();
     } //done
 
-    protected int showPlayerPoints(Player player) {
-        return 0;
-    } //TODO game points calculate
-
     protected void monsterEffectsActivator() {
         for (MonsterCard card : monsterEffectsQueue) {
             if (card.getEffectType().equals("Continuous")) activeMonsterContinuousEffects.add(card);
@@ -713,12 +759,11 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected boolean ifDuelHasEnded() {
-        return false;
-    } //TODO Check for end
-
-    protected void endDuel(Player winner, Player loser) {
-    } //TODO End duel
+    protected boolean ifRoundHasEnded() {
+        if (getActingPlayer().getLp() <= 0 || getOtherPlayer().getLp() <= 0)
+            ifRoundHasEnded = true;
+        return ifRoundHasEnded;
+    } //done
 
     protected Player getWinner() {
         return null;
