@@ -675,6 +675,36 @@ abstract public class DuelMenuProcessor extends Processor {
 
     protected String activateEffect() {
         //TODO Spell effect activation preparations check
+        MagicCard toBeActivatedCard = (MagicCard) selectedCard;
+        deselect();
+        switch (toBeActivatedCard.getName()) {
+            case "Monster Reborn" -> {
+
+            }
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+            case "" -> {}
+        }
         return "spell activated";
     }  //TODO activate effect
 
