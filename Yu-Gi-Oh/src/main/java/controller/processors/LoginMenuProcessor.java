@@ -134,7 +134,7 @@ public class LoginMenuProcessor extends Processor { //DONE
         return """
                 * Commands in this Menu:
                 menu enter <name>
-                menu exit
+                exit
                 menu show-current
                 user create <username> <nickname> <password>
                 user login <username> <password>
@@ -148,6 +148,6 @@ public class LoginMenuProcessor extends Processor { //DONE
 
     @Override
     protected void exitMenu() {
-        System.exit(0);
+        Core.destruct();
     }
 }

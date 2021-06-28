@@ -1,14 +1,16 @@
 package controller;
 
 import controller.processors.*;
+import models.Account;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
 import view.UserInterface;
 import view.menus.Menus;
 
+import javax.sound.midi.Soundbank;
 import java.util.Objects;
 
-public class Core {//0
+public class Core {
     public static Menus currentMenu;
 
     static {
@@ -38,9 +40,13 @@ public class Core {//0
 
     public static void Initializer() {
         //TODO INITIALIZER
-        //Users Initialize
-        //Cards Initialize
-        MonsterCard.addMonsterCardFromJSON();
-        MagicCard.addMagicCardFromJSON();
+        System.out.println(MonsterCard.addMonsterCardFromJSON());
+        System.out.println(MagicCard.addMagicCardFromJSON());
+        System.out.println(Account.initializeAccounts());
+    }
+
+    public static void destruct() {
+        System.out.println(Account.saveAccounts());
+        System.exit(0);
     }
 }
