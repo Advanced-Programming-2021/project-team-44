@@ -26,7 +26,7 @@ public class Account {
         this.password = password;
         this.nickname = nickname;
         this.score = 0;
-        this.coin = 0;
+        this.coin = 50000;
         this.activeDeck = null;
         spareCards = new ArrayList<>();
         decks = new ArrayList<>();

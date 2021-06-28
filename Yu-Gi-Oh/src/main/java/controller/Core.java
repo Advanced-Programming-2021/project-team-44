@@ -17,6 +17,7 @@ public class Core {//0
 
     public void run() {
         ////Initialize
+        Initializer();
 
         new LoginMenuProcessor();
         new MainMenuProcessor();
@@ -37,9 +38,9 @@ public class Core {//0
 
     public static void Initializer() {
         //TODO INITIALIZER
+        //Users Initialize
         //Cards Initialize
         MonsterCard.addMonsterCardFromJSON();
         MagicCard.addMagicCardFromJSON();
-
     }
 }

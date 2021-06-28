@@ -120,9 +120,9 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
         if (isSummonOrSetActionAvailable && !getAI().isMonsterZoneFull()) {
             if (monsterCard.getLevel() <= 4) return true;
             else if (monsterCard.getLevel() == 5 || monsterCard.getLevel() == 6) {
-                if (getAI().countMonstersInMonsterZone() >= 1) return true;
+                return getAI().countMonstersInMonsterZone() >= 1;
             } else if (monsterCard.getLevel() > 6) {
-                if (getAI().countMonstersInMonsterZone() >= 2) return true;
+                return getAI().countMonstersInMonsterZone() >= 2;
             }
         }
         return false;
