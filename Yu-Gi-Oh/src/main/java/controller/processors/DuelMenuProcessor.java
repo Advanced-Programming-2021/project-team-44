@@ -263,12 +263,15 @@ abstract public class DuelMenuProcessor extends Processor {
         else if (!getActingPlayer().ifHandContains(selectedCard)) return "you can't summon this card";
         else if (!(selectedCard instanceof MonsterCard)) return "you can't summon this card";
         else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) return "action not allowed in this phase";
-        else if ()
+        else if (!getActingPlayer().ifHandContainsAdvancedRitualArtCard())
+            return "there is no way you could ritual summon a monster";
         else {
             MonsterCard toBeRitualSummonedCard = (MonsterCard) selectedCard;
             deselect();
             switch (toBeRitualSummonedCard.getName()) {
-                case "" -> {
+                case "Skull Guardian", "Crab Turtle" -> {
+                    if (!getActingPlayer().ifCardsMatchTheLevelOfTheRitualMonster(toBeRitualSummonedCard))
+                        return "there is no way you could ritual summon a monster";
                     return ritualSummon(toBeRitualSummonedCard);
                 }
                 default -> {
@@ -609,7 +612,7 @@ abstract public class DuelMenuProcessor extends Processor {
         switch (toBeSpecialSummonedCard.getName()) {
             case "Gate Guardian" -> {
                 System.out.println("""
-                        This monster can be special summoned with 3 tributes. Choose 3 cards to tribute.
+                        This monster can be special summoned by 3 tributes. Choose 3 cards to tribute.
                         Input format:
                         <tribute index>
                         """);
@@ -644,16 +647,62 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     protected String ritualSummon(MonsterCard toBeRitualSummonedCard) {
-        switch (toBeRitualSummonedCard.getName()) {
-            case "Skull Guardian" -> {}
-            case "Crab Turtle" -> {}
+        System.out.println("""
+                        This monster can be ritual summoned by tributes. Choose cards from monster zone to tribute equalling the level of the selected ritual monster.
+                        Input format:
+                        Tribute Part: <tribute 1 index> <tribute 2 index> ...
+                        State Part: <attacking/defensive>
+                        """);
+        Scanner tmpScanner = new Scanner(System.in);
+        ArrayList<Integer> tributes;
+        String[] inputPatterns = {"^\\d$",
+                "^\\d\\s\\d$",
+                "^\\d\\s\\d\\s\\d$",
+                "^\\d\\s\\d\\s\\d\\s\\d$",
+                "^\\d\\s\\d\\s\\d\\s\\d\\s\\d$"};
+
+        while (true) {
+            String input = tmpScanner.nextLine();
+            tributes = new ArrayList<>();
+            while (!ifMatchesPatterns(inputPatterns, input)) {
+                if (input.equals("cancel")) return "Summon Canceled";
+                System.out.println("you should ritual summon right now");
+                input = tmpScanner.nextLine();
+            }
+            Pattern pattern = Pattern.compile("(?<=\\s|^)(\\d*)(?=\\s|$)");
+            Matcher matcher = pattern.matcher(input);
+            while (matcher.find())
+                tributes.add(Integer.parseInt(matcher.group(1)));
+            int sum = 0;
+            for (Integer index : tributes)
+                sum += getActingPlayer().getCardFromMonsterZone(index).getLevel();
+            if (sum == toBeRitualSummonedCard.getLevel()) break;
+        }
+        String input = tmpScanner.nextLine();
+        while (!(input.equals("attacking") || input.equals("defensive"))) {
+            if (input.equals("cancel")) return "Summon Canceled";
+            System.out.println("invalid state");
+            input = tmpScanner.nextLine();
+        }
+        for (Integer index : tributes) {
+            getActingPlayer().destroyMonster(index);
         }
         int emptyPosition = getActingPlayer().getFirstFreePositionInMonsterZone();
         if (emptyPosition == -1) return "monster card zone is full";
         getActingPlayer().setCardInMonsterZone(toBeRitualSummonedCard, emptyPosition);
         getActingPlayer().removeCardFromHandZone(toBeRitualSummonedCard);
-        getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
+        String state = input.equals("attacking")?"OO":"DO";
+        getActingPlayerBoard().setMonsterZoneState(emptyPosition, state);
+        tmpScanner.close();
         return "ritual summoned successfully";
+    }
+
+    private boolean ifMatchesPatterns(String[] patterns, String input) {
+        for (String patternString  :patterns) {
+            Pattern pattern = Pattern.compile(patternString);
+            if (pattern.matcher(input).find()) return true;
+        }
+        return false;
     }
 
     protected String set() {
@@ -902,9 +951,6 @@ abstract public class DuelMenuProcessor extends Processor {
     }  //TODO activate effect
 
     //TODO spell activation in other player's turn
-
-    //TODO ritual summon
-    //TODO special summon
 
     protected void showGraveyard(boolean ofOpponent) {
         ArrayList<Card> graveyardZone;
