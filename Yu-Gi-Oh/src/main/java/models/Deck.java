@@ -1,9 +1,12 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Deck {
@@ -15,6 +18,38 @@ public class Deck {
         this.name = name;
         mainDeckCards = new ArrayList<>();
         sideDeckCards = new ArrayList<>();
+    }
+
+    public static Deck deserialize(String deckDeepSerialized) {
+        DeckDeepSerialized deck = (new Gson()).fromJson(deckDeepSerialized, DeckDeepSerialized.class);
+        if (deck == null) return null;
+        Type collectionType = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        ArrayList<String> mainDeckCardsSerialized = (new Gson()).fromJson(deck.mainDeckCardsSerialized, collectionType);
+        ArrayList<String> sideDeckCardsSerialized = (new Gson()).fromJson(deck.sideDeckCardsSerialized, collectionType);
+        ArrayList<Card> mainDeckCards = new ArrayList<>();
+        ArrayList<Card> sideDeckCards = new ArrayList<>();
+        for (String cardSerialized : mainDeckCardsSerialized)
+            mainDeckCards.add((new Gson()).fromJson(cardSerialized, Card.class));
+        for (String cardSerialized : sideDeckCardsSerialized)
+            sideDeckCards.add((new Gson()).fromJson(cardSerialized, Card.class));
+        Deck output = new Deck(deck.name);
+        output.setMainDeckCards(mainDeckCards);
+        output.setSideDeckCards(sideDeckCards);
+        return output;
+    }
+
+    public String serialize() {
+        ArrayList<String> mainDeckCardsSerialized = new ArrayList<>();
+        ArrayList<String> sideDeckCardsSerialized = new ArrayList<>();
+        for (Card card : this.mainDeckCards)
+            mainDeckCardsSerialized.add(card.serialize());
+        for (Card card : this.sideDeckCards)
+            sideDeckCardsSerialized.add(card.serialize());
+        String mainDeckSerialized = (new Gson()).toJson(mainDeckCardsSerialized);
+        String sideDeckSerialized = (new Gson()).toJson(sideDeckCardsSerialized);
+        DeckDeepSerialized deckDeepSerialized = new DeckDeepSerialized(this.name, mainDeckSerialized, sideDeckSerialized);
+        return (new Gson()).toJson(deckDeepSerialized);
     }
 
     //Setters
@@ -89,8 +124,16 @@ public class Deck {
         return this.mainDeckCards;
     }
 
+    public void setMainDeckCards(ArrayList<Card> mainDeckCards) {
+        this.mainDeckCards = mainDeckCards;
+    }
+
     public ArrayList<Card> getSideDeckCards() {
         return this.sideDeckCards;
+    }
+
+    public void setSideDeckCards(ArrayList<Card> sideDeckCards) {
+        this.sideDeckCards = sideDeckCards;
     }
 
     public String showDeck(String mainOrSide) {
@@ -123,20 +166,20 @@ public class Deck {
                         response.append(card.getStringForAllCardsShow()).append("\n");
             }
         }
-        response.deleteCharAt(response.length()-1);
+        response.deleteCharAt(response.length() - 1);
         return response.toString();
     }
 
     public String getStringForShowAllDecks() {
-       StringBuilder response = new StringBuilder();
-       response.append(this.name).append(": ");
-       response.append("main deck ").append(mainDeckCards.size()).append(",");
-       response.append("side deck ").append(sideDeckCards.size()).append(",");
-       String validString;
-       if (isDeckValid()) validString = "valid";
-       else validString = "invalid";
-       response.append(validString);
-       return response.toString();
+        StringBuilder response = new StringBuilder();
+        response.append(this.name).append(": ");
+        response.append("main deck ").append(mainDeckCards.size()).append(",");
+        response.append("side deck ").append(sideDeckCards.size()).append(",");
+        String validString;
+        if (isDeckValid()) validString = "valid";
+        else validString = "invalid";
+        response.append(validString);
+        return response.toString();
     }
 
     public boolean ifMaxOfCardIsReached(String cardName) {
@@ -159,5 +202,17 @@ public class Deck {
         for (Card card : this.sideDeckCards)
             dummy.addCardToSideDeck((Card) card.clone());
         return dummy;
+    }
+}
+
+class DeckDeepSerialized {
+    protected String name;
+    protected String mainDeckCardsSerialized;
+    protected String sideDeckCardsSerialized;
+
+    public DeckDeepSerialized(String name, String mainDeckCardsSerialized, String sideDeckCardsSerialized) {
+        this.name = name;
+        this.mainDeckCardsSerialized = mainDeckCardsSerialized;
+        this.sideDeckCardsSerialized = sideDeckCardsSerialized;
     }
 }

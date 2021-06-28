@@ -38,7 +38,6 @@ public class MonsterCard extends Card {
     //Utils
     public static String monsterCardsJsonParser() {
         //Generates Json files from csv file
-        //TODO LOG
         String path = "src/main/resources/static/cards/Monster.csv";
         try {
             File source = new File(path);
@@ -57,7 +56,7 @@ public class MonsterCard extends Card {
                     writer.write(jsonData);
                     writer.close();
                 } catch (IOException e) {
-                    return "Can't parse monsters JSON Files!";
+                    return "Can't parse monsters JSON files!";
                 }
             }
             reader.close();

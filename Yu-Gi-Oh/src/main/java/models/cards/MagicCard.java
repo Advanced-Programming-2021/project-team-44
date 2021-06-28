@@ -12,15 +12,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class MagicCard extends Card{
+public class MagicCard extends Card {
     public static ArrayList<MagicCard> magicCards;
-    protected MagicType type;
-    protected MagicIcon icon;
-    private String status;
 
     static {
         magicCards = new ArrayList<>();
     }
+
+    protected MagicType type;
+    protected MagicIcon icon;
+    private String status;
 
     private MagicCard() {
     }
@@ -136,7 +137,6 @@ public class MagicCard extends Card{
     public String getStatus() {
         return status;
     }
-
 
 
     @Override

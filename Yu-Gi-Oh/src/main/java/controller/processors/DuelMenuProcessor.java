@@ -1036,6 +1036,7 @@ abstract public class DuelMenuProcessor extends Processor {
     protected boolean ifRoundHasEnded() {
         if (getActingPlayer().getLp() <= 0 || getOtherPlayer().getLp() <= 0)
             ifRoundHasEnded = true;
+        endRound(getWinner(), getLoser());
         return ifRoundHasEnded;
     } //done
 
