@@ -59,14 +59,14 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         //Giving money and score
         if (player1.getRoundsWon() > player2.getRoundsWon()) {
             coinPayer(player1, player2);
-            System.out.println("\n" + player1.getAccount().getUsername()
+            System.out.println("\n" + player1.getAccount().getNickname()
                     + " won the whole match with score: "
                     + player1.getScore()
                     + " - "
                     + player2.getScore());
         } else {
             coinPayer(player2, player1);
-            System.out.println("\n" + player2.getAccount().getUsername()
+            System.out.println("\n" + player2.getAccount().getNickname()
                     + " won the whole match with score: "
                     + player2.getScore()
                     + " - "
@@ -78,7 +78,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
     public void endRound(Player winner, Player loser) {
         winner.winsRound();
         ifRoundHasEnded = true;
-        System.out.println("\n" + winner.getAccount().getUsername()
+        System.out.println("\n" + winner.getAccount().getNickname()
                 + " won the match with score: "
                 + winner.getScore()
                 + " - "

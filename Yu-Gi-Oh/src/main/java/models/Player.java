@@ -178,13 +178,19 @@ public class Player {
         return -1;
     }
 
-    public int countMonstersInMonsterZone() {
-        int count = 0;
+    public int getFirstFullPositionInMonsterZone(){
         for (int i = 1; i <= 5; i++) {
             if (getCardFromMonsterZone(i) != null)
-                count++;
+                return i;
         }
-        return count;
+        return -1;
+    }
+    public int getSecondFullPositionInMonsterZone(){
+        for (int i = getFirstFullPositionInMonsterZone() + 1; i <= 5; i++) {
+            if (getCardFromMonsterZone(i) != null)
+                return i;
+        }
+        return -1;
     }
 
     public int howManyMonstersInTheGame() {
@@ -318,6 +324,23 @@ public class Player {
             if (handZone.get(i) != null)
                 count++;
         return count;
+    }
+
+    public int getHandZoneMonstersCount() {
+        int count = 0;
+        for (int i = 0; i < handZone.size(); i++) {
+            if(handZone.get(i) != null )
+                if(!MonsterCard.getMonsterCardByName(handZone.get(i).getName()).equals(null))
+                count++;
+        }
+        return count;
+    }
+
+    public int getPositionOfCardInTheHandZone(Card card){
+        for (int i = 0; i < handZone.size(); i++) {
+            if(handZone.get(i).equals(card)) return i;
+        }
+        return -1;
     }
 
     ////Field Zone

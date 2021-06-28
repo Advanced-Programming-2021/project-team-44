@@ -768,7 +768,7 @@ abstract public class DuelMenuProcessor extends Processor {
         getOtherPlayer().winsRound();
         int score1 = getOtherPlayer().getScore();
         int score2 = getActingPlayer().getScore();
-        return getOtherPlayer().getAccount().getUsername()
+        return getOtherPlayer().getAccount().getNickname()
                 + " won the game and the score is: "
                 + score1
                 + " - "
