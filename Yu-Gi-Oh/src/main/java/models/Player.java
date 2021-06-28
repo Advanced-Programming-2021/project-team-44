@@ -375,7 +375,7 @@ public class Player {
             for (int i = 0; i < binary.length(); i++) {
                 int ifCounts = Integer.parseInt(String.valueOf(binary.charAt(i)));
                 if (monsterZone.get(i) != null) {
-                    sum += monsterZone.get(i).getLevel();
+                    sum += monsterZone.get(i).getLevel() * ifCounts;
                 }
             }
             if (sum == ritualCard.getLevel()) return true;

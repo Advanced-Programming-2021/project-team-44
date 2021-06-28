@@ -677,6 +677,7 @@ abstract public class DuelMenuProcessor extends Processor {
             for (Integer index : tributes)
                 sum += getActingPlayer().getCardFromMonsterZone(index).getLevel();
             if (sum == toBeRitualSummonedCard.getLevel()) break;
+            else System.out.println("selected monsters levels don't match with ritual monster");
         }
         String input = tmpScanner.nextLine();
         while (!(input.equals("attacking") || input.equals("defensive"))) {
