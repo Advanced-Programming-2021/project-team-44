@@ -95,6 +95,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 "attack direct|" +
                 "attack|" +
                 "activate effect|" +
+                "show graveyard --opponent|" + "show graveyard -o|" +
                 "show graveyard|" +
                 "card show --selected|" + "card show -s|" +
                 "surrender" +
@@ -118,6 +119,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "activate effect" -> output[0] = "13";
                 case "show graveyard" -> output[0] = "14";
                 case "card show --selected", "card show -s" -> output[0] = "15";
+                case "show graveyard --opponent", "show graveyard -o" -> output[0] = "16";
                 case "surrender" -> output[0] = "17";
                 case "use cheat" -> output[0] = "18";
                 case "duel set-winner" -> output[0] = "19";
@@ -374,8 +376,8 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String showGraveyardErrorChecker() {
-        showGraveyard();
+    protected String showGraveyardErrorChecker(boolean ofOpponent) {
+        showGraveyard(ofOpponent);
         return "";
     } //done
 
@@ -677,34 +679,56 @@ abstract public class DuelMenuProcessor extends Processor {
         //TODO Spell effect activation preparations check
         MagicCard toBeActivatedCard = (MagicCard) selectedCard;
         deselect();
+        Scanner tmpScanner = new Scanner(System.in);
         switch (toBeActivatedCard.getName()) {
             case "Monster Reborn" -> {
-
+                System.out.println("""
+                        Choose a monster from your graveyard or opponent's to revive and special summon.
+                        Input format:
+                        <self/opponent> <card name>
+                        """);
+                Pattern pattern = Pattern.compile("^(self|opponent)\\s+(.+?)$");
+                String input = tmpScanner.nextLine();
+                while (!pattern.matcher(input).find()) {
+                    System.out.println("invalid input. ");
+                }
             }
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
-            case "" -> {}
+            case "Terraforming" -> {}
+            case "Pot of Greed" -> {}
+            case "Raigeki" -> {}
+            case "Change of Heart" -> {}
+            case "Harpie's Feather Duster" -> {}
+            case "Swords of Revealing Light" -> {}
+            case "Dark Hole" -> {}
+            case "Supply Squad" -> {}
+            case "Spell Absorption" -> {}
+            case "Messenger of peace" -> {}
+            case "Twin Twisters" -> {}
+            case "Mystical space typhoon" -> {}
+            case "Ring of defense" -> {}
+            case "Yami" -> {}
+            case "Forest" -> {}
+            case "Closed Forest" -> {}
+            case "Umiiruka" -> {}
+            case "Sword of dark destruction" -> {}
+            case "Black Pendant" -> {}
+            case "United We Stand" -> {}
+            case "Magnum Shield" -> {}
+            case "Advanced Ritual Art" -> {}
+            case "Magic Cylinder" -> {}
+            case "Mirror Force" -> {}
+            case "Mind Crush" -> {}
+            case "Trap Hole" -> {}
+            case "Torrential Tribute" -> {}
+            case "Time Seal" -> {}
+            case "Negate Attack" -> {}
+            case "Solemn Warning" -> {}
+            case "Magic Jammer" -> {}
+            case "Call of The Haunted" -> {}
+            case "Vanity's Emptiness" -> {}
+            case "Wall of Revealing Light" -> {}
         }
+        tmpScanner.close();
         return "spell activated";
     }  //TODO activate effect
 
@@ -713,12 +737,15 @@ abstract public class DuelMenuProcessor extends Processor {
     //TODO ritual summon
     //TODO special summon
 
-    protected void showGraveyard() {
+    protected void showGraveyard(boolean ofOpponent) {
+        ArrayList<Card> graveyardZone;
+        if (ofOpponent) graveyardZone = getOtherPlayer().getGraveyardZone();
+        else graveyardZone = getActingPlayer().getGraveyardZone();
         StringBuilder stringBuilder = new StringBuilder();
-        if (getActingPlayer().getGraveyardZone().size() == 0)
+        if (graveyardZone.size() == 0)
             System.out.println("graveyard empty");
         else {
-            for (Card card : getActingPlayer().getGraveyardZone()) {
+            for (Card card : graveyardZone) {
                 stringBuilder.append(card.getName());
                 stringBuilder.append(":");
                 stringBuilder.append(card.getDescription());
@@ -872,8 +899,9 @@ abstract public class DuelMenuProcessor extends Processor {
             case 11 -> response = attackErrorChecker(commandArguments);
             case 12 -> response = directAttackErrorChecker();
             case 13 -> response = activateEffectErrorChecker();
-            case 14 -> response = showGraveyardErrorChecker();
+            case 14 -> response = showGraveyardErrorChecker(false);
             case 15 -> response = showSelectedCardErrorChecker();
+            case 16 -> response = showGraveyardErrorChecker(true);
             case 17 -> response = surrender();
             case 18 -> response = useCheat();
             case 19 -> response = setWinnerErrorChecker(commandArguments);
