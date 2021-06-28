@@ -97,6 +97,7 @@ public class ShopMenuProcessor extends Processor { //DONE
                 card show <name>
                 shop buy <name>
                 shop show --all
+                increase --money <amount> (cheat)
                 help
                 """;
     }

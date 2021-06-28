@@ -300,6 +300,7 @@ public class DeckMenuProcessor extends Processor { //DONE
             case 9 -> response = showCards();
             case 10 -> response = showDeckErrorChecker(commandArguments);
             case 11 -> response = showCardErrorChecker(commandArguments);
+            case 99 -> response = help();
         }
         return response;
     }
