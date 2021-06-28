@@ -89,6 +89,8 @@ abstract public class DuelMenuProcessor extends Processor {
                 "select|" +
                 "next phase|" +
                 "summon|" +
+                "special summon|" +
+                "ritual summon|" +
                 "set --position|" + "set -p|" +
                 "set|" +
                 "flip-summon|" +
@@ -124,6 +126,8 @@ abstract public class DuelMenuProcessor extends Processor {
                 case "use cheat" -> output[0] = "18";
                 case "duel set-winner" -> output[0] = "19";
                 case "increase --LP" -> output[0] = "20";
+                case "special summon" -> output[0] = "30";
+                case "ritual summon" -> output[0] = "31";
                 case "help" -> output[0] = "99";
             }
             output[1] = matcher.group(2);
@@ -234,6 +238,45 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         return response;
     } //done
+
+    protected String specialSummonErrorChecker() {
+        if (selectedCard == null) return "no card is selected yet";
+        else if (!getActingPlayer().ifHandContains(selectedCard)) return "you can't summon this card";
+        else if (!(selectedCard instanceof MonsterCard)) return "you can't summon this card";
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) return "action not allowed in this phase";
+        else {
+            MonsterCard toBeSpecialSummonedCard = (MonsterCard) selectedCard;
+            deselect();
+            switch (toBeSpecialSummonedCard.getName()) {
+                case "Gate Guardian", "" -> {
+                    return specialSummon(toBeSpecialSummonedCard);
+                }
+                default -> {
+                    return "this monster can't be special summoned";
+                }
+            }
+        }
+    } //done
+
+    protected String ritualSummonErrorChecker() {
+        if (selectedCard == null) return "no card is selected yet";
+        else if (!getActingPlayer().ifHandContains(selectedCard)) return "you can't summon this card";
+        else if (!(selectedCard instanceof MonsterCard)) return "you can't summon this card";
+        else if (phase != Phases.MAIN1 && phase != Phases.MAIN2) return "action not allowed in this phase";
+        else if ()
+        else {
+            MonsterCard toBeRitualSummonedCard = (MonsterCard) selectedCard;
+            deselect();
+            switch (toBeRitualSummonedCard.getName()) {
+                case "" -> {
+                    return ritualSummon(toBeRitualSummonedCard);
+                }
+                default -> {
+                    return "this monster can't be ritual summoned";
+                }
+            }
+        }
+    }
 
     protected String setErrorChecker() {
         //monster and spell and trap
@@ -496,40 +539,42 @@ abstract public class DuelMenuProcessor extends Processor {
             if (getActingPlayer().howManyMonstersInTheGame() == 0) return "there are not enough cards for tribute";
             else {
                 System.out.print("Choose a card to tribute: ");
-                Integer tributeIndex = getTribute();
-                if (tributeIndex == null) return "Summon Canceled";
-                if (getActingPlayer().getCardFromMonsterZone(tributeIndex) == null)
+                Integer tributeIndex;
+                try {
+                    tributeIndex = getTribute();
+                    if (tributeIndex == null) return "Summon Canceled";
+                } catch (Exception e) {
                     return "there are no monsters on this address";
-                else {
-                    getActingPlayer().destroyMonster(tributeIndex);
-                    getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
-                    getActingPlayer().removeCardFromHandZone(selectedCard);
-                    activateSummonEffect((MonsterCard) selectedCard);
-                    deselect();
-                    getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
                 }
+                getActingPlayer().destroyMonster(tributeIndex);
+                getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
+                getActingPlayer().removeCardFromHandZone(selectedCard);
+                activateSummonEffect((MonsterCard) selectedCard);
+                deselect();
+                getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
             }
         } else {
             if (getActingPlayer().howManyMonstersInTheGame() < 2) return "there are not enough cards for tribute";
             else {
-                System.out.print("Choose first card to tribute: ");
-                Integer firstTributeIndex = getTribute();
-                if (firstTributeIndex == null) return "Summon Canceled";
-                System.out.print("Choose second card to tribute: ");
-                Integer secondTributeIndex = getTribute();
-                if (secondTributeIndex == null) return "Summon Canceled";
-                if (getActingPlayer().getCardFromMonsterZone(firstTributeIndex) == null ||
-                        getActingPlayer().getCardFromMonsterZone(secondTributeIndex) == null)
+                Integer firstTributeIndex = null;
+                Integer secondTributeIndex = null;
+                try {
+                    System.out.print("Choose first card to tribute: ");
+                    firstTributeIndex = getTribute();
+                    if (firstTributeIndex == null) return "Summon Canceled";
+                    System.out.print("Choose second card to tribute: ");
+                    secondTributeIndex = getTribute();
+                    if (secondTributeIndex == null) return "Summon Canceled";
+                } catch (Exception e) {
                     return "there is no monster on one of these addresses";
-                else {
-                    getActingPlayer().destroyMonster(firstTributeIndex);
-                    getActingPlayer().destroyMonster(secondTributeIndex);
-                    getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
-                    getActingPlayer().removeCardFromHandZone(selectedCard);
-                    activateSummonEffect((MonsterCard) selectedCard);
-                    deselect();
-                    getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
                 }
+                getActingPlayer().destroyMonster(firstTributeIndex);
+                getActingPlayer().destroyMonster(secondTributeIndex);
+                getActingPlayer().setCardInMonsterZone((MonsterCard) selectedCard, emptyPosition);
+                getActingPlayer().removeCardFromHandZone(selectedCard);
+                activateSummonEffect((MonsterCard) selectedCard);
+                deselect();
+                getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
             }
         }
         isSummonOrSetActionAvailable = false;
@@ -538,7 +583,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Util
     // {
-    private Integer getTribute() {
+    protected Integer getTribute() throws Exception {
         Scanner tmpScanner = new Scanner(System.in);
         Integer tributeIndex = null;
         String input;
@@ -554,9 +599,62 @@ abstract public class DuelMenuProcessor extends Processor {
         }
         if (input.equals("cancel")) return null;
         tmpScanner.close();
+        if (getActingPlayer().getCardFromMonsterZone(tributeIndex) == null)
+            throw new Exception();
         return tributeIndex;
     } //done
     // }
+
+    protected String specialSummon(MonsterCard toBeSpecialSummonedCard) {
+        switch (toBeSpecialSummonedCard.getName()) {
+            case "Gate Guardian" -> {
+                System.out.println("""
+                        This monster can be special summoned with 3 tributes. Choose 3 cards to tribute.
+                        Input format:
+                        <tribute index>
+                        """);
+                if (getActingPlayer().howManyMonstersInTheGame() < 3) return "there are not enough cards for tribute";
+                Integer firstTribute;
+                Integer secondTribute;
+                Integer thirdTribute;
+                try {
+                    System.out.print("Choose first card to tribute: ");
+                    firstTribute = getTribute();
+                    if (firstTribute == null) return "Summon Canceled";
+                    System.out.print("Choose second card to tribute: ");
+                    secondTribute = getTribute();
+                    if (secondTribute == null) return "Summon Canceled";
+                    System.out.print("Choose third card to tribute: ");
+                    thirdTribute = getTribute();
+                    if (thirdTribute == null) return "Summon Canceled";
+                } catch (Exception e) {
+                    return "there is no monster on one of these addresses";
+                }
+                getActingPlayer().destroyMonster(firstTribute);
+                getActingPlayer().destroyMonster(secondTribute);
+                getActingPlayer().destroyMonster(thirdTribute);
+            }
+        }
+        int emptyPosition = getActingPlayer().getFirstFreePositionInMonsterZone();
+        if (emptyPosition == -1) return "monster card zone is full";
+        getActingPlayer().setCardInMonsterZone(toBeSpecialSummonedCard, emptyPosition);
+        getActingPlayer().removeCardFromHandZone(toBeSpecialSummonedCard);
+        getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
+        return "special summoned successfully";
+    }
+
+    protected String ritualSummon(MonsterCard toBeRitualSummonedCard) {
+        switch (toBeRitualSummonedCard.getName()) {
+            case "Skull Guardian" -> {}
+            case "Crab Turtle" -> {}
+        }
+        int emptyPosition = getActingPlayer().getFirstFreePositionInMonsterZone();
+        if (emptyPosition == -1) return "monster card zone is full";
+        getActingPlayer().setCardInMonsterZone(toBeRitualSummonedCard, emptyPosition);
+        getActingPlayer().removeCardFromHandZone(toBeRitualSummonedCard);
+        getActingPlayerBoard().setMonsterZoneState(emptyPosition, "OO");
+        return "ritual summoned successfully";
+    }
 
     protected String set() {
         //monster and spell and trap
@@ -595,10 +693,35 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     protected String flipSummon() {
-        getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex((MonsterCard) selectedCard), "OO");
+        MonsterCard toBeFlipped = (MonsterCard) selectedCard;
+        getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex(toBeFlipped), "OO");
+        onFlipEffects(toBeFlipped);
         deselect();
         return "flip summoned successfully";
     } //done
+
+    protected void onFlipEffects(Card gettingFlipped) {
+        Scanner tmpScanner = new Scanner(System.in);
+        switch (gettingFlipped.getName()) {
+            case "Man-Eater Bug" -> {
+                System.out.println("""
+                        This card can destroy one of your opponent's monsters after being flipped. Choose a monster to be destroyed.
+                        Input format:
+                        <monster card index>
+                        """);
+                Pattern pattern = Pattern.compile("^(\\d)$");
+                String input = tmpScanner.nextLine();
+                Matcher matcher;
+                while (!(matcher = pattern.matcher(input)).find()) {
+                    System.out.println("invalid input.");
+                    input = tmpScanner.nextLine();
+                }
+                int index = Integer.parseInt(matcher.group(1));
+                getOtherPlayer().destroyMonster(index);
+            }
+        }
+        tmpScanner.close();
+    }
 
     protected String attack(int toBeAttackedIndex) {
         MonsterCard attackingCard = (MonsterCard) selectedCard;
@@ -612,12 +735,14 @@ abstract public class DuelMenuProcessor extends Processor {
                 if (toBeAttackedCard.getAttackPoint() < attackingCard.getAttackPoint()) {
                     getOtherPlayer().increaseLp(-1 * difference);
                     getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    onBeingAttackedAndDestroyedEffects(toBeAttackedCard, attackingCard);
                     return "your opponent's monster is destroyed and your opponent receives "
                             + difference
                             + " battle damage";
                 } else if (toBeAttackedCard.getAttackPoint() == attackingCard.getAttackPoint()) {
                     getOtherPlayer().destroyMonster(toBeAttackedIndex);
                     getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
+                    onBeingAttackedAndDestroyedEffects(toBeAttackedCard, attackingCard);
                     return "both you and your opponent monster cards are destroyed and no one receives damage";
                 } else {
                     getActingPlayer().increaseLp(-1 * difference);
@@ -631,6 +756,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
                 if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
                     getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    onBeingAttackedAndDestroyedEffects(toBeAttackedCard, attackingCard);
                     return "the defense position monster is destroyed";
                 } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
                     return "no card is destroyed";
@@ -646,6 +772,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 int difference = Math.abs(toBeAttackedCard.getDefensePoint() - attackingCard.getAttackPoint());
                 if (toBeAttackedCard.getDefensePoint() < attackingCard.getAttackPoint()) {
                     getOtherPlayer().destroyMonster(toBeAttackedIndex);
+                    onBeingAttackedAndDestroyedEffects(toBeAttackedCard, attackingCard);
                     return response
                             + "the defense position monster is destroyed";
                 } else if (toBeAttackedCard.getDefensePoint() == attackingCard.getAttackPoint()) {
@@ -664,6 +791,14 @@ abstract public class DuelMenuProcessor extends Processor {
             }
         }
     } //done
+
+    protected void onBeingAttackedAndDestroyedEffects(Card gettingAttacked, MonsterCard attackingCard) {
+        switch (gettingAttacked.getName()) {
+            case "Yomi Ship", "Exploder Dragon" -> {
+                getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
+            }
+        }
+    }
 
     protected String directAttack() {
         MonsterCard attackingCard = (MonsterCard) selectedCard;
@@ -693,40 +828,74 @@ abstract public class DuelMenuProcessor extends Processor {
                     System.out.println("invalid input. ");
                 }
             }
-            case "Terraforming" -> {}
-            case "Pot of Greed" -> {}
-            case "Raigeki" -> {}
-            case "Change of Heart" -> {}
-            case "Harpie's Feather Duster" -> {}
-            case "Swords of Revealing Light" -> {}
-            case "Dark Hole" -> {}
-            case "Supply Squad" -> {}
-            case "Spell Absorption" -> {}
-            case "Messenger of peace" -> {}
-            case "Twin Twisters" -> {}
-            case "Mystical space typhoon" -> {}
-            case "Ring of defense" -> {}
-            case "Yami" -> {}
-            case "Forest" -> {}
-            case "Closed Forest" -> {}
-            case "Umiiruka" -> {}
-            case "Sword of dark destruction" -> {}
-            case "Black Pendant" -> {}
-            case "United We Stand" -> {}
-            case "Magnum Shield" -> {}
-            case "Advanced Ritual Art" -> {}
-            case "Magic Cylinder" -> {}
-            case "Mirror Force" -> {}
-            case "Mind Crush" -> {}
-            case "Trap Hole" -> {}
-            case "Torrential Tribute" -> {}
-            case "Time Seal" -> {}
-            case "Negate Attack" -> {}
-            case "Solemn Warning" -> {}
-            case "Magic Jammer" -> {}
-            case "Call of The Haunted" -> {}
-            case "Vanity's Emptiness" -> {}
-            case "Wall of Revealing Light" -> {}
+            case "Terraforming" -> {
+            }
+            case "Pot of Greed" -> {
+            }
+            case "Raigeki" -> {
+            }
+            case "Change of Heart" -> {
+            }
+            case "Harpie's Feather Duster" -> {
+            }
+            case "Swords of Revealing Light" -> {
+            }
+            case "Dark Hole" -> {
+            }
+            case "Supply Squad" -> {
+            }
+            case "Spell Absorption" -> {
+            }
+            case "Messenger of peace" -> {
+            }
+            case "Twin Twisters" -> {
+            }
+            case "Mystical space typhoon" -> {
+            }
+            case "Ring of defense" -> {
+            }
+            case "Yami" -> {
+            }
+            case "Forest" -> {
+            }
+            case "Closed Forest" -> {
+            }
+            case "Umiiruka" -> {
+            }
+            case "Sword of dark destruction" -> {
+            }
+            case "Black Pendant" -> {
+            }
+            case "United We Stand" -> {
+            }
+            case "Magnum Shield" -> {
+            }
+            case "Advanced Ritual Art" -> {
+            }
+            case "Magic Cylinder" -> {
+            }
+            case "Mirror Force" -> {
+            }
+            case "Mind Crush" -> {
+            }
+            case "Trap Hole" -> {
+            }
+            case "Torrential Tribute" -> {
+            }
+            case "Time Seal" -> {
+            }
+            case "Negate Attack" -> {
+            }
+            case "Solemn Warning" -> {
+            }
+            case "Magic Jammer" -> {
+            }
+            case "Call of The Haunted" -> {
+            }
+            case "Vanity's Emptiness" -> {
+            }
+            case "Wall of Revealing Light" -> {
+            }
         }
         tmpScanner.close();
         return "spell activated";
@@ -906,6 +1075,8 @@ abstract public class DuelMenuProcessor extends Processor {
             case 18 -> response = useCheat();
             case 19 -> response = setWinnerErrorChecker(commandArguments);
             case 20 -> response = increaseLpErrorChecker(commandArguments);
+            case 30 -> response = specialSummonErrorChecker();
+            case 31 -> response = ritualSummonErrorChecker();
             case 99 -> response = help();
         }
         return response;
@@ -922,16 +1093,18 @@ abstract public class DuelMenuProcessor extends Processor {
                 select <monster/spell/field/hand> <index> [opponent]
                 select -d
                 summon
+                special summon
+                ritual summon
                 set
                 set --position
                 flip-summon
                 attack
                 attack direct
                 activate effect
-                show graveyard
+                show graveyard [opponent]
                 card show --selected
                 surrender
-                cancel [only usable in  in-command chain inputs]
+                cancel (only usable in  in-command chain inputs)
                 use cheat
                 increase --LP <amount>
                 duel set-winner <nickname>

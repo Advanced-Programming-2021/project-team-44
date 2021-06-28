@@ -178,14 +178,15 @@ public class Player {
         return -1;
     }
 
-    public int getFirstFullPositionInMonsterZone(){
+    public int getFirstFullPositionInMonsterZone() {
         for (int i = 1; i <= 5; i++) {
             if (getCardFromMonsterZone(i) != null)
                 return i;
         }
         return -1;
     }
-    public int getSecondFullPositionInMonsterZone(){
+
+    public int getSecondFullPositionInMonsterZone() {
         for (int i = getFirstFullPositionInMonsterZone() + 1; i <= 5; i++) {
             if (getCardFromMonsterZone(i) != null)
                 return i;
@@ -311,7 +312,7 @@ public class Player {
     }
 
     public int getFirstFreePositionInHandZone() {
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= handZone.size(); i++) {
             if (getCardFromHandZone(i) == null)
                 return i;
         }
@@ -320,7 +321,7 @@ public class Player {
 
     public int getHandZoneCount() {
         int count = 0;
-        for (int i = 0; i < handZone.size(); i++)
+        for (int i = 1; i <= handZone.size(); i++)
             if (handZone.get(i) != null)
                 count++;
         return count;
@@ -328,19 +329,31 @@ public class Player {
 
     public int getHandZoneMonstersCount() {
         int count = 0;
-        for (int i = 0; i < handZone.size(); i++) {
-            if(handZone.get(i) != null )
-                if(!MonsterCard.getMonsterCardByName(handZone.get(i).getName()).equals(null))
-                count++;
+        for (int i = 1; i <= handZone.size(); i++) {
+            if (handZone.get(i) != null)
+                if (!MonsterCard.getMonsterCardByName(handZone.get(i).getName()).equals(null))
+                    count++;
         }
         return count;
     }
 
-    public int getPositionOfCardInTheHandZone(Card card){
-        for (int i = 0; i < handZone.size(); i++) {
-            if(handZone.get(i).equals(card)) return i;
+    public int getPositionOfCardInTheHandZone(Card card) {
+        for (int i = 1; i <= handZone.size(); i++) {
+            if (handZone.get(i).equals(card)) return i;
         }
         return -1;
+    }
+
+    public boolean ifHandContainsAdvancedRitualArtCard() {
+        for (int i = 1; i <= handZone.size(); i++) {
+            if (handZone.get(i).getName().equals("Advanced Ritual Art"))
+                return true;
+        }
+        return false;
+    }
+
+    public int[] whichCardsMarchTheLevelOfTheRitualMonster() {
+        
     }
 
     ////Field Zone
