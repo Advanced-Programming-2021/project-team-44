@@ -9,6 +9,7 @@ import models.utils.Utils;
 import java.util.*;
 
 public class Player {
+    private static ArrayList<String> binaryCombinationsArray = new ArrayList<>();
     private Account account;
     private Board board;
     private int score;
@@ -29,6 +30,21 @@ public class Player {
         this.board = new Board(this);
         this.isCheatActivated = false;
         newRoundInitialize();
+    }
+
+    private static void generateAllBinaryStrings(int n, int[] array, int i) {
+        if (i == n) binaryCombinationSaver(n, array);
+        array[i] = 0;
+        generateAllBinaryStrings(n, array, i + 1);
+        array[i] = 1;
+        generateAllBinaryStrings(n, array, i + 1);
+    }
+
+    private static void binaryCombinationSaver(int n, int[] array) {
+        StringBuilder tmpString = new StringBuilder();
+        for (int i = 0; i < n; i++)
+            tmpString.append(array[i]);
+        binaryCombinationsArray.add(tmpString.toString());
     }
 
     public void newRoundInitialize() {
@@ -91,6 +107,7 @@ public class Player {
 
     public void increaseLp(int amount) {
         this.lp += amount;
+        if (this.lp < 0) lp = 0;
     }
 
     public boolean isCheatActivated() {
@@ -177,14 +194,15 @@ public class Player {
         return -1;
     }
 
-    public int getFirstFullPositionInMonsterZone(){
+    public int getFirstFullPositionInMonsterZone() {
         for (int i = 1; i <= 5; i++) {
             if (getCardFromMonsterZone(i) != null)
                 return i;
         }
         return -1;
     }
-    public int getSecondFullPositionInMonsterZone(){
+
+    public int getSecondFullPositionInMonsterZone() {
         for (int i = getFirstFullPositionInMonsterZone() + 1; i <= 5; i++) {
             if (getCardFromMonsterZone(i) != null)
                 return i;
@@ -310,7 +328,7 @@ public class Player {
     }
 
     public int getFirstFreePositionInHandZone() {
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= handZone.size(); i++) {
             if (getCardFromHandZone(i) == null)
                 return i;
         }
@@ -319,7 +337,7 @@ public class Player {
 
     public int getHandZoneCount() {
         int count = 0;
-        for (int i = 0; i < handZone.size(); i++)
+        for (int i = 1; i <= handZone.size(); i++)
             if (handZone.get(i) != null)
                 count++;
         return count;
@@ -327,19 +345,43 @@ public class Player {
 
     public int getHandZoneMonstersCount() {
         int count = 0;
-        for (int i = 0; i < handZone.size(); i++) {
-            if(handZone.get(i) != null )
-                if(!MonsterCard.getMonsterCardByName(handZone.get(i).getName()).equals(null))
-                count++;
+        for (int i = 1; i <= handZone.size(); i++) {
+            if (handZone.get(i) != null)
+                if (!MonsterCard.getMonsterCardByName(handZone.get(i).getName()).equals(null))
+                    count++;
         }
         return count;
     }
 
-    public int getPositionOfCardInTheHandZone(Card card){
-        for (int i = 0; i < handZone.size(); i++) {
-            if(handZone.get(i).equals(card)) return i;
+    public int getPositionOfCardInTheHandZone(Card card) {
+        for (int i = 1; i <= handZone.size(); i++) {
+            if (handZone.get(i).equals(card)) return i;
         }
         return -1;
+    }
+
+    public boolean ifHandContainsAdvancedRitualArtCard() {
+        for (int i = 1; i <= handZone.size(); i++) {
+            if (handZone.get(i).getName().equals("Advanced Ritual Art"))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean ifCardsMatchTheLevelOfTheRitualMonster(MonsterCard ritualCard) {
+        generateAllBinaryStrings(monsterZone.size(), new int[monsterZone.size()], 0);
+        int sum = 0;
+        for (String binary : binaryCombinationsArray) {
+            for (int i = 0; i < binary.length(); i++) {
+                int ifCounts = Integer.parseInt(String.valueOf(binary.charAt(i)));
+                if (monsterZone.get(i) != null) {
+                    sum += monsterZone.get(i).getLevel();
+                }
+            }
+            if (sum == ritualCard.getLevel()) return true;
+            sum = 0;
+        }
+        return false;
     }
 
     ////Field Zone

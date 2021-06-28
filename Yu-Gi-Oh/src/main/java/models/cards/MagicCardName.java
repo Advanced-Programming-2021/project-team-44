@@ -1,6 +1,6 @@
 package models.cards;
 
-public enum SpellCardName {
+public enum MagicCardName {
     MONSTER_REBORN("Monster Reborn"),
     TERRAFORMING("Terraforming"),
     POT_OF_GREED("Pot of Greed"),
@@ -23,11 +23,23 @@ public enum SpellCardName {
     BLACK_PENDANT("Black Pendant"),
     UNITED_WE_STAND("United We Stand"),
     MAGNUM_SHIELD("Magnum Shield"),
-    ADVANCED_RITUAL_ART("Advanced Ritual Art");
+    ADVANCED_RITUAL_ART("Advanced Ritual Art"),
+    MAGIC_CYLINDER("Magic Cylinder"),
+    MIRROR_FORCE("Mirror Force"),
+    MIND_CRUSH("Mind Crush"),
+    TRAP_HOLE("Trap Hole"),
+    TORRENTIAL_TRIBUTE("Torrential Tribute"),
+    TIME_SEAL("Time Seal"),
+    NEGATE_ATTACK("Negate Attack"),
+    SOLEMN_WARNING("Solemn Warning"),
+    MAGIC_JAMMER("Magic Jammer"),
+    CALL_OF_THE_HAUNTED("Call of The Haunted"),
+    VANITYS_EMPTINESS("Vanity's Emptiness"),
+    WALL_OF_REVEALING_LIGHT("Wall of Revealing Light");
 
     public final String stringName;
 
-    SpellCardName(String stringName) {
+    MagicCardName(String stringName) {
         this.stringName = stringName;
     }
 }

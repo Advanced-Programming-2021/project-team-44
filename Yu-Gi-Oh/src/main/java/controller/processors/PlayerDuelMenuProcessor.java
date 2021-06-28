@@ -29,10 +29,15 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
 
     @Override
     public void executeRound() {
+        showBoard(); //Before command
         executeTurn();
+        showBoard(); //After command
         if (hasAnyoneSurrendered) return;
         if (ifRoundHasEnded()) {
-            if (remainingRounds > 0) {
+            if (remainingRounds > 0
+                    && !(allRounds == 3
+                    && (player1.getRoundsWon() == 2
+                    || player2.getRoundsWon() == 2))) {
                 newRoundInitializer();
                 //TODO check for card swap between decks
                 executeRound();

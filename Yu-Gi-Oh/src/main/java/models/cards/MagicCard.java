@@ -85,12 +85,7 @@ public class MagicCard extends Card{
             MagicCard tmpMagicCard = (new Gson()).fromJson(magicJson, MagicCard.class);
             magicCards.add(tmpMagicCard);
         }
-        for (SpellCardName name : SpellCardName.values())
-            if (getMagicCardByName(name.stringName) == null) {
-                response += name.stringName + " card is missing!";
-                return response;
-            }
-        for (TrapCardName name : TrapCardName.values())
+        for (MagicCardName name : MagicCardName.values())
             if (getMagicCardByName(name.stringName) == null) {
                 response += name.stringName + " card is missing!";
                 return response;
