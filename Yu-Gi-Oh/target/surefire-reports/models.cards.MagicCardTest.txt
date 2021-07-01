@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: models.cards.MagicCardTest
--------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in models.cards.MagicCardTest
