@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class GraphicsView extends Application implements Illustratable{
+public class GraphicsView extends Application{
     public static Stage stage;
     private Parent pane;
 
@@ -15,13 +15,5 @@ public class GraphicsView extends Application implements Illustratable{
 
     @Override
     public void start(Stage stage) throws Exception {
-        GraphicsView.stage = stage;
-        pane = constr
-    }
-
-
-    @Override
-    public Parent constructPane() {
-        return null;
     }
 }
