@@ -1,0 +1,17 @@
+.button {
+  -fx-background-color: #121D4B;
+  -fx-border: thick solid #121D4B;
+  -fx-text-fill: #8a9ce3;
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+  -fx-font-size: 25px;
+  -fx-border-radius: 50%;
+  -fx-trasition-duration: 0.4s;
+  -fx-pref-width: 400;
+  -fx-pref-height: 50;
+}
+
+.button:hover {
+  -fx-background-color: #2a44af;
+  -fx-text-fill: #adb9eb;
+}
