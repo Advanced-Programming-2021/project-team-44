@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" onKeyPressed="#redirectToLoginMenu" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.controller.StartPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" onKeyPressed="#redirectToLoginMenu" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.controller.StartPageController">
    <children>
-      <ImageView mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+      <ImageView mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../graphics/menus_backgrounds/startPageBackground.jpg" />
          </image>
@@ -17,12 +17,12 @@
             <Cursor fx:constant="DISAPPEAR" />
          </cursor>
       </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="887.0" layoutY="1030.0" text="Press Any Key" textAlignment="CENTER" textFill="WHITE">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="736.0" layoutY="863.0" text="Press Any Key" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="736.0">
          <font>
-            <Font size="30.0" />
+            <Font size="24.0" />
          </font>
          <effect>
-            <Glow />
+            <Glow level="1.0" />
          </effect>
       </Label>
    </children>
