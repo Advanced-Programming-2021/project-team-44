@@ -5,7 +5,7 @@
   -fx-text-alignment: center;
   -fx-alignment: center;
   -fx-font-size: 25px;
-  -fx-border-radius: 50%;
+  -fx-border-radius: 10%;
   -fx-trasition-duration: 0.4s;
   -fx-pref-width: 400;
   -fx-pref-height: 50;
