@@ -14,7 +14,7 @@ public class CreditsPage extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         CreditsPage.stage = stage;
-        URL pageUrl = getClass().getResource("/static/fxml/CreditsPage.fxml");
+        URL pageUrl = getClass().getResource("/static/fxml/login_menu_page_subPages/CreditsPage.fxml");
         Parent pane = FXMLLoader.load(pageUrl);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
