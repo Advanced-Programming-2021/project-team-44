@@ -1,58 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.view.login_menu_subPages.CreditsPage">
+    <children>
+        <ImageView pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../graphics/menus_backgrounds/creditsMenuBackground.png"/>
+            </image>
+        </ImageView>
+        <AnchorPane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../graphics/icon/game_icon.png"/>
+                            </image>
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" text="Yu-Gi-Oh!" textAlignment="CENTER" textFill="#WHITE">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets top="20.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" text="Duel Monsters!" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets bottom="5.0" left="10.0" right="10.0" top="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="CENTER"
+                               text="The source code of this project is available on our github repository."
+                               textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <VBox.margin>
+                                <Insets top="50.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                        <Label onMouseClicked="#openProjectGithubRepository" text="Yu-Gi-Oh! Repository"
+                               textAlignment="CENTER" textFill="WHITE">
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                            <effect>
+                                <Glow level="1.0"/>
+                            </effect>
+                            <padding>
+                                <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="CENTER" text="Created by" textAlignment="CENTER" textFill="WHITE">
 
-<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane mouseTransparent="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="530.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../graphics/icon/game_icon.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label alignment="CENTER" text="Yu-Gi-Oh!" textAlignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label alignment="CENTER" text="Duel Monsters!" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-                     </padding>
-                  </Label>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="DISAPPEAR" />
-               </cursor>
-               <padding>
-                  <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-               </padding>
-            </VBox>
-         </children>
-         <padding>
-            <Insets bottom="50.0" left="20.0" right="20.0" top="50.0" />
-         </padding>
-      </AnchorPane>
-   </children>
+                        </Label>
+                    </children>
+                    <cursor>
+                        <Cursor fx:constant="DISAPPEAR"/>
+                    </cursor>
+                    <padding>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0"/>
+                    </padding>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="50.0" left="20.0" right="20.0" top="50.0"/>
+            </padding>
+        </AnchorPane>
+    </children>
 </AnchorPane>
