@@ -4,11 +4,11 @@
   -fx-text-fill: #8a9ce3;
   -fx-text-alignment: center;
   -fx-alignment: center;
-  -fx-font-size: 25px;
+  -fx-font-size: 23px;
   -fx-border-radius: 10%;
   -fx-trasition-duration: 0.4s;
-  -fx-pref-width: 400;
-  -fx-pref-height: 50;
+  -fx-pref-width: 360;
+  -fx-pref-height: 40;
 }
 
 .button:hover {
