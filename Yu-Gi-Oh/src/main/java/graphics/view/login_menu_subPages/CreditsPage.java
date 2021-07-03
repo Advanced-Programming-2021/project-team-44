@@ -1,12 +1,15 @@
 package graphics.view.login_menu_subPages;
 
+import controller.Core;
 import graphics.view.LoginMenuPage;
 import graphics.view.StartPage;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -20,6 +23,7 @@ import java.net.URL;
 
 public class CreditsPage extends Application {
     private static Stage stage;
+    public Label versionLabel;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -39,6 +43,11 @@ public class CreditsPage extends Application {
         stage.show();
     }
 
+    @FXML
+    public void initialize() {
+        versionLabel.setText(Core.version);
+    }
+
     public void redirectToLoginMenu(KeyEvent event) {
         try {
             (new LoginMenuPage()).start(StartPage.stage);
@@ -48,32 +57,26 @@ public class CreditsPage extends Application {
     }
 
     public void openProjectGithubRepository(MouseEvent mouseEvent) {
-        System.out.println("bitch");
-//        getHostServices().showDocument("https://github.com/Advanced-Programming-2021/project-team-44");
-//        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-//            try {
-//                Desktop.getDesktop().browse(new URI("https://github.com/Advanced-Programming-2021/project-team-44"));
-//            } catch (IOException | URISyntaxException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        String url = "https://github.com/Advanced-Programming-2021/project-team-44";
-        if(Desktop.isDesktopSupported()){
-            Desktop desktop = Desktop.getDesktop();
-            try {
-                desktop.browse(new URI(url));
-            } catch (IOException | URISyntaxException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }else{
-            Runtime runtime = Runtime.getRuntime();
-            try {
-                runtime.exec("xdg-open " + url);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        try {
+            Desktop.getDesktop().browse(URI.create("https://github.com/Advanced-Programming-2021/project-team-44"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openMatinGithubPage(MouseEvent mouseEvent) {
+        try {
+            Desktop.getDesktop().browse(URI.create("https://github.com/matadysa"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openMahdiGithubPage(MouseEvent mouseEvent) {
+        try {
+            Desktop.getDesktop().browse(URI.create("https://github.com/mahdikhoshdell"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

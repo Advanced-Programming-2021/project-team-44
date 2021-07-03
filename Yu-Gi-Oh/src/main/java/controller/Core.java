@@ -11,9 +11,11 @@ import java.util.Objects;
 
 public class Core {
     public static Menus currentMenu;
+    public static String version;
 
     static {
         currentMenu = Menus.LOGIN;
+        version = "1.0.0";
     }
 
     public void run() {
