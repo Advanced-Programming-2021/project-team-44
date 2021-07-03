@@ -1,11 +1,12 @@
-package graphics.view;
+package graphics;
 
-import graphics.controller.StartPageController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -13,7 +14,6 @@ import java.util.Objects;
 
 public class StartPage extends Application {
     public static Stage stage;
-    private static final StartPageController controller = new StartPageController();
 
     public static void main(String[] args) {
         launch(args);
@@ -31,9 +31,18 @@ public class StartPage extends Application {
         Parent pane = FXMLLoader.load(startPageUrl);
         Scene scene = new Scene(pane);
         {
-            scene.setOnKeyPressed(controller::redirectToLoginMenu);
+            scene.setOnKeyPressed(this::redirectToLoginMenu);
         }
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public void redirectToLoginMenu(KeyEvent event) {
+        try {
+            (new LoginMenuPage()).start(StartPage.stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

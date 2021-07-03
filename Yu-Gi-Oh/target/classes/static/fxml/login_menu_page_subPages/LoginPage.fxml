@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="graphics.controller.login_menu_subControllers.LoginPageController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="graphics.login_menu_subPages.LoginPage"
+            prefHeight="900.0" prefWidth="1600.0">
 
 </AnchorPane>

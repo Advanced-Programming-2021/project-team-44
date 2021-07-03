@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="graphics.controller.login_menu_subControllers.RegisterPageController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="graphics.login_menu_subPages.RegisterPage"
+            prefHeight="900.0" prefWidth="1600.0">
 
 </AnchorPane>
