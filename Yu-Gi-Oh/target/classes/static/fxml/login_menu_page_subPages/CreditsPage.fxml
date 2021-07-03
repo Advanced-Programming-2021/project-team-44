@@ -27,12 +27,20 @@
                                 <Insets />
                             </VBox.margin>
                         </ImageView>
-                        <Label alignment="CENTER" text="Yu-Gi-Oh!" textAlignment="CENTER" textFill="#fffefe">
+                        <Label alignment="CENTER" text="Yu-Gi-Oh!" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="24.0" />
                             </font>
                             <VBox.margin>
                                 <Insets top="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" textAlignment="CENTER" textFill="WHITE" fx:id="versionLabel">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="10.0" />
                             </VBox.margin>
                         </Label>
                         <Label alignment="CENTER" text="Duel Monsters!" textAlignment="CENTER" textFill="WHITE">
@@ -47,29 +55,66 @@
                             </padding>
                         </Label>
                         <Label alignment="CENTER" text="The source code of this project is available on our github repository." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <VBox.margin>
-                        <Insets top="50.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-                  <Label onMouseClicked="#openProjectGithubRepository" text="Yu-Gi-Oh! Repository" textAlignment="CENTER" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <effect>
-                        <Glow level="1.0" />
-                     </effect>
-                     <padding>
-                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-                     </padding>
-                  </Label>
+                            <VBox.margin>
+                                <Insets top="100.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <Label alignment="CENTER" onMouseClicked="#openProjectGithubRepository" text="Yu-Gi-Oh! Repository" textAlignment="CENTER" textFill="WHITE">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Italic" size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <effect>
+                                <Glow level="1.0" />
+                            </effect>
+                            <padding>
+                                <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                            </padding>
+                        </Label>
+                        <Label alignment="CENTER" text="Created by" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="130.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" onMouseClicked="#openMatinGithubPage" text="Matin Mahmoudi" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="System Italic" size="16.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="30.0" />
+                            </VBox.margin>
+                            <effect>
+                                <Glow level="1.0" />
+                            </effect>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                        <Label alignment="CENTER" onMouseClicked="#openMahdiGithubPage" text="Mohammad Mahdi Sadeghi Khoshdel" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="System Italic" size="16.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <effect>
+                                <Glow level="1.0" />
+                            </effect>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
                     </children>
                     <cursor>
                         <Cursor fx:constant="DISAPPEAR" />
