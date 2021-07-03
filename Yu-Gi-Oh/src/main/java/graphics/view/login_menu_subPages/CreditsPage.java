@@ -4,21 +4,19 @@ import controller.Core;
 import graphics.view.LoginMenuPage;
 import graphics.view.StartPage;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 
 
 public class CreditsPage extends Application {
@@ -28,16 +26,11 @@ public class CreditsPage extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         CreditsPage.stage = stage;
-        URL pageUrl = getClass().getResource("/static/fxml/login_menu_page_subPages/CreditsPage.fxml");
+        URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/login_menu_page_subPages/CreditsPage.fxml"));
         Parent pane = FXMLLoader.load(pageUrl);
         Scene scene = new Scene(pane);
         {
-            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent keyEvent) {
-                    redirectToLoginMenu(keyEvent);
-                }
-            });
+            scene.setOnKeyPressed(this::redirectToLoginMenu);
         }
         stage.setScene(scene);
         stage.show();
@@ -56,7 +49,7 @@ public class CreditsPage extends Application {
         }
     }
 
-    public void openProjectGithubRepository(MouseEvent mouseEvent) {
+    public void openProjectGithubRepository() {
         try {
             Desktop.getDesktop().browse(URI.create("https://github.com/Advanced-Programming-2021/project-team-44"));
         } catch (IOException e) {
@@ -64,7 +57,7 @@ public class CreditsPage extends Application {
         }
     }
 
-    public void openMatinGithubPage(MouseEvent mouseEvent) {
+    public void openMatinGithubPage() {
         try {
             Desktop.getDesktop().browse(URI.create("https://github.com/matadysa"));
         } catch (IOException e) {
@@ -72,7 +65,7 @@ public class CreditsPage extends Application {
         }
     }
 
-    public void openMahdiGithubPage(MouseEvent mouseEvent) {
+    public void openMahdiGithubPage() {
         try {
             Desktop.getDesktop().browse(URI.create("https://github.com/mahdikhoshdell"));
         } catch (IOException e) {
