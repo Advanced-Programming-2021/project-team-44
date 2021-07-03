@@ -1,8 +1,8 @@
-package graphics.view.login_menu_subPages;
+package graphics.login_menu_subPages;
 
 import controller.Core;
-import graphics.view.LoginMenuPage;
-import graphics.view.StartPage;
+import graphics.LoginMenuPage;
+import graphics.StartPage;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -50,26 +49,11 @@ public class CreditsPage extends Application {
     }
 
     public void openProjectGithubRepository() {
-        try {
-            Desktop.getDesktop().browse(URI.create("https://github.com/Advanced-Programming-2021/project-team-44"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void openMatinGithubPage() {
-        try {
-            Desktop.getDesktop().browse(URI.create("https://github.com/matadysa"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void openMahdiGithubPage() {
-        try {
-            Desktop.getDesktop().browse(URI.create("https://github.com/mahdikhoshdell"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
