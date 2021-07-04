@@ -1,76 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.LoginMenuPage">
-    <children>
-        <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <image>
-                <Image url="@../graphics/menus_backgrounds/loginPageBackground.jpg"/>
-            </image>
-        </ImageView>
-        <VBox alignment="CENTER" prefHeight="900.0" prefWidth="652.0" spacing="50.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <Button alignment="CENTER" contentDisplay="CENTER"
-                        stylesheets="@../graphics/css_styles/buttons/button_style.css"
-                        text="Register" textAlignment="CENTER" fx:id="registerButton">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </Button>
-
-<!--                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"-->
-<!--                        onMouseClicked="#registerHandler"-->
-<!--                        stylesheets="@../graphics/css_styles/buttons/button_style.css"-->
-<!--                        text="Register" textAlignment="CENTER">-->
-<!--                    <font>-->
-<!--                        <Font size="24.0"/>-->
-<!--                    </font>-->
-<!--                    <cursor>-->
-<!--                        <Cursor fx:constant="HAND"/>-->
-<!--                    </cursor>-->
-<!--                </Button>-->
-<!--                -->
-<!--                -->
-
-                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#loginHandler"
-                        stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Login"
-                        textAlignment="CENTER">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </Button>
-                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#creditsHandler"
-                        stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Credits"
-                        textAlignment="CENTER">
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#exitHandler"
-                        stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Exit"
-                        textAlignment="CENTER">
-                    <font>
-                        <Font size="24.0"/>
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </Button>
-            </children>
-        </VBox>
-    </children>
+    <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../graphics/menus_backgrounds/loginPageBackground.jpg"/>
+    </ImageView>
+    <VBox alignment="CENTER" prefHeight="900.0" prefWidth="652.0" spacing="50.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#registerHandler"
+                prefHeight="40" prefWidth="360" styleClass="button_login_menu_page"
+                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Register" textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Button>
+        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#loginHandler" prefHeight="40"
+                prefWidth="360" styleClass="button_login_menu_page"
+                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Login" textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Button>
+        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#creditsHandler" prefHeight="40"
+                prefWidth="360" styleClass="button_login_menu_page"
+                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Credits" textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Button>
+        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#exitHandler"
+                prefHeight="40" prefWidth="360" styleClass="button_login_menu_page"
+                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Exit" textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Button>
+    </VBox>
 </AnchorPane>
