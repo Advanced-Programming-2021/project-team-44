@@ -1,5 +1,6 @@
 package graphics;
 
+import controller.Core;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,7 @@ public class StartPage extends Application {
         }
         stage.setScene(scene);
         stage.show();
+        Core.musicPlayer.start();
     }
 
     @FXML

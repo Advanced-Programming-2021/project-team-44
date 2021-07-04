@@ -9,11 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -28,9 +29,6 @@ public class CreditsPage extends Application {
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/login_menu_page_subPages/CreditsPage.fxml"));
         Parent pane = FXMLLoader.load(pageUrl);
         Scene scene = new Scene(pane);
-        {
-            scene.setOnKeyPressed(this::redirectToLoginMenu);
-        }
         stage.setScene(scene);
         stage.show();
     }
@@ -40,7 +38,7 @@ public class CreditsPage extends Application {
         versionLabel.setText(Core.version);
     }
 
-    public void redirectToLoginMenu(KeyEvent event) {
+    public void redirectToLoginMenu() {
         try {
             (new LoginMenuPage()).start(StartPage.stage);
         } catch (Exception e) {
@@ -48,12 +46,29 @@ public class CreditsPage extends Application {
         }
     }
 
+    //TODO github links
     public void openProjectGithubRepository() {
+
+        try {
+            Desktop.getDesktop().browse(new URI("http://www.javafx.com"));
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void openMatinGithubPage() {
+        try {
+            Desktop.getDesktop().browse(new URI("http://www.javafx.com"));
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void openMahdiGithubPage() {
+        try {
+            Desktop.getDesktop().browse(new URI("http://www.javafx.com"));
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import controller.processors.*;
+import graphics.others.MusicPlayer;
 import models.Account;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
@@ -12,10 +13,13 @@ import java.util.Objects;
 public class Core {
     public static Menus currentMenu;
     public static String version;
+    public static MusicPlayer musicPlayer;
 
     static {
         currentMenu = Menus.LOGIN;
         version = "1.0.0";
+        musicPlayer = new MusicPlayer();
+        musicPlayer.setDaemon(true);
     }
 
     public void run() {

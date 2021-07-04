@@ -1,17 +1,30 @@
 .button {
-  -fx-background-color: #121D4B;
-  -fx-border: thick solid #121D4B;
-  -fx-text-fill: #8a9ce3;
   -fx-text-alignment: center;
   -fx-alignment: center;
-  -fx-font-size: 23px;
   -fx-border-radius: 10%;
   -fx-trasition-duration: 0.4s;
-  -fx-pref-width: 360;
-  -fx-pref-height: 40;
+  -fx-cursor: hand;
 }
 
-.button:hover {
+.button_login_menu_page {
+  -fx-background-color: #121D4B;
+  -fx-border: thin solid #121D4B;
+  -fx-text-fill: #8a9ce3;
+}
+
+.button_back_button {
+  -fx-background-color: #121D4B;
+  -fx-border: thin solid #121D4B;
+  -fx-text-fill: #8a9ce3;
+  -fx-font-size: 18px;
+}
+
+.button_login_menu_page:hover {
+  -fx-background-color: #2a44af;
+  -fx-text-fill: #adb9eb;
+}
+
+.button_back_button:hover {
   -fx-background-color: #2a44af;
   -fx-text-fill: #adb9eb;
 }
