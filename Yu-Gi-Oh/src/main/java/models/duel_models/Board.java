@@ -1,4 +1,4 @@
-package models;
+package models.duel_models;
 
 import java.util.HashMap;
 

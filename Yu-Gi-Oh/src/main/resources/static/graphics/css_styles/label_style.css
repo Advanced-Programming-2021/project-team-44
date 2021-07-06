@@ -1,0 +1,15 @@
+.label_register_text_box {
+    -fx-padding: 5px;
+    -fx-text-alignment: center;
+    -fx-background-color: #3E535C;
+    -fx-background-radius: 20px;
+    -fx-text-fill: white;
+}
+
+.label_register_menu_title {
+    -fx-padding: 5px;
+    -fx-text-alignment: center;
+    -fx-background-color: red;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+}

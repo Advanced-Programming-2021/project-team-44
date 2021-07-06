@@ -1,25 +1,30 @@
-.button {
+.button_login_menu_page {
   -fx-text-alignment: center;
   -fx-alignment: center;
-  -fx-border-radius: 50%;
   -fx-trasition-duration: 0.4s;
   -fx-cursor: hand;
-}
-
-.button_login_menu_page {
   -fx-background-color: #121D4B;
-  -fx-border: thin solid #121D4B;
+  -fx-background-radius: 20px;
   -fx-text-fill: #8a9ce3;
 }
 
 .button_back_button {
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+  -fx-trasition-duration: 0.4s;
+  -fx-cursor: hand;
   -fx-background-color: #121D4B;
-  -fx-border: thin solid #121D4B;
+  -fx-background-radius: 10px;
   -fx-text-fill: #8a9ce3;
   -fx-font-size: 18px;
 }
 
 .button_login_menu_page:hover {
+  -fx-background-color: #2a44af;
+  -fx-text-fill: #adb9eb;
+}
+
+.button_back_button:hover {
   -fx-background-color: #2a44af;
   -fx-text-fill: #adb9eb;
 }

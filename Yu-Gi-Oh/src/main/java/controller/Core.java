@@ -1,7 +1,8 @@
 package controller;
 
 import controller.processors.*;
-import graphics.others.MusicPlayer;
+import controller.threads.DataSaver;
+import controller.threads.MusicPlayer;
 import models.Account;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
@@ -14,12 +15,13 @@ public class Core {
     public static Menus currentMenu;
     public static String version;
     public static MusicPlayer musicPlayer;
+    public static DataSaver dataSaver;
 
     static {
         currentMenu = Menus.LOGIN;
         version = "1.0.0";
         musicPlayer = new MusicPlayer();
-        musicPlayer.setDaemon(true);
+        dataSaver = new DataSaver();
     }
 
     public void run() {
