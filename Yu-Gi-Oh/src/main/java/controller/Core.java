@@ -6,8 +6,7 @@ import controller.threads.MusicPlayer;
 import models.Account;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import view.UserInterface;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public class Core {
         dataSaver = new DataSaver();
     }
 
-    public void run() {
+    public static void run() {
         ////Initialize
         Initializer();
 
@@ -38,7 +37,6 @@ public class Core {
         new ShopMenuProcessor();
         new ImportExportMenuProcessor();
 
-        UserInterface.run();
     } //done
 
     public static String menuDistributor(int inputId, String commandArguments) {

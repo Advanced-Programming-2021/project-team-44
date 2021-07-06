@@ -8,7 +8,7 @@ public class DataSaver extends Thread{
         while (true) {
             Account.saveAccounts();
             try {
-                this.wait(10000);
+                wait(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -1,14 +1,11 @@
 package controller.processors;
 
-import com.sun.tools.javac.Main;
 import controller.Core;
 import models.Account;
 import models.cards.Card;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import view.menus.Menus;
-
-import static org.junit.jupiter.api.Assertions.*;
+import models.Menus;
 
 class ShopMenuProcessorTest {
 

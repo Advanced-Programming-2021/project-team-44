@@ -1,19 +1,20 @@
 package controller.processors;
 
 import models.Account;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.ArrayList;
 
 public abstract class Processor {
     public static Account loggedInUser;
-    protected Menus name;
     public static ArrayList<Processor> processors;
 
     static {
         loggedInUser = null;
         processors = new ArrayList<>();
     }
+
+    protected Menus name;
 
     public Processor(Menus name) {
         this.name = name;
@@ -30,16 +31,16 @@ public abstract class Processor {
     public abstract String process(int commandId, String commandArguments);
 
     //Error Checker
-    protected abstract String enterMenuErrorChecker(String input);
+    public abstract String enterMenuErrorChecker(String input);
 
     //Command Performer
-    protected abstract String help();
+    public abstract String help();
 
-    protected abstract void enterMenu(Menus menu);
+    public abstract void enterMenu(Menus menu);
 
-    protected abstract void exitMenu();
+    public abstract void exitMenu();
 
-    public String showMenu()  {
+    public String showMenu() {
         return this.name.toBePrintedName + "\n";
     }
 }

@@ -36,44 +36,6 @@ public class LoginMenuPage extends Application {
         stage.show();
     }
 
-    @FXML
-    public void initialize() {
-//        Popup registrationMenu = new Popup();
-//        AnchorPane anchorPane = new AnchorPane();
-//        anchorPane.setPrefWidth(400);
-//        anchorPane.setPrefHeight(800);
-//        anchorPane.setStyle("-fx-background-color: white");
-//
-//
-//        registrationMenu.getContent().add(anchorPane);
-//
-//        Label flag = new Label("This is the popup!");
-//        flag.setTextFill(Color.RED);
-//
-//        Label flag1 = new Label("This is the popup!");
-//        flag1.setTextFill(Color.RED);
-//
-//        Label flag2 = new Label("This is the popup!");
-//        flag2.setTextFill(Color.RED);
-//
-//        VBox vBox = new VBox();
-//        vBox.getChildren().addAll(flag, flag1, flag2);
-//        anchorPane.getChildren().add(vBox);
-//        EventHandler<ActionEvent> event =
-//                e -> {
-//                    if (!registrationMenu.isShowing()) {
-//                        registrationMenu.show(stage);
-//                    }
-//                    else {
-//                        registrationMenu.hide();
-//                    }
-//                };
-//
-//        // when button is pressed
-//        registerButton.setOnAction(event);
-    }
-
-
     public void registerHandler(MouseEvent mouseEvent) {
         try {
             (new RegisterPage()).start(StartPage.stage);

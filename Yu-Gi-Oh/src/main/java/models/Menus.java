@@ -1,4 +1,4 @@
-package view.menus;
+package models;
 
 public enum Menus {
     LOGIN("Login Menu"),

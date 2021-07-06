@@ -2,7 +2,7 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -17,7 +17,7 @@ public class MainMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    private String duelStartErrorChecker(String arguments) {
+    public String duelStartErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -60,7 +60,7 @@ public class MainMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String duelStartWithAIErrorChecker(String arguments) {
+    public String duelStartWithAIErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -93,13 +93,13 @@ public class MainMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    private String userLogout() {
+    public String userLogout() {
         Processor.loggedInUser = null;
         Core.currentMenu = Menus.LOGIN;
         return "user logged out successfully!";
     }
 
-    private void duelStart(String player1Username, String player2Username, int rounds) {
+    public void duelStart(String player1Username, String player2Username, int rounds) {
         Random random = new Random();
         int randomNumber = random.nextInt(2);
         Core.currentMenu = Menus.PLAYER_DUEL;
@@ -114,7 +114,7 @@ public class MainMenuProcessor extends Processor { //DONE
         }
     }
 
-    private void duelStartWithAI(String player1Username, int rounds) {
+    public void duelStartWithAI(String player1Username, int rounds) {
         Random random = new Random();
         int randomNumber = random.nextInt(2);
         Core.currentMenu = Menus.AI_DUEL;
@@ -148,7 +148,7 @@ public class MainMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         String response;
         input = input.trim();
         switch (input) {
@@ -181,7 +181,7 @@ public class MainMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -195,12 +195,12 @@ public class MainMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
         Core.currentMenu = menu;
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Processor.loggedInUser = null;
         Core.currentMenu = Menus.LOGIN;
     }

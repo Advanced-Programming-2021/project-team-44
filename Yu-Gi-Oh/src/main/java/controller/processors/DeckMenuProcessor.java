@@ -5,7 +5,7 @@ import models.Deck;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -18,7 +18,7 @@ public class DeckMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    private String showCardErrorChecker(String arguments) {
+    public String showCardErrorChecker(String arguments) {
         String response;
         if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
         else {
@@ -27,7 +27,7 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String createDeckErrorChecker(String arguments) {
+    public String createDeckErrorChecker(String arguments) {
         String response;
         String deckName = arguments.trim();
         if (Processor.loggedInUser.getDeckByName(deckName) != null)
@@ -39,7 +39,7 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String deleteDeckErrorChecker(String arguments) {
+    public String deleteDeckErrorChecker(String arguments) {
         String response;
         String deckName = arguments.trim();
         if (Processor.loggedInUser.getDeckByName(deckName) == null)
@@ -51,7 +51,7 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String setActiveDeckErrorChecker(String arguments) {
+    public String setActiveDeckErrorChecker(String arguments) {
         String response;
         String deckName = arguments.trim();
         if (Processor.loggedInUser.getDeckByName(deckName) == null)
@@ -63,7 +63,7 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String addCardToDeckErrorChecker(String arguments) {
+    public String addCardToDeckErrorChecker(String arguments) {
         //Cheat Enhanced
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
@@ -128,7 +128,7 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String removeCardFromDeckErrorChecker(String arguments) {
+    public String removeCardFromDeckErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -181,7 +181,7 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String showDeckErrorChecker(String arguments) {
+    public String showDeckErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-\\w|--\\w+)\\b(.*?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -215,23 +215,23 @@ public class DeckMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    private String showCard(String cardName) {
+    public String showCard(String cardName) {
         return Objects.requireNonNull(Card.getCardByName(cardName)).getStringForShow();
     }
 
-    private void createDeck(String deckName) {
+    public void createDeck(String deckName) {
         Processor.loggedInUser.addDeck(new Deck(deckName));
     }
 
-    private void deleteDeck(String deckName) {
+    public void deleteDeck(String deckName) {
         Processor.loggedInUser.removeDeck(Processor.loggedInUser.getDeckByName(deckName));
     }
 
-    private void setActiveDeck(String deckName) {
+    public void setActiveDeck(String deckName) {
         Processor.loggedInUser.setActiveDeck(Processor.loggedInUser.getDeckByName(deckName));
     }
 
-    private void addCardToDeck(String deckName, String cardName, String whichDeck) {
+    public void addCardToDeck(String deckName, String cardName, String whichDeck) {
         switch (whichDeck) {
             case "main" -> {
                 switch (Objects.requireNonNull(Card.getTypeOfCardByName(cardName))) {
@@ -248,14 +248,14 @@ public class DeckMenuProcessor extends Processor { //DONE
         }
     }
 
-    private void removeCardFromDeck(String deckName, String cardName, String whichDeck) {
+    public void removeCardFromDeck(String deckName, String cardName, String whichDeck) {
         switch (whichDeck) {
             case "main" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromMainDeck(cardName);
             case "side" -> Processor.loggedInUser.getDeckByName(deckName).removeCardFromSideDeck(cardName);
         }
     }
 
-    private String showAllDecks() {
+    public String showAllDecks() {
         StringBuilder response = new StringBuilder();
         response.append("Decks:").append("\n");
         response.append("Active deck:").append("\n");
@@ -270,14 +270,14 @@ public class DeckMenuProcessor extends Processor { //DONE
         return response.toString();
     }
 
-    private String showDeck(String deckName, Boolean isSide) {
+    public String showDeck(String deckName, Boolean isSide) {
         String mainOrSide;
         if (isSide) mainOrSide = "Side";
         else mainOrSide = "Main";
         return Processor.loggedInUser.getDeckByName(deckName).showDeck(mainOrSide);
     }
 
-    private String showCards() {
+    public String showCards() {
         return loggedInUser.showSpareCards();
     }
 
@@ -306,12 +306,12 @@ public class DeckMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -331,11 +331,11 @@ public class DeckMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.currentMenu = Menus.MAIN;
     }
 }

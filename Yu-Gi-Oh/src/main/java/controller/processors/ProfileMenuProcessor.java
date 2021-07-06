@@ -2,7 +2,7 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +14,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    private String changeNicknameErrorChecker(String arguments) {
+    public String changeNicknameErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -44,7 +44,7 @@ public class ProfileMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String changePasswordErrorChecker(String arguments) {
+    public String changePasswordErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -81,15 +81,15 @@ public class ProfileMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    private void changeNickname(String newNickname) {
+    public void changeNickname(String newNickname) {
         loggedInUser.setNickname(newNickname);
     }
 
-    private void changePassword(String newPassword) {
+    public void changePassword(String newPassword) {
         loggedInUser.setPassword(newPassword);
     }
 
-    private String showProfile() {
+    public String showProfile() {
         String response;
         response = "----------------------------------------\n" +
                 "Nickname: " + loggedInUser.getNickname() + "\n" +
@@ -119,12 +119,12 @@ public class ProfileMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -138,11 +138,11 @@ public class ProfileMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.currentMenu = Menus.MAIN;
     }
 }

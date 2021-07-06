@@ -3,7 +3,7 @@ package controller.processors;
 import controller.Core;
 import models.cards.Card;
 import models.utils.comparators.CardSortByName;
-import view.menus.Menus;
+import models.Menus;
 
 public class ShopMenuProcessor extends Processor { //DONE
 
@@ -12,7 +12,7 @@ public class ShopMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    private String showCardErrorChecker(String arguments) {
+    public String showCardErrorChecker(String arguments) {
         String response;
         if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
         else {
@@ -21,7 +21,7 @@ public class ShopMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String buyCardErrorChecker(String arguments) {
+    public String buyCardErrorChecker(String arguments) {
         String response;
         if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
         else if (Card.getCardByName(arguments).getPrice() > loggedInUser.getCoin()) response = "not enough money";
@@ -33,16 +33,16 @@ public class ShopMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    private String showCard(String cardName) {
+    public String showCard(String cardName) {
         return Card.getCardByName(cardName).getStringForShow();
     }
 
-    private void buyCard(String cardName) {
+    public void buyCard(String cardName) {
         loggedInUser.decreaseCoin(Card.getCardByName(cardName).getPrice());
         loggedInUser.addCard(Card.getCardByName(cardName));
     }
 
-    private String showAllCards() {
+    public String showAllCards() {
         Card.allCards.sort(new CardSortByName());
         StringBuilder response = new StringBuilder();
         for (Card card : Card.allCards)
@@ -51,7 +51,7 @@ public class ShopMenuProcessor extends Processor { //DONE
         return response.toString();
     }
 
-    private String increaseMoneyByCheat(String arguments) {
+    public String increaseMoneyByCheat(String arguments) {
         //Cheat Enhanced
         int amount;
         try {
@@ -83,12 +83,12 @@ public class ShopMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -103,11 +103,11 @@ public class ShopMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.currentMenu = Menus.MAIN;
     }
 }

@@ -6,7 +6,7 @@ import models.duel_models.Phases;
 import models.duel_models.Player;
 import models.cards.MonsterCard;
 import view.UserInterface;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@ import controller.Core;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import view.menus.Menus;
+import models.Menus;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -23,12 +23,12 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    private String importCardErrorChecker(String arguments) {
+    public String importCardErrorChecker(String arguments) {
         //Command: import card PATH_TO_CARD_INFORMATION
         return importCard(arguments.trim());
     }
 
-    private String exportCardErrorChecker(String arguments) {
+    public String exportCardErrorChecker(String arguments) {
         //Command: export card <CARD_NAME> --path [PATH_TO_SAVE, DEFAULT=src/main/resources/dynamic/exports/CARD_NAME.json]
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(?:--path|-p)\\s+(.+?)");
@@ -52,7 +52,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
 
 
     //Command Performer
-    private String importCard(String path) {
+    public String importCard(String path) {
         Scanner tmpScanner = new Scanner(System.in);
         System.out.println("What type of card is it? Respond with monster or magic.");
         String response = tmpScanner.nextLine();
@@ -80,7 +80,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         return "Card imported successfully!";
     }
 
-    private void exportCard(String cardName, String path) {
+    public void exportCard(String cardName, String path) {
         File exportedCardFile = new File(path);
         try {
             Card toBeExportedCard = Card.getCardByName(cardName);
@@ -118,12 +118,12 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -136,11 +136,11 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.currentMenu = Menus.MAIN;
     }
 }

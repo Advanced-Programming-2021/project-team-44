@@ -4,9 +4,7 @@ import controller.Core;
 import models.Account;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import view.menus.Menus;
-
-import static org.junit.jupiter.api.Assertions.*;
+import models.Menus;
 
 class ProfileMenuProcessorTest {
 
