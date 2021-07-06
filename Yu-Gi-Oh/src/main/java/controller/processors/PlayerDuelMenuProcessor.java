@@ -2,14 +2,21 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
+import models.Menus;
 import models.duel_models.Player;
-import view.UserInterface;
-import view.menus.Menus;
 
 public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
+    private static PlayerDuelMenuProcessor instance;
 
     public PlayerDuelMenuProcessor() {
         super(Menus.PLAYER_DUEL);
+    }
+
+    public static PlayerDuelMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new PlayerDuelMenuProcessor();
+        }
+        return instance;
     }
 
     @Override
@@ -85,7 +92,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
                 + loser.getScore());
     } //done
 
-    private void coinPayer(Player winner, Player loser) {
+    public void coinPayer(Player winner, Player loser) {
         if (allRounds == 1) {
             winner.getAccount().increaseScore(1000);
 

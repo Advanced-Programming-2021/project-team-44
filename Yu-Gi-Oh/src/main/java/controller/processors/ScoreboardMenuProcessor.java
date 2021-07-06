@@ -2,18 +2,26 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
+import models.Menus;
 import models.utils.comparators.AccountSortByNickname;
 import models.utils.comparators.AccountSortByScore;
-import view.menus.Menus;
 
 public class ScoreboardMenuProcessor extends Processor { //DONE
+    private static ScoreboardMenuProcessor instance;
 
     public ScoreboardMenuProcessor() {
         super(Menus.SCOREBOARD);
     }
 
+    public static ScoreboardMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new ScoreboardMenuProcessor();
+        }
+        return instance;
+    }
+
     //Command Performer
-    private String showScoreboard() {
+    public String showScoreboard() {
         StringBuilder response = new StringBuilder();
         Account.accounts.sort(new AccountSortByNickname());
         Account.accounts.sort(new AccountSortByScore());
@@ -34,28 +42,12 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = showScoreboard();
-            case 99 -> response = help();
-        }
-        return response;
-    }
-
-    @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -67,11 +59,11 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.currentMenu = Menus.MAIN;
     }
 }

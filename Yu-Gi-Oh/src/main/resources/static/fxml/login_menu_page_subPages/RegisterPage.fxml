@@ -16,7 +16,8 @@
           AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="0.0">
         <Label alignment="CENTER" prefHeight="50.0" prefWidth="350.0" text="Register"
                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               AnchorPane.topAnchor="0.0" stylesheets="@../../graphics/css_styles/label_style.css" styleClass="label_register_menu_title">
+               AnchorPane.topAnchor="0.0" stylesheets="@../../graphics/css_styles/label_style.css"
+               styleClass="label_register_menu_title">
             <font>
                 <Font size="24.0"/>
             </font>
@@ -28,7 +29,7 @@
                     <Font size="18.0"/>
                 </font>
             </Label>
-            <TextField promptText="Username">
+            <TextField fx:id="usernameField" promptText="Username">
                 <font>
                     <Font size="18.0"/>
                 </font>
@@ -41,7 +42,7 @@
                     <Font size="18.0"/>
                 </font>
             </Label>
-            <TextField promptText="Nickname">
+            <TextField fx:id="nicknameField" promptText="Nickname">
                 <font>
                     <Font size="18.0"/>
                 </font>
@@ -54,13 +55,14 @@
                     <Font size="18.0"/>
                 </font>
             </Label>
-            <PasswordField promptText="Password">
+            <PasswordField fx:id="passwordField" promptText="Password">
                 <font>
                     <Font size="18.0"/>
                 </font>
             </PasswordField>
         </HBox>
-        <Button mnemonicParsing="false" text="Submit" stylesheets="@../../graphics/css_styles/button_style.css" onMouseClicked="#registerSubmitHandler"
+        <Button mnemonicParsing="false" text="Submit" stylesheets="@../../graphics/css_styles/button_style.css"
+                onMouseClicked="#registerSubmitHandler"
                 styleClass="button_login_menu_page" prefWidth="150" prefHeight="30">
             <font>
                 <Font size="18.0"/>
@@ -68,5 +70,6 @@
         </Button>
 
     </VBox>
-    <Button layoutX="25.0" layoutY="840.0" mnemonicParsing="false" text="Back" styleClass="button_back_button" stylesheets="@../../graphics/css_styles/button_style.css" onMouseClicked="#redirectToLoginMenu"/>
+    <Button layoutX="25.0" layoutY="840.0" mnemonicParsing="false" text="Back" styleClass="button_back_button"
+            stylesheets="@../../graphics/css_styles/button_style.css" onMouseClicked="#redirectToLoginMenu"/>
 </AnchorPane>

@@ -5,7 +5,7 @@ import controller.Core;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import view.menus.Menus;
+import models.Menus;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,18 +17,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ImportExportMenuProcessor extends Processor { //DONE
+    private static ImportExportMenuProcessor instance;
 
     public ImportExportMenuProcessor() {
         super(Menus.IMPORTEXPORT);
     }
 
+    public static ImportExportMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new ImportExportMenuProcessor();
+        }
+        return instance;
+    }
+
     //Error Checker
-    private String importCardErrorChecker(String arguments) {
+    public String importCardErrorChecker(String arguments) {
         //Command: import card PATH_TO_CARD_INFORMATION
         return importCard(arguments.trim());
     }
 
-    private String exportCardErrorChecker(String arguments) {
+    public String exportCardErrorChecker(String arguments) {
         //Command: export card <CARD_NAME> --path [PATH_TO_SAVE, DEFAULT=src/main/resources/dynamic/exports/CARD_NAME.json]
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(?:--path|-p)\\s+(.+?)");
@@ -52,7 +60,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
 
 
     //Command Performer
-    private String importCard(String path) {
+    public String importCard(String path) {
         Scanner tmpScanner = new Scanner(System.in);
         System.out.println("What type of card is it? Respond with monster or magic.");
         String response = tmpScanner.nextLine();
@@ -80,7 +88,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         return "Card imported successfully!";
     }
 
-    private void exportCard(String cardName, String path) {
+    public void exportCard(String cardName, String path) {
         File exportedCardFile = new File(path);
         try {
             Card toBeExportedCard = Card.getCardByName(cardName);
@@ -101,46 +109,29 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = importCardErrorChecker(commandArguments);
-            case 4 -> response = exportCardErrorChecker(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
-    }
-
-    @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
                 menu exit
                 menu show-current
-                import card <name>
+                import card <name> [path]
                 export card <name>
                 help
                 """;
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.currentMenu = Menus.MAIN;
     }
 }

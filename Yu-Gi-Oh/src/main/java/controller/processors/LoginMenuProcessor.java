@@ -2,7 +2,7 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -10,12 +10,21 @@ import java.util.regex.Pattern;
 
 public class LoginMenuProcessor extends Processor { //DONE
 
-    public LoginMenuProcessor() {
+    private static LoginMenuProcessor instance;
+
+    protected LoginMenuProcessor() {
         super(Menus.LOGIN);
     }
 
+    public static LoginMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new LoginMenuProcessor();
+        }
+        return instance;
+    }
+
     //Error Checkers
-    private String createUserErrorChecker(String arguments) {
+    public String createUserErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -59,7 +68,7 @@ public class LoginMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    private String loginUserErrorChecker(String arguments) {
+    public String loginUserErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -98,39 +107,22 @@ public class LoginMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    private void createUser(String username, String password, String nickname) {
+    public void createUser(String username, String password, String nickname) {
         new Account(username, password, nickname);
     }
 
-    private void loginUser(String username) {
+    public void loginUser(String username) {
         Core.currentMenu = Menus.MAIN;
         Processor.loggedInUser = Account.getAccountByUsername(username);
     }
 
     @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = createUserErrorChecker(commandArguments);
-            case 4 -> response = loginUserErrorChecker(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
-    }
-
-    @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "please login first";
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -143,11 +135,11 @@ public class LoginMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         Core.destruct();
     }
 }

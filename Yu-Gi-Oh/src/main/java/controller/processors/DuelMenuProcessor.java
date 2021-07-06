@@ -7,7 +7,7 @@ import models.duel_models.Player;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import view.menus.Menus;
+import models.Menus;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -39,7 +39,7 @@ abstract public class DuelMenuProcessor extends Processor {
         super(name);
     }
 
-    protected void newRoundInitializer() {
+    public void newRoundInitializer() {
         remainingRounds--;
 
         Player dummy = player1;
@@ -138,7 +138,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Error Checker
     ////Main
-    protected String showCardErrorChecker(String arguments) {
+    public String showCardErrorChecker(String arguments) {
         String response;
         if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
         else {
@@ -147,7 +147,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String selectCardErrorChecker(String arguments) {
+    public String selectCardErrorChecker(String arguments) {
         //user and opponent
         String response = "";
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
@@ -214,7 +214,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String deselectErrorChecker() {
+    public String deselectErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else {
@@ -224,7 +224,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String summonErrorChecker() {
+    public String summonErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else if (!getActingPlayer().ifHandContains(selectedCard)) response = "you can't summon this card";
@@ -239,7 +239,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String specialSummonErrorChecker() {
+    public String specialSummonErrorChecker() {
         if (selectedCard == null) return "no card is selected yet";
         else if (!getActingPlayer().ifHandContains(selectedCard)) return "you can't summon this card";
         else if (!(selectedCard instanceof MonsterCard)) return "you can't summon this card";
@@ -258,7 +258,7 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected String ritualSummonErrorChecker() {
+    public String ritualSummonErrorChecker() {
         if (selectedCard == null) return "no card is selected yet";
         else if (!getActingPlayer().ifHandContains(selectedCard)) return "you can't summon this card";
         else if (!(selectedCard instanceof MonsterCard)) return "you can't summon this card";
@@ -281,7 +281,7 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     }
 
-    protected String setErrorChecker() {
+    public String setErrorChecker() {
         //monster and spell and trap
         String response;
         if (selectedCard == null) response = "no card is selected yet";
@@ -300,7 +300,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String setPositionErrorChecker(String arguments) {
+    public String setPositionErrorChecker(String arguments) {
         String response;
         Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
         Matcher matcher = pattern.matcher(arguments);
@@ -345,7 +345,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     }
 
-    protected String flipSummonErrorChecker() {
+    public String flipSummonErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else if (!(selectedCard instanceof MonsterCard)
@@ -362,7 +362,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String attackErrorChecker(String arguments) {
+    public String attackErrorChecker(String arguments) {
         String response;
         int toBeAttacked;
         try {
@@ -387,7 +387,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String directAttackErrorChecker() {
+    public String directAttackErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else if (!(selectedCard instanceof MonsterCard)
@@ -405,7 +405,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String activateEffectErrorChecker() {
+    public String activateEffectErrorChecker() {
         String response;
         if (selectedCard == null) response = "no card is selected yet";
         else if (!(selectedCard instanceof MagicCard))
@@ -422,12 +422,12 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String showGraveyardErrorChecker(boolean ofOpponent) {
+    public String showGraveyardErrorChecker(boolean ofOpponent) {
         showGraveyard(ofOpponent);
         return "";
     } //done
 
-    protected String showSelectedCardErrorChecker() {
+    public String showSelectedCardErrorChecker() {
         if (selectedCard == null) return "no card is selected yet";
         if (getOtherPlayer().ownsCard(selectedCard)
                 && getOtherPlayer().getCardState(selectedCard).charAt(getOtherPlayer().getCardState(selectedCard).length() - 1) == 'H')
@@ -436,7 +436,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     ////Cheats
-    protected String increaseLpErrorChecker(String arguments) {
+    public String increaseLpErrorChecker(String arguments) {
         if (!getActingPlayer().isCheatActivated()) return "you can't use cheats";
         int amount;
         try {
@@ -447,7 +447,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return increaseLp(amount);
     } //done
 
-    protected String setWinnerErrorChecker(String arguments) {
+    public String setWinnerErrorChecker(String arguments) {
         if (!getActingPlayer().isCheatActivated()) return "you can't use cheats";
         if (!getActingPlayer().getAccount().getNickname().equals(arguments)
                 && !getOtherPlayer().getAccount().getNickname().equals(arguments))
@@ -458,11 +458,11 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Command Performer
     ////Main
-    protected String showCard(String cardName) {
+    public String showCard(String cardName) {
         return Objects.requireNonNull(Card.getCardByName(cardName)).getStringForShow();
     } //done
 
-    protected String selectCard(String set, Integer position, Boolean ofOpponent) {
+    public String selectCard(String set, Integer position, Boolean ofOpponent) {
         //user and opponent
         String response = "card selected";
         Card tmpCard = null;
@@ -489,11 +489,11 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected void deselect() {
+    public void deselect() {
         selectedCard = null;
     } //done
 
-    protected void changeTurn() {
+    public void changeTurn() {
         if (whoseTurn == 1) whoseTurn = 2;
         else if (whoseTurn == 2) whoseTurn = 1;
         isSummonOrSetActionAvailable = true;
@@ -503,7 +503,7 @@ abstract public class DuelMenuProcessor extends Processor {
         deselect();
     } //done
 
-    protected String changePhase() {
+    public String changePhase() {
         String response;
         switch (phase) {
             case DRAW -> phase = Phases.STANDBY;
@@ -528,7 +528,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String summon() {
+    public String summon() {
         String response = "summoned successfully";
         int emptyPosition = getActingPlayer().getFirstFreePositionInMonsterZone();
         assert emptyPosition != -1;
@@ -586,7 +586,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //Util
     // {
-    protected Integer getTribute() throws Exception {
+    public Integer getTribute() throws Exception {
         Scanner tmpScanner = new Scanner(System.in);
         Integer tributeIndex = null;
         String input;
@@ -608,7 +608,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
     // }
 
-    protected String specialSummon(MonsterCard toBeSpecialSummonedCard) {
+    public String specialSummon(MonsterCard toBeSpecialSummonedCard) {
         switch (toBeSpecialSummonedCard.getName()) {
             case "Gate Guardian" -> {
                 System.out.println("""
@@ -646,7 +646,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return "special summoned successfully";
     }
 
-    protected String ritualSummon(MonsterCard toBeRitualSummonedCard) {
+    public String ritualSummon(MonsterCard toBeRitualSummonedCard) {
         System.out.println("""
                         This monster can be ritual summoned by tributes. Choose cards from monster zone to tribute equalling the level of the selected ritual monster.
                         Input format:
@@ -698,7 +698,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return "ritual summoned successfully";
     }
 
-    private boolean ifMatchesPatterns(String[] patterns, String input) {
+    public boolean ifMatchesPatterns(String[] patterns, String input) {
         for (String patternString  :patterns) {
             Pattern pattern = Pattern.compile(patternString);
             if (pattern.matcher(input).find()) return true;
@@ -706,7 +706,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return false;
     }
 
-    protected String set() {
+    public String set() {
         //monster and spell and trap
         String response = "set successfully";
         if (selectedCard instanceof MonsterCard) {
@@ -731,7 +731,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return response;
     } //done
 
-    protected String setPosition(String position) {
+    public String setPosition(String position) {
         MonsterCard dummy = (MonsterCard) selectedCard;
         if (position.equals("attack"))
             getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex(dummy), "OO");
@@ -742,7 +742,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return "monster card position changed successfully";
     } //done
 
-    protected String flipSummon() {
+    public String flipSummon() {
         MonsterCard toBeFlipped = (MonsterCard) selectedCard;
         getActingPlayerBoard().setMonsterZoneState(getActingPlayer().getMonsterCardIndex(toBeFlipped), "OO");
         onFlipEffects(toBeFlipped);
@@ -750,7 +750,7 @@ abstract public class DuelMenuProcessor extends Processor {
         return "flip summoned successfully";
     } //done
 
-    protected void onFlipEffects(Card gettingFlipped) {
+    public void onFlipEffects(Card gettingFlipped) {
         Scanner tmpScanner = new Scanner(System.in);
         switch (gettingFlipped.getName()) {
             case "Man-Eater Bug" -> {
@@ -773,7 +773,7 @@ abstract public class DuelMenuProcessor extends Processor {
         tmpScanner.close();
     }
 
-    protected String attack(int toBeAttackedIndex) {
+    public String attack(int toBeAttackedIndex) {
         MonsterCard attackingCard = (MonsterCard) selectedCard;
         hasAttackedInThisTurn.add(selectedCard);
         deselect();
@@ -842,7 +842,7 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected void onBeingAttackedAndDestroyedEffects(Card gettingAttacked, MonsterCard attackingCard) {
+    public void onBeingAttackedAndDestroyedEffects(Card gettingAttacked, MonsterCard attackingCard) {
         switch (gettingAttacked.getName()) {
             case "Yomi Ship", "Exploder Dragon" -> {
                 getActingPlayer().destroyMonster(getActingPlayer().getMonsterCardIndex(attackingCard));
@@ -850,7 +850,7 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     }
 
-    protected String directAttack() {
+    public String directAttack() {
         MonsterCard attackingCard = (MonsterCard) selectedCard;
         hasAttackedInThisTurn.add(selectedCard);
         deselect();
@@ -860,7 +860,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 + " battle damage";
     } //done
 
-    protected String activateEffect() {
+    public String activateEffect() {
         //TODO Spell effect activation preparations check
         MagicCard toBeActivatedCard = (MagicCard) selectedCard;
         deselect();
@@ -953,7 +953,7 @@ abstract public class DuelMenuProcessor extends Processor {
 
     //TODO spell activation in other player's turn
 
-    protected void showGraveyard(boolean ofOpponent) {
+    public void showGraveyard(boolean ofOpponent) {
         ArrayList<Card> graveyardZone;
         if (ofOpponent) graveyardZone = getOtherPlayer().getGraveyardZone();
         else graveyardZone = getActingPlayer().getGraveyardZone();
@@ -975,11 +975,11 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected String showSelectedCard() {
+    public String showSelectedCard() {
         return showCard(selectedCard.getName());
     } //done
 
-    protected String surrender() {
+    public String surrender() {
         hasAnyoneSurrendered = true;
         getOtherPlayer().winsRound();
         int score1 = getOtherPlayer().getScore();
@@ -992,7 +992,7 @@ abstract public class DuelMenuProcessor extends Processor {
     } //done
 
     ////Cheats
-    protected String useCheat() {
+    public String useCheat() {
         if (getActingPlayer().isCheatActivated()) return "cheats already activated";
         else {
             getActingPlayer().setCheatActivated(true);
@@ -1000,25 +1000,25 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected String increaseLp(int amount) {
+    public String increaseLp(int amount) {
         getActingPlayer().increaseLp(amount);
         return amount + " Lp was successfully added to you";
     } //done
 
-    protected void setWinnerCheat(String winnerNickname) {
+    public void setWinnerCheat(String winnerNickname) {
         if (getActingPlayer().getAccount().getNickname().equals(winnerNickname))
             cheatEndRound(getActingPlayer(), getOtherPlayer());
         else
             cheatEndRound(getOtherPlayer(), getActingPlayer());
     } //done
 
-    protected void cheatEndRound(Player winner, Player loser) {
+    public void cheatEndRound(Player winner, Player loser) {
         cheatEndRound = true;
         endRound(winner, loser);
     } //done
 
     //Utils
-    protected String showBoard() {
+    public String showBoard() {
         return "\n" + getOtherPlayerBoard().getStringAsOpponent() + "\n" +
                 "\n" +
                 "--------------------------" + "\n" +
@@ -1026,7 +1026,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 getActingPlayerBoard().getStringAsSelf() + "\n";
     } //done
 
-    protected void monsterEffectsActivator() {
+    public void monsterEffectsActivator() {
         for (MonsterCard card : monsterEffectsQueue) {
             if (card.getEffectType().equals("Continuous")) activeMonsterContinuousEffects.add(card);
             getActingPlayer().activateSelfSummonEffect(card);
@@ -1034,14 +1034,14 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected boolean ifRoundHasEnded() {
+    public boolean ifRoundHasEnded() {
         if (getActingPlayer().getLp() <= 0 || getOtherPlayer().getLp() <= 0)
             ifRoundHasEnded = true;
         endRound(getWinner(), getLoser());
         return ifRoundHasEnded;
     } //done
 
-    protected Player getWinner() {
+    public Player getWinner() {
         if (getActingPlayer().getLp() == 0 && getOtherPlayer().getLp() > 0)
             return getOtherPlayer();
         else if (getActingPlayer().getLp() > 0 && getOtherPlayer().getLp() == 0)
@@ -1050,7 +1050,7 @@ abstract public class DuelMenuProcessor extends Processor {
             return null;
     } //done
 
-    protected Player getLoser() {
+    public Player getLoser() {
         if (getActingPlayer().getLp() == 0 && getOtherPlayer().getLp() > 0)
             return getActingPlayer();
         else if (getActingPlayer().getLp() > 0 && getOtherPlayer().getLp() == 0)
@@ -1059,7 +1059,7 @@ abstract public class DuelMenuProcessor extends Processor {
             return null;
     } //done
 
-    protected void activateSummonEffect(MonsterCard card) {
+    public void activateSummonEffect(MonsterCard card) {
         //Called from summon method
         if ("Effect".equals(card.getCardType())) {
             monsterEffectsQueue.add(card);
@@ -1067,7 +1067,7 @@ abstract public class DuelMenuProcessor extends Processor {
         }
     } //done
 
-    protected Player getPlayerByNumber(int playerNumber) {
+    public Player getPlayerByNumber(int playerNumber) {
         return switch (playerNumber) {
             case 1 -> player1;
             case 2 -> player2;
@@ -1075,22 +1075,22 @@ abstract public class DuelMenuProcessor extends Processor {
         };
     } //done
 
-    protected Player getActingPlayer() {
+    public Player getActingPlayer() {
         return getPlayerByNumber(whoseTurn);
     } //done
 
-    protected Player getOtherPlayer() {
+    public Player getOtherPlayer() {
         int other;
         if (whoseTurn == 1) other = 2;
         else other = 1;
         return getPlayerByNumber(other);
     } //done
 
-    protected Board getActingPlayerBoard() {
+    public Board getActingPlayerBoard() {
         return getActingPlayer().getBoard();
     } //done
 
-    protected Board getOtherPlayerBoard() {
+    public Board getOtherPlayerBoard() {
         return getOtherPlayer().getBoard();
     } //done
 
@@ -1131,7 +1131,7 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     @Override
-    protected String help() {
+    public String help() {
         return """
                 * Commands in this Menu:
                 menu enter <name>
@@ -1161,16 +1161,16 @@ abstract public class DuelMenuProcessor extends Processor {
     }
 
     @Override
-    protected String enterMenuErrorChecker(String input) {
+    public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
 
     @Override
-    protected void enterMenu(Menus menu) {
+    public void enterMenu(Menus menu) {
     }
 
     @Override
-    protected void exitMenu() {
+    public void exitMenu() {
         System.out.println("\nmenu navigation is not possible\n");
     }
 }
