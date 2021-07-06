@@ -2,8 +2,8 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import models.Phases;
-import models.Player;
+import models.duel_models.Phases;
+import models.duel_models.Player;
 import models.cards.MonsterCard;
 import view.UserInterface;
 import view.menus.Menus;

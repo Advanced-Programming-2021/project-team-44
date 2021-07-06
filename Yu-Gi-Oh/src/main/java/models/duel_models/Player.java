@@ -1,6 +1,8 @@
-package models;
+package models.duel_models;
 
 import controller.processors.DuelMenuProcessor;
+import models.Account;
+import models.Deck;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;

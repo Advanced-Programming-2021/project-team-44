@@ -15,28 +15,28 @@
           AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#registerHandler"
                 prefHeight="40" prefWidth="360" styleClass="button_login_menu_page"
-                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Register" textAlignment="CENTER">
+                stylesheets="@../graphics/css_styles/button_style.css" text="Register" textAlignment="CENTER">
             <font>
                 <Font size="24.0"/>
             </font>
         </Button>
         <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#loginHandler" prefHeight="40"
                 prefWidth="360" styleClass="button_login_menu_page"
-                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Login" textAlignment="CENTER">
+                stylesheets="@../graphics/css_styles/button_style.css" text="Login" textAlignment="CENTER">
             <font>
                 <Font size="24.0"/>
             </font>
         </Button>
         <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#creditsHandler" prefHeight="40"
                 prefWidth="360" styleClass="button_login_menu_page"
-                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Credits" textAlignment="CENTER">
+                stylesheets="@../graphics/css_styles/button_style.css" text="Credits" textAlignment="CENTER">
             <font>
                 <Font size="24.0"/>
             </font>
         </Button>
         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#exitHandler"
                 prefHeight="40" prefWidth="360" styleClass="button_login_menu_page"
-                stylesheets="@../graphics/css_styles/buttons/button_style.css" text="Exit" textAlignment="CENTER">
+                stylesheets="@../graphics/css_styles/button_style.css" text="Exit" textAlignment="CENTER">
             <font>
                 <Font size="24.0"/>
             </font>

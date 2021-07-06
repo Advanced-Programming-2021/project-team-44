@@ -37,6 +37,7 @@ public class StartPage extends Application {
         stage.setScene(scene);
         stage.show();
         Core.musicPlayer.start();
+        Core.dataSaver.start();
     }
 
     @FXML

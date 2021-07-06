@@ -1,9 +1,9 @@
 package controller.processors;
 
 import models.Account;
-import models.Board;
-import models.Phases;
-import models.Player;
+import models.duel_models.Board;
+import models.duel_models.Phases;
+import models.duel_models.Player;
 import models.cards.Card;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;

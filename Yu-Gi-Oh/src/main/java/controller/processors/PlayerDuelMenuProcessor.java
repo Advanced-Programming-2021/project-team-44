@@ -2,7 +2,7 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import models.Player;
+import models.duel_models.Player;
 import view.UserInterface;
 import view.menus.Menus;
 

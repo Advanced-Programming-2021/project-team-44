@@ -128,6 +128,6 @@
                 <Insets bottom="50.0" left="20.0" right="20.0" top="50.0" />
             </padding>
         </AnchorPane>
-      <Button layoutX="25.0" layoutY="840.0" mnemonicParsing="false" text="Back" styleClass="button_back_button" stylesheets="@../../graphics/css_styles/buttons/button_style.css" onMouseClicked="#redirectToLoginMenu"/>
+      <Button layoutX="25.0" layoutY="840.0" mnemonicParsing="false" text="Back" styleClass="button_back_button" stylesheets="@../../graphics/css_styles/button_style.css" onMouseClicked="#redirectToLoginMenu"/>
     </children>
 </AnchorPane>

@@ -1,4 +1,4 @@
-package models;
+package models.duel_models;
 
 public enum Phases {
     DRAW("Draw Phase"),
