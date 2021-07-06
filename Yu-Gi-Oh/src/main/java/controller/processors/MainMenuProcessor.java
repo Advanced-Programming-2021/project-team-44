@@ -5,15 +5,23 @@ import models.Account;
 import models.Menus;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Random;
 
 
 public class MainMenuProcessor extends Processor { //DONE
+    private static MainMenuProcessor instance;
 
     public MainMenuProcessor() {
         super(Menus.MAIN);
+    }
+
+    public static MainMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new MainMenuProcessor();
+        }
+        return instance;
     }
 
     //Error Checker
@@ -106,11 +114,11 @@ public class MainMenuProcessor extends Processor { //DONE
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
             Account player2 = Account.getAccountByUsername(player2Username);
-            ((PlayerDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.PLAYER_DUEL))).gameInitialization(player1, player2, rounds);
+            PlayerDuelMenuProcessor.getInstance().gameInitialization(player1, player2, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
             Account player1 = Account.getAccountByUsername(player2Username);
-            ((PlayerDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.PLAYER_DUEL))).gameInitialization(player1, player2, rounds);
+            PlayerDuelMenuProcessor.getInstance().gameInitialization(player1, player2, rounds);
         }
     }
 
@@ -120,40 +128,21 @@ public class MainMenuProcessor extends Processor { //DONE
         Core.currentMenu = Menus.AI_DUEL;
         if (randomNumber == 0) {
             Account player1 = Account.getAccountByUsername(player1Username);
-            ((AIDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.AI_DUEL))).gameInitialization(player1, null, rounds);
+            AIDuelMenuProcessor.getInstance().gameInitialization(player1, null, rounds);
         } else {
             Account player2 = Account.getAccountByUsername(player1Username);
-            ((AIDuelMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.AI_DUEL))).gameInitialization(null, player2, rounds);
+            AIDuelMenuProcessor.getInstance().gameInitialization(null, player2, rounds);
         }
         //TODO AI
     }
 
 
     @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "user logged out successfully!";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = userLogout();
-            case 4 -> response = duelStartErrorChecker(commandArguments);
-            case 5 -> response = duelStartWithAIErrorChecker(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
-    }
-
-    @Override
     public String enterMenuErrorChecker(String input) {
         String response;
         input = input.trim();
         switch (input) {
-            case "Duel", "duel", "Duel Menu", "duel menu", "Login", "login", "Login Menu", "login menu" ->
-                    response = "you can't enter this menu by this command";
+            case "Duel", "duel", "Duel Menu", "duel menu", "Login", "login", "Login Menu", "login menu" -> response = "you can't enter this menu by this command";
             case "Deck", "deck", "Deck Menu", "deck menu" -> {
                 response = "";
                 enterMenu(Menus.DECK);

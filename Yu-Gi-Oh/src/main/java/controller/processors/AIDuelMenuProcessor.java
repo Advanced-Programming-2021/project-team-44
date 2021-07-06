@@ -1,20 +1,29 @@
 package controller.processors;
 
 import controller.Core;
+import graphics.GraphicalUserInterface;
 import models.Account;
+import models.Menus;
+import models.cards.MonsterCard;
 import models.duel_models.Phases;
 import models.duel_models.Player;
-import models.cards.MonsterCard;
-import view.UserInterface;
-import models.Menus;
 
 import java.util.ArrayList;
 
 public class AIDuelMenuProcessor extends DuelMenuProcessor {
+    private static AIDuelMenuProcessor instance;
+
     private int whichPlayerIsAI;
 
     public AIDuelMenuProcessor() {
         super(Menus.AI_DUEL);
+    }
+
+    public static AIDuelMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new AIDuelMenuProcessor();
+        }
+        return instance;
     }
 
     @Override
@@ -62,11 +71,11 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
     @Override
     public void executeTurn() {
         String command;
-        if(getActingPlayer().getAccount().getNickname().equals("AI")) command = AIGetCommand(phase);
+        if (getActingPlayer().getAccount().getNickname().equals("AI")) command = AIGetCommand(phase);
         else command = getActingPlayer().getCommand();
         String[] dividedCommand = commandHandler(command);
         String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
-        UserInterface.returnResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response);
     }
 
     @Override
@@ -134,14 +143,13 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
 
     public String AIMain1PhaseCommand() {
         StringBuilder command = new StringBuilder();
-        for (int i = 0; i < getAI().getHandZoneMonstersCount() ; i++) {
-            if(canAISummonMonster(AIHandZoneSortedByAttackPoint().get(i))){
+        for (int i = 0; i < getAI().getHandZoneMonstersCount(); i++) {
+            if (canAISummonMonster(AIHandZoneSortedByAttackPoint().get(i))) {
                 command.append("select --hand ").append(getAI().getPositionOfCardInTheHandZone(MonsterCard.getMonsterCardByName(AIHandZoneSortedByAttackPoint().get(i).getName()))).append("\n");
                 command.append("summon").append("\n");
-                if(AIHandZoneSortedByAttackPoint().get(i).getLevel() > 4 && AIHandZoneSortedByAttackPoint().get(i).getLevel() < 7){
+                if (AIHandZoneSortedByAttackPoint().get(i).getLevel() > 4 && AIHandZoneSortedByAttackPoint().get(i).getLevel() < 7) {
                     command.append(getAI().getFirstFullPositionInMonsterZone()).append("\n");
-                }
-                else if(AIHandZoneSortedByAttackPoint().get(i).getLevel() > 6){
+                } else if (AIHandZoneSortedByAttackPoint().get(i).getLevel() > 6) {
                     command.append(getAI().getFirstFullPositionInMonsterZone()).append("\n");
                     command.append(getAI().getSecondFullPositionInMonsterZone()).append("\n");
                 }
@@ -152,23 +160,23 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
 
     public String AIBattlePhaseCommand() {
         StringBuilder command = new StringBuilder();
-        if(canAIAttackDirect()){
-            for (int AIMonsterLocation = 1; AIMonsterLocation < 6; AIMonsterLocation++){
-                if(getAI().getCardFromMonsterZone(AIMonsterLocation) != null){
-                    if(!hasAttackedInThisTurn.contains(getAI().getCardFromMonsterZone(AIMonsterLocation))){
+        if (canAIAttackDirect()) {
+            for (int AIMonsterLocation = 1; AIMonsterLocation < 6; AIMonsterLocation++) {
+                if (getAI().getCardFromMonsterZone(AIMonsterLocation) != null) {
+                    if (!hasAttackedInThisTurn.contains(getAI().getCardFromMonsterZone(AIMonsterLocation))) {
                         command.append("select --monster ").append(AIMonsterLocation).append("\n");
                         command.append("attack direct");
                     }
                 }
             }
-        }else{
+        } else {
             for (int AIMonsterLocation = 1; AIMonsterLocation < 6; AIMonsterLocation++) {
-                if(getAI().getCardFromMonsterZone(AIMonsterLocation) != null){
-                    if(!hasAttackedInThisTurn.contains(getAI().getCardFromMonsterZone(AIMonsterLocation))){
+                if (getAI().getCardFromMonsterZone(AIMonsterLocation) != null) {
+                    if (!hasAttackedInThisTurn.contains(getAI().getCardFromMonsterZone(AIMonsterLocation))) {
                         for (int humanMonsterLocation = 1; humanMonsterLocation < 6; humanMonsterLocation++) {
-                            if(getHuman().getCardFromMonsterZone(humanMonsterLocation) != null){
-                                if(getOtherPlayerBoard().getMonsterZoneState(humanMonsterLocation).equals("DH")||
-                                        isAttackUseful(getAI().getCardFromMonsterZone(AIMonsterLocation), getHuman().getCardFromMonsterZone(humanMonsterLocation), humanMonsterLocation)){
+                            if (getHuman().getCardFromMonsterZone(humanMonsterLocation) != null) {
+                                if (getOtherPlayerBoard().getMonsterZoneState(humanMonsterLocation).equals("DH") ||
+                                        isAttackUseful(getAI().getCardFromMonsterZone(AIMonsterLocation), getHuman().getCardFromMonsterZone(humanMonsterLocation), humanMonsterLocation)) {
                                     command.append("select --monster ").append(AIMonsterLocation).append("\n");
                                     command.append("attack ").append(humanMonsterLocation).append("\n");
                                 }
@@ -202,7 +210,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
         return null;
     }
 
-    public Player getHuman(){
+    public Player getHuman() {
         switch (whichPlayerIsAI) {
             case 1 -> {
                 return player2;
@@ -214,8 +222,8 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
         return null;
     }
 
-    public void coinPayer(boolean winner){
-        if(winner){
+    public void coinPayer(boolean winner) {
+        if (winner) {
             getHuman().getAccount().increaseScore(allRounds * 1000);
             getHuman().getAccount().increaseCoin(allRounds * (1000 + getHuman().getMaxLp()));
         } else {
@@ -228,24 +236,24 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
             if (monsterCard.getLevel() <= 4) return true;
             else if (monsterCard.getLevel() == 5 || monsterCard.getLevel() == 6) {
                 return getAI().howManyMonstersInTheGame() >= 1;
-            } else{
+            } else {
                 return getAI().howManyMonstersInTheGame() >= 2;
             }
         }
         return false;
     }
 
-    public boolean isAttackUseful(MonsterCard attacker, MonsterCard defender, int defenderLocation){
-        if(getOtherPlayerBoard().getMonsterZoneState(defenderLocation).equals("OO")){
+    public boolean isAttackUseful(MonsterCard attacker, MonsterCard defender, int defenderLocation) {
+        if (getOtherPlayerBoard().getMonsterZoneState(defenderLocation).equals("OO")) {
             return attacker.getAttackPoint() >= defender.getAttackPoint();
-        }
-        else return attacker.getAttackPoint() >= defender.getDefensePoint();
+        } else return attacker.getAttackPoint() >= defender.getDefensePoint();
     }
 
-    public boolean canAIAttackDirect(){
+    public boolean canAIAttackDirect() {
         return getHuman().howManyMonstersInTheGame() == 0;
     }
-    public ArrayList<MonsterCard> AIHandZoneSortedByAttackPoint(){
+
+    public ArrayList<MonsterCard> AIHandZoneSortedByAttackPoint() {
         return new ArrayList<>();
     }
 }

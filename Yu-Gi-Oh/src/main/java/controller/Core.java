@@ -27,21 +27,15 @@ public class Core {
         ////Initialize
         Initializer();
 
-        new LoginMenuProcessor();
-        new MainMenuProcessor();
-        new PlayerDuelMenuProcessor();
-        new AIDuelMenuProcessor();
-        new DeckMenuProcessor();
-        new ScoreboardMenuProcessor();
-        new ProfileMenuProcessor();
-        new ShopMenuProcessor();
-        new ImportExportMenuProcessor();
+        LoginMenuProcessor.getInstance();
+        MainMenuProcessor.getInstance();
+        DeckMenuProcessor.getInstance();
+        ScoreboardMenuProcessor.getInstance();
+        ProfileMenuProcessor.getInstance();
+        ShopMenuProcessor.getInstance();
+        ImportExportMenuProcessor.getInstance();
 
     } //done
-
-    public static String menuDistributor(int inputId, String commandArguments) {
-        return Objects.requireNonNull(Processor.getProcessorByName(currentMenu)).process(inputId, commandArguments.trim());
-    }
 
     public static void Initializer() {
         //TODO INITIALIZER

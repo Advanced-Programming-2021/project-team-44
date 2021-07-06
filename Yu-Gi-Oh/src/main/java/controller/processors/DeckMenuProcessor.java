@@ -12,9 +12,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeckMenuProcessor extends Processor { //DONE
+    private static DeckMenuProcessor instance;
 
     public DeckMenuProcessor() {
         super(Menus.DECK);
+    }
+
+    public static DeckMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new DeckMenuProcessor();
+        }
+        return instance;
     }
 
     //Error Checker
@@ -279,30 +287,6 @@ public class DeckMenuProcessor extends Processor { //DONE
 
     public String showCards() {
         return loggedInUser.showSpareCards();
-    }
-
-    @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = createDeckErrorChecker(commandArguments);
-            case 4 -> response = deleteDeckErrorChecker(commandArguments);
-            case 5 -> response = setActiveDeckErrorChecker(commandArguments);
-            case 6 -> response = addCardToDeckErrorChecker(commandArguments);
-            case 7 -> response = removeCardFromDeckErrorChecker(commandArguments);
-            case 8 -> response = showAllDecks();
-            case 9 -> response = showCards();
-            case 10 -> response = showDeckErrorChecker(commandArguments);
-            case 11 -> response = showCardErrorChecker(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
     }
 
     @Override

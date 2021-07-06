@@ -1,14 +1,22 @@
 package controller.processors;
 
 import controller.Core;
+import models.Menus;
 import models.cards.Card;
 import models.utils.comparators.CardSortByName;
-import models.Menus;
 
 public class ShopMenuProcessor extends Processor { //DONE
+    private static ShopMenuProcessor instance;
 
     public ShopMenuProcessor() {
         super(Menus.SHOP);
+    }
+
+    public static ShopMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new ShopMenuProcessor();
+        }
+        return instance;
     }
 
     //Error Checker
@@ -47,7 +55,7 @@ public class ShopMenuProcessor extends Processor { //DONE
         StringBuilder response = new StringBuilder();
         for (Card card : Card.allCards)
             response.append(card.getStringForAllCardsShow()).append("\n");
-        response.deleteCharAt(response.length()-1);
+        response.deleteCharAt(response.length() - 1);
         return response.toString();
     }
 
@@ -61,25 +69,6 @@ public class ShopMenuProcessor extends Processor { //DONE
         }
         loggedInUser.increaseCoin(amount);
         return amount + " coins was successfully added to your account, of course by cheats! shame on cheater!";
-    }
-
-    @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = buyCardErrorChecker(commandArguments);
-            case 4 -> response = showAllCards();
-            case 5 -> response = showCardErrorChecker(commandArguments);
-            case 6 -> response = increaseMoneyByCheat(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
     }
 
     @Override

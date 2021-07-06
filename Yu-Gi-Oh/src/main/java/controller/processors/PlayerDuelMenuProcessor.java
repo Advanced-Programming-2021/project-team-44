@@ -2,14 +2,21 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
-import models.duel_models.Player;
-import view.UserInterface;
 import models.Menus;
+import models.duel_models.Player;
 
 public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
+    private static PlayerDuelMenuProcessor instance;
 
     public PlayerDuelMenuProcessor() {
         super(Menus.PLAYER_DUEL);
+    }
+
+    public static PlayerDuelMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new PlayerDuelMenuProcessor();
+        }
+        return instance;
     }
 
     @Override

@@ -17,9 +17,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ImportExportMenuProcessor extends Processor { //DONE
+    private static ImportExportMenuProcessor instance;
 
     public ImportExportMenuProcessor() {
         super(Menus.IMPORTEXPORT);
+    }
+
+    public static ImportExportMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new ImportExportMenuProcessor();
+        }
+        return instance;
     }
 
     //Error Checker
@@ -101,23 +109,6 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = importCardErrorChecker(commandArguments);
-            case 4 -> response = exportCardErrorChecker(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
-    }
-
-    @Override
     public String enterMenuErrorChecker(String input) {
         return "menu navigation is not possible";
     }
@@ -129,7 +120,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
                 menu enter <name>
                 menu exit
                 menu show-current
-                import card <name>
+                import card <name> [path]
                 export card <name>
                 help
                 """;

@@ -46,7 +46,7 @@ public class RegisterPage extends Application {
         command.append("-u ").append(usernameField.getText()).append(" ");
         command.append("-n ").append(nicknameField.getText()).append(" ");
         command.append("-p ").append(passwordField.getText());
-        String response = ((LoginMenuProcessor) Objects.requireNonNull(Processor.getProcessorByName(Menus.LOGIN))).createUserErrorChecker(command.toString());
+        String response = LoginMenuProcessor.getInstance().createUserErrorChecker(command.toString());
         GraphicalUserInterface.returnGraphicalResponse(response);
     }
 }

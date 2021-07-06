@@ -10,8 +10,17 @@ import java.util.regex.Pattern;
 
 public class LoginMenuProcessor extends Processor { //DONE
 
-    public LoginMenuProcessor() {
+    private static LoginMenuProcessor instance;
+
+    protected LoginMenuProcessor() {
         super(Menus.LOGIN);
+    }
+
+    public static LoginMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new LoginMenuProcessor();
+        }
+        return instance;
     }
 
     //Error Checkers
@@ -105,23 +114,6 @@ public class LoginMenuProcessor extends Processor { //DONE
     public void loginUser(String username) {
         Core.currentMenu = Menus.MAIN;
         Processor.loggedInUser = Account.getAccountByUsername(username);
-    }
-
-    @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = createUserErrorChecker(commandArguments);
-            case 4 -> response = loginUserErrorChecker(commandArguments);
-            case 99 -> response = help();
-        }
-        return response;
     }
 
     @Override

@@ -2,14 +2,22 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
+import models.Menus;
 import models.utils.comparators.AccountSortByNickname;
 import models.utils.comparators.AccountSortByScore;
-import models.Menus;
 
 public class ScoreboardMenuProcessor extends Processor { //DONE
+    private static ScoreboardMenuProcessor instance;
 
     public ScoreboardMenuProcessor() {
         super(Menus.SCOREBOARD);
+    }
+
+    public static ScoreboardMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new ScoreboardMenuProcessor();
+        }
+        return instance;
     }
 
     //Command Performer
@@ -31,22 +39,6 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
             }
         }
         return response.toString();
-    }
-
-    @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = showScoreboard();
-            case 99 -> response = help();
-        }
-        return response;
     }
 
     @Override

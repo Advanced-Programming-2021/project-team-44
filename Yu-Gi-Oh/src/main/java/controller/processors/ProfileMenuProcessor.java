@@ -8,9 +8,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProfileMenuProcessor extends Processor { //DONE
+    private static ProfileMenuProcessor instance;
 
     public ProfileMenuProcessor() {
         super(Menus.PROFILE);
+    }
+
+    public static ProfileMenuProcessor getInstance() {
+        if (instance == null) {
+            instance = new ProfileMenuProcessor();
+        }
+        return instance;
     }
 
     //Error Checker
@@ -97,24 +105,6 @@ public class ProfileMenuProcessor extends Processor { //DONE
                 "Score: " + loggedInUser.getScore() + " pts\n" +
                 "Coin: " + loggedInUser.getCoin() + "\n" +
                 "----------------------------------------";
-        return response;
-    }
-
-    @Override
-    public String process(int commandId, String commandArguments) {
-        String response = "invalid command";
-        switch (commandId) {
-            case 0 -> response = enterMenuErrorChecker(commandArguments);
-            case 1 -> {
-                response = "";
-                exitMenu();
-            }
-            case 2 -> response = showMenu();
-            case 3 -> response = changeNicknameErrorChecker(commandArguments);
-            case 4 -> response = changePasswordErrorChecker(commandArguments);
-            case 5 -> response = showProfile();
-            case 99 -> response = help();
-        }
         return response;
     }
 

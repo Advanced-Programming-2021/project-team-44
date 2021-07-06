@@ -16,7 +16,7 @@ public abstract class Processor {
 
     protected Menus name;
 
-    public Processor(Menus name) {
+    protected Processor(Menus name) {
         this.name = name;
         processors.add(this);
     }
@@ -27,8 +27,6 @@ public abstract class Processor {
                 return processor;
         return null;
     }
-
-    public abstract String process(int commandId, String commandArguments);
 
     //Error Checker
     public abstract String enterMenuErrorChecker(String input);
