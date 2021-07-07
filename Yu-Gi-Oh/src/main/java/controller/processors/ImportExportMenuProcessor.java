@@ -61,10 +61,6 @@ public class ImportExportMenuProcessor extends Processor { //DONE
 
     //Command Performer
     public String importCard(String path) {
-        Scanner tmpScanner = new Scanner(System.in);
-        System.out.println("What type of card is it? Respond with monster or magic.");
-        String response = tmpScanner.nextLine();
-        tmpScanner.close();
         File cardJsonFile = new File(path);
         String cardJson;
         try {
@@ -72,16 +68,14 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         } catch (IOException e) {
             return "Json files can't be accessed!";
         }
-        switch (response) {
-            case "monster" -> {
-                MonsterCard tmpMonsterCard = (new Gson()).fromJson(cardJson, MonsterCard.class);
-                MonsterCard.monsterCards.add(tmpMonsterCard);
-            }
-            case "magic" -> {
+        try {
+            MonsterCard tmpMonsterCard = (new Gson()).fromJson(cardJson, MonsterCard.class);
+            MonsterCard.monsterCards.add(tmpMonsterCard);
+        } catch (Exception e) {
+            try {
                 MagicCard tmpMagicCard = (new Gson()).fromJson(cardJson, MagicCard.class);
                 MagicCard.magicCards.add(tmpMagicCard);
-            }
-            default -> {
+            } catch (Exception ex) {
                 return "Invalid card type!";
             }
         }
@@ -120,7 +114,7 @@ public class ImportExportMenuProcessor extends Processor { //DONE
                 menu enter <name>
                 menu exit
                 menu show-current
-                import card <name> [path]
+                import card [path]
                 export card <name>
                 help
                 """;

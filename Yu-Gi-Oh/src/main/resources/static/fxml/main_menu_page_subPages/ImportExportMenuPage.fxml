@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="graphics.main_menu_subPages.ImportExportMenuPage"
+            prefHeight="900.0" prefWidth="1600.0">
+
+    <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../../graphics/menus_backgrounds/mainMenuPageBackground.png" />
+    </ImageView>
+
+    <HBox fx:id="menuNavigationHBox" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
+          AnchorPane.topAnchor="0.0">
+        <Button fx:id="mainMenuButton" text="Main Menu"/>
+        <Button fx:id="duelMenuButton" text="Duel Menu"/>
+        <Button fx:id="deckMenuButton" text="Deck Menu"/>
+        <Button fx:id="scoreboardMenuButton" text="ScoreBoard Menu"/>
+        <Button fx:id="profileMenuButton" text="Profile Menu"/>
+        <Button fx:id="shopMenuButton" text="Shop Menu"/>
+        <Button fx:id="importExportMenuButton" text="Import/Export Menu"/>
+    </HBox>
+
+</AnchorPane>
