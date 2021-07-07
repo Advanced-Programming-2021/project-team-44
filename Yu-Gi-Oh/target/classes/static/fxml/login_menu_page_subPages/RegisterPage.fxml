@@ -48,7 +48,7 @@
                 </font>
             </TextField>
         </HBox>
-        <HBox alignment="CENTER" spacing="5">
+        <HBox alignment="CENTER" spacing="10">
             <Label text="Password:" stylesheets="@../../graphics/css_styles/label_style.css"
                    styleClass="label_register_text_box">
                 <font>

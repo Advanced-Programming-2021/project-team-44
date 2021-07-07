@@ -22,7 +22,7 @@ public class MainMenuPage extends Application {
     public Button registerButton;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
         MainMenuPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/MainMenuPage.fxml"));
         pane = FXMLLoader.load(pageUrl);

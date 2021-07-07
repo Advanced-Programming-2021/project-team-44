@@ -4,11 +4,9 @@ import controller.processors.*;
 import controller.threads.DataSaver;
 import controller.threads.MusicPlayer;
 import models.Account;
+import models.Menus;
 import models.cards.MagicCard;
 import models.cards.MonsterCard;
-import models.Menus;
-
-import java.util.Objects;
 
 public class Core {
     public static Menus currentMenu;

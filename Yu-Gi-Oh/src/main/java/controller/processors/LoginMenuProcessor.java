@@ -5,8 +5,6 @@ import models.Account;
 import models.Menus;
 
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LoginMenuProcessor extends Processor { //DONE
 
@@ -46,29 +44,10 @@ public class LoginMenuProcessor extends Processor { //DONE
         return response;
     }
 
-    public String loginUserErrorChecker(String arguments) {
+    public String loginUserErrorChecker(String... arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
-        Matcher matcher = pattern.matcher(arguments);
-        String username = null;
-        String password = null;
-        //Invalid Command
-        while (matcher.find()) {
-            switch (matcher.group(1)) {
-                case "--username", "-u" -> {
-                    if (username != null) return "invalid command";
-                    username = matcher.group(2).trim();
-                }
-                case "--password", "-p" -> {
-                    if (password != null) return "invalid command";
-                    password = matcher.group(2).trim();
-                }
-                default -> {
-                    return "invalid command";
-                }
-            }
-        }
-        if (username == null || password == null) return "invalid command";
+        String username = arguments[0];
+        String password = arguments[1];
 
         //Invalid Command Arguments
         if (!Account.isUsernameValid(username)) response = "invalid username";

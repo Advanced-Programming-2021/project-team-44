@@ -1,5 +1,6 @@
 package graphics;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +18,7 @@ public class GraphicalUserInterface {
 
     public static void returnGraphicalResponse(String response) {
         Popup popup = new Popup();
+
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setStyle("-fx-background-color: #8a9ce3;" +
                 "-fx-background-radius: 10px;");
@@ -27,6 +29,7 @@ public class GraphicalUserInterface {
         anchorPane.getChildren().add(vBox);
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
 
         Label responseText = new Label(response);
         vBox.getChildren().add(responseText);
@@ -54,5 +57,4 @@ public class GraphicalUserInterface {
         popup.show(stage);
         okButton.setOnMouseClicked(mouseEvent -> popup.hide());
     }
-
 }
