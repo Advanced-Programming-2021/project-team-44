@@ -1,11 +1,14 @@
 package graphics.main_menu_subPages;
 
 import graphics.MainMenuPage;
+import graphics.main_menu_subPages.importexport_menu_subPages.ExportPage;
+import graphics.main_menu_subPages.importexport_menu_subPages.ImportPage;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -113,6 +116,22 @@ public class ImportExportMenuPage extends Application {
     public void redirectToProfileMenu() {
         try {
             (new ProfileMenuPage()).start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void importHandler(MouseEvent mouseEvent) {
+        try {
+            (new ImportPage()).start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportHandler(MouseEvent mouseEvent) {
+        try {
+            (new ExportPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }

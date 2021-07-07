@@ -31,29 +31,21 @@ public class ImportExportMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    public String importCardErrorChecker(String arguments) {
+    public String importCardErrorChecker(String path) {
         //Command: import card PATH_TO_CARD_INFORMATION
-        return importCard(arguments.trim());
+        return importCard(path.trim());
     }
 
-    public String exportCardErrorChecker(String arguments) {
+    public String exportCardErrorChecker(String... arguments) {
         //Command: export card <CARD_NAME> --path [PATH_TO_SAVE, DEFAULT=src/main/resources/dynamic/exports/CARD_NAME.json]
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(?:--path|-p)\\s+(.+?)");
-        Matcher matcher = pattern.matcher(arguments);
-        String path;
-        String cardName;
-        if (matcher.find()) {
-            path = arguments.substring(matcher.start(), matcher.end());
-            arguments = arguments.substring(0, matcher.start()) + arguments.substring(matcher.end());
-        } else path = "src/main/resources/dynamic/exports/" + arguments.trim() + ".json";
-        cardName = arguments.trim();
-
+        String path = arguments[1];
+        String cardName = arguments[0];
+        if (path.equals("")) path = "src/main/resources/dynamic/exports/" + cardName + ".json";
         if (Card.getCardByName(cardName) == null)
             response = "Card with this name doesn't exist!";
         else {
-            exportCard(cardName, path);
-            response = "Card exported successfully!";
+            response = exportCard(cardName, path);
         }
         return response;
     }
@@ -82,9 +74,9 @@ public class ImportExportMenuProcessor extends Processor { //DONE
         return "Card imported successfully!";
     }
 
-    public void exportCard(String cardName, String path) {
-        File exportedCardFile = new File(path);
+    public String exportCard(String cardName, String path) {
         try {
+            File exportedCardFile = new File(path);
             Card toBeExportedCard = Card.getCardByName(cardName);
             String exportedCardData;
             if (toBeExportedCard instanceof MonsterCard toBeExportedMonsterCard) {
@@ -98,8 +90,10 @@ public class ImportExportMenuProcessor extends Processor { //DONE
                 importedCardWriter.write(exportedCardData);
                 importedCardWriter.close();
             }
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            return "invalid file path";
         }
+        return "Card exported successfully!\n" + "Path: " + path;
     }
 
     @Override
@@ -114,8 +108,8 @@ public class ImportExportMenuProcessor extends Processor { //DONE
                 menu enter <name>
                 menu exit
                 menu show-current
-                import card [path]
-                export card <name>
+                import card <path>
+                export card <name> [PATH_TO_SAVE, DEFAULT=src/main/resources/dynamic/exports/CARD_NAME.json]
                 help
                 """;
     }

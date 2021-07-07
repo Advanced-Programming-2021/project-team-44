@@ -7,6 +7,7 @@ module graphics {
     opens graphics to javafx.fxml;
     opens graphics.login_menu_subPages to javafx.fxml;
     opens graphics.main_menu_subPages to javafx.fxml;
+    opens graphics.main_menu_subPages.importexport_menu_subPages to javafx.fxml;
 
     opens models to com.google.gson;
     opens models.cards to com.google.gson;
@@ -15,6 +16,7 @@ module graphics {
     exports graphics;
     exports graphics.login_menu_subPages;
     exports graphics.main_menu_subPages;
+    exports graphics.main_menu_subPages.importexport_menu_subPages;
 
     exports models;
     exports models.cards;

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.main_menu_subPages.importexport_menu_subPages.ExportPage">
+
+    <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../../../graphics/menus_backgrounds/mainMenuPageBackground.png" />
+    </ImageView>
+
+    <VBox alignment="CENTER" prefHeight="900.0" prefWidth="500.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="0.0">
+        <Label alignment="CENTER" prefHeight="50.0" prefWidth="350.0" styleClass="label_register_menu_title" stylesheets="@../../../graphics/css_styles/label_style.css" text="Import" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER" spacing="10">
+            <Label styleClass="label_register_text_box" stylesheets="@../../../graphics/css_styles/label_style.css" text="Card Name">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <TextField fx:id="cardNameField" promptText="Card Name">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </TextField>
+        </HBox>
+        <HBox alignment="CENTER" spacing="10">
+            <Label styleClass="label_register_text_box" stylesheets="@../../../graphics/css_styles/label_style.css" text="Path (Optional)">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+            <TextField fx:id="pathField" promptText="Path To File (Optional)">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </TextField>
+        </HBox>
+        <Button mnemonicParsing="false" onMouseClicked="#exportHandler" prefHeight="30" prefWidth="150" styleClass="button_login_menu_page" stylesheets="@../../../graphics/css_styles/button_style.css" text="Import">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+    </VBox>
+
+
+    <Button layoutX="25.0" layoutY="840.0" mnemonicParsing="false" onMouseClicked="#redirectToImportExportMenu" styleClass="button_back_button" stylesheets="@../../../graphics/css_styles/button_style.css" text="Back" />
+
+</AnchorPane>

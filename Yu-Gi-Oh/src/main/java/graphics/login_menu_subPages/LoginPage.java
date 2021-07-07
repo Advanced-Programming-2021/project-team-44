@@ -5,7 +5,6 @@ import controller.processors.LoginMenuProcessor;
 import graphics.GraphicalUserInterface;
 import graphics.LoginMenuPage;
 import graphics.MainMenuPage;
-import graphics.StartPage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,6 +52,5 @@ public class LoginPage extends Application {
         String response = LoginMenuProcessor.getInstance().loginUserErrorChecker(usernameField.getText(), passwordField.getText());
         GraphicalUserInterface.returnGraphicalResponse(response);
         if (Core.currentMenu == Menus.MAIN) redirectToMainMenu();
-
     }
 }
