@@ -1,5 +1,6 @@
 package graphics;
 
+import controller.processors.LoginMenuProcessor;
 import graphics.login_menu_subPages.CreditsPage;
 import graphics.login_menu_subPages.LoginPage;
 import graphics.login_menu_subPages.RegisterPage;
@@ -53,7 +54,7 @@ public class LoginMenuPage extends Application {
     }
 
     public void exitHandler(MouseEvent mouseEvent) {
-        System.exit(0);
+        LoginMenuProcessor.getInstance().exitMenu();
     }
 
     public void creditsHandler(MouseEvent mouseEvent) {

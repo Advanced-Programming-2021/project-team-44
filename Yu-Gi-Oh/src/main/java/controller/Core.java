@@ -38,7 +38,6 @@ public class Core {
     } //done
 
     public static void Initializer() {
-        //TODO INITIALIZER
         System.out.println(MonsterCard.addMonsterCardFromJSON());
         System.out.println(MagicCard.addMagicCardFromJSON());
         System.out.println(Account.initializeAccounts());

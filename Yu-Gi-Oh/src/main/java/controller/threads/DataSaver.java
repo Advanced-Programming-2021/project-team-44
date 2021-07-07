@@ -4,7 +4,7 @@ import models.Account;
 
 public class DataSaver extends Thread{
     @Override
-    public void run() {
+    public synchronized void run() {
         while (true) {
             Account.saveAccounts();
             try {

@@ -1094,7 +1094,6 @@ abstract public class DuelMenuProcessor extends Processor {
         return getOtherPlayer().getBoard();
     } //done
 
-    @Override
     public String process(int commandId, String commandArguments) {
         commandArguments = commandArguments.trim();
         String response = "invalid command";

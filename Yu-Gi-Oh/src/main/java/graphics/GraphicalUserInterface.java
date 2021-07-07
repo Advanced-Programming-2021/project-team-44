@@ -19,7 +19,7 @@ public class GraphicalUserInterface {
         Popup popup = new Popup();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setStyle("-fx-background-color: #8a9ce3;" +
-                "-fx-background-radius: 10px 10px;");
+                "-fx-background-radius: 10px;");
         anchorPane.setMaxWidth(400);
         popup.getContent().add(anchorPane);
 
@@ -33,6 +33,7 @@ public class GraphicalUserInterface {
         responseText.setStyle("-fx-text-alignment: center;" +
                 "-fx-alignment: center;" +
                 "-fx-background-color: #8a9ce3;" +
+                "-fx-background-radius: 5px;" +
                 "-fx-text-fill: #121D4B;" +
                 "-fx-font-size: 16px;" +
                 "-fx-padding: 5px;");

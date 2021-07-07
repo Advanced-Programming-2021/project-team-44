@@ -1,6 +1,7 @@
 package controller.processors;
 
 import controller.Core;
+import graphics.GraphicalUserInterface;
 import models.Account;
 import models.Menus;
 import models.duel_models.Player;
@@ -25,6 +26,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         this.player1 = new Player(player2);
         this.player2 = new Player(player1);
         newRoundInitializer();
+        execute();
     }
 
     @Override
@@ -58,7 +60,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
         String command = getActingPlayer().getCommand();
         String[] dividedCommand = commandHandler(command);
         String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
-        UserInterface.returnResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response);
     } //done
 
     @Override

@@ -42,11 +42,7 @@ public class RegisterPage extends Application {
     }
 
     public void registerSubmitHandler() {
-        StringBuilder command = new StringBuilder();
-        command.append("-u ").append(usernameField.getText()).append(" ");
-        command.append("-n ").append(nicknameField.getText()).append(" ");
-        command.append("-p ").append(passwordField.getText());
-        String response = LoginMenuProcessor.getInstance().createUserErrorChecker(command.toString());
+        String response = LoginMenuProcessor.getInstance().createUserErrorChecker(usernameField.getText(), nicknameField.getText(), passwordField.getText());
         GraphicalUserInterface.returnGraphicalResponse(response);
     }
 }

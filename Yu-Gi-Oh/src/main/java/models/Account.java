@@ -3,6 +3,8 @@ package models;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.cards.Card;
+import models.cards.MagicCard;
+import models.cards.MonsterCard;
 import models.utils.comparators.CardSortByName;
 
 import java.io.File;
@@ -84,8 +86,13 @@ public class Account {
         ArrayList<String> decksDeepSerialized = (new Gson()).fromJson(accountDeepSerialized.decksSerialized, collectionType);
         ArrayList<Card> spareCards = new ArrayList<>();
         ArrayList<Deck> decks = new ArrayList<>();
-        for (String cardSerialized : spareCardsDeepSerialized)
-            spareCards.add((new Gson()).fromJson(cardSerialized, Card.class));
+        for (String cardSerialized : spareCardsDeepSerialized) {
+            try {
+                spareCards.add((new Gson()).fromJson(cardSerialized, MonsterCard.class));
+            } catch (Exception e) {
+                spareCards.add((new Gson()).fromJson(cardSerialized, MagicCard.class));
+            }
+        }
         for (String deckSerialized : decksDeepSerialized)
             decks.add(Deck.deserialize(deckSerialized));
         Account output = new Account(accountDeepSerialized.username, accountDeepSerialized.password, accountDeepSerialized.nickname);

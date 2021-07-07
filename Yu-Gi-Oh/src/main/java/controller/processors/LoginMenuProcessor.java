@@ -24,34 +24,12 @@ public class LoginMenuProcessor extends Processor { //DONE
     }
 
     //Error Checkers
-    public String createUserErrorChecker(String arguments) {
+    public String createUserErrorChecker(String... arguments) {
         String response;
-        Pattern pattern = Pattern.compile("(?=\\B)(-[-]?\\S+)\\b(.+?)(?= -[-]?|$)");
-        Matcher matcher = pattern.matcher(arguments);
-        String username = null;
-        String nickname = null;
-        String password = null;
-        //Invalid Command
-        while (matcher.find()) {
-            switch (matcher.group(1)) {
-                case "--username", "-u" -> {
-                    if (username != null) return "invalid command";
-                    username = matcher.group(2).trim();
-                }
-                case "--nickname", "-n" -> {
-                    if (nickname != null) return "invalid command";
-                    nickname = matcher.group(2).trim();
-                }
-                case "--password", "-p" -> {
-                    if (password != null) return "invalid command";
-                    password = matcher.group(2).trim();
-                }
-                default -> {
-                    return "invalid command";
-                }
-            }
-        }
-        if (username == null || nickname == null || password == null) return "invalid command";
+
+        String username = arguments[0];
+        String nickname = arguments[1];
+        String password = arguments[2];
 
         //Invalid Command Arguments
         if (!Account.isUsernameValid(username)) response = "invalid username";

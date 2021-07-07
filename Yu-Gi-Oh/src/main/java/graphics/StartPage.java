@@ -36,6 +36,7 @@ public class StartPage extends Application {
         }
         stage.setScene(scene);
         stage.show();
+        Core.run();
         Core.musicPlayer.start();
         Core.dataSaver.start();
     }
