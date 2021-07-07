@@ -91,7 +91,7 @@ public class MagicCard extends Card {
                 response += name.stringName + " card is missing!";
                 return response;
             }
-        response += "All magic cards added successfully!";
+        response += "Magic cards loaded successfully";
         Card.allCards.addAll(magicCards);
         return response;
     }

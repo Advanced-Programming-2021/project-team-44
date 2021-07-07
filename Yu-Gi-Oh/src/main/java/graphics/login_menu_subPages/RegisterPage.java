@@ -1,7 +1,6 @@
 package graphics.login_menu_subPages;
 
 import controller.processors.LoginMenuProcessor;
-import controller.processors.Processor;
 import graphics.GraphicalUserInterface;
 import graphics.LoginMenuPage;
 import graphics.StartPage;
@@ -12,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import models.Menus;
 
 import java.net.URL;
 import java.util.Objects;
@@ -35,7 +33,7 @@ public class RegisterPage extends Application {
 
     public void redirectToLoginMenu() {
         try {
-            (new LoginMenuPage()).start(StartPage.stage);
+            (new LoginMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }

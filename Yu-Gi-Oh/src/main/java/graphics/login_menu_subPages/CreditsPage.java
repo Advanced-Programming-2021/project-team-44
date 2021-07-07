@@ -40,7 +40,7 @@ public class CreditsPage extends Application {
 
     public void redirectToLoginMenu() {
         try {
-            (new LoginMenuPage()).start(StartPage.stage);
+            (new LoginMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }

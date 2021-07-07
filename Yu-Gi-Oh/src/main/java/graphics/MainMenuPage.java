@@ -1,25 +1,33 @@
 package graphics;
 
 import controller.processors.Processor;
-import graphics.login_menu_subPages.LoginPage;
 import graphics.main_menu_subPages.*;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.w3c.dom.events.MouseEvent;
 
 import java.net.URL;
 import java.util.Objects;
 
-import static graphics.StartPage.stage;
-
 public class MainMenuPage extends Application {
     private static Stage stage;
     private static Pane pane;
-    public Button registerButton;
+    public HBox menuNavigationHBox;
+    public Button mainMenuButton;
+    public Button duelMenuButton;
+    public Button deckMenuButton;
+    public Button scoreboardMenuButton;
+    public Button profileMenuButton;
+    public Button shopMenuButton;
+    public Button importExportMenuButton;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -31,52 +39,98 @@ public class MainMenuPage extends Application {
         stage.show();
     }
 
-    public void duelHandler(javafx.scene.input.MouseEvent mouseEvent) {
+    @FXML
+    public void initialize() {
+        menuNavigationHBox.setSpacing(0);
+        menuNavigationHBox.setPrefHeight(50);
+
+        mainMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        mainMenuButton.getStyleClass().add("button_menu_navigation_selected");
+
+        duelMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        duelMenuButton.getStyleClass().add("button_menu_navigation");
+        duelMenuButton.setOnMouseClicked(mouseEvent -> redirectToDuelPage());
+
+        deckMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        deckMenuButton.getStyleClass().add("button_menu_navigation");
+        deckMenuButton.setOnMouseClicked(mouseEvent -> redirectToDeckMenu());
+
+        scoreboardMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        scoreboardMenuButton.getStyleClass().add("button_menu_navigation");
+        scoreboardMenuButton.setOnMouseClicked(mouseEvent -> redirectToScoreboardMenu());
+
+        profileMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        profileMenuButton.getStyleClass().add("button_menu_navigation");
+        profileMenuButton.setOnMouseClicked(mouseEvent -> redirectToProfileMenu());
+
+        shopMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        shopMenuButton.getStyleClass().add("button_menu_navigation");
+        shopMenuButton.setOnMouseClicked(mouseEvent -> redirectToShopMenu());
+
+        importExportMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
+        importExportMenuButton.getStyleClass().add("button_menu_navigation");
+        importExportMenuButton.setOnMouseClicked(mouseEvent -> redirectToImportExportMenu());
+
+    }
+
+    public void redirectToDuelPage() {
         try {
-            (new DuelPage()).start(StartPage.stage);
+            (new DuelPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void deckHandler(javafx.scene.input.MouseEvent mouseEvent) {
+    public void redirectToDeckMenu() {
         try {
-            (new DeckPage()).start(StartPage.stage);
+            (new DeckMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void scoreboardHandler(javafx.scene.input.MouseEvent mouseEvent) {
+    public void redirectToScoreboardMenu() {
         try {
-            (new ScoreboardPage()).start(StartPage.stage);
+            (new ScoreboardMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void profileHandler(javafx.scene.input.MouseEvent mouseEvent) {
+    public void redirectToProfileMenu() {
         try {
-            (new ProfilePage()).start(StartPage.stage);
+            (new ProfileMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void shopHandler(javafx.scene.input.MouseEvent mouseEvent) {
+    public void redirectToShopMenu() {
         try {
-            (new ShopPage()).start(StartPage.stage);
+            (new ShopMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void logoutHandler(javafx.scene.input.MouseEvent mouseEvent) {
+    public void redirectToImportExportMenu() {
         try {
-            Processor.loggedInUser = null;
-            (new LoginPage()).start(StartPage.stage);
+            (new ImportExportMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void redirectToLoginMenu() {
+        try {
+            (new LoginMenuPage()).start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void logoutHandler() {
+        Processor.loggedInUser = null;
+        redirectToLoginMenu();
     }
 }

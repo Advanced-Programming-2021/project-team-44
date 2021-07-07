@@ -53,7 +53,7 @@
                 </font>
             </PasswordField>
         </HBox>
-        <Button mnemonicParsing="false" text="Submit" stylesheets="@../../graphics/css_styles/button_style.css"
+        <Button mnemonicParsing="false" text="Login" stylesheets="@../../graphics/css_styles/button_style.css"
                 onMouseClicked="#loginSubmitHandler"
                 styleClass="button_login_menu_page" prefWidth="150" prefHeight="30">
             <font>

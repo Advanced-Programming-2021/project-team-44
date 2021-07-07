@@ -8,6 +8,11 @@
   -fx-text-fill: #8a9ce3;
 }
 
+.button_login_menu_page:hover {
+  -fx-background-color: #2a44af;
+  -fx-text-fill: #adb9eb;
+}
+
 .button_back_button {
   -fx-text-alignment: center;
   -fx-alignment: center;
@@ -19,12 +24,41 @@
   -fx-font-size: 18px;
 }
 
-.button_login_menu_page:hover {
+.button_back_button:hover {
   -fx-background-color: #2a44af;
   -fx-text-fill: #adb9eb;
 }
 
-.button_back_button:hover {
-  -fx-background-color: #2a44af;
+.button_menu_navigation {
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+  -fx-trasition-duration: 0.4s;
+  -fx-cursor: hand;
+  -fx-background-color: #1F3960;
   -fx-text-fill: #adb9eb;
+  -fx-font-size: 18px;
+  -fx-pref-width: 228px;
+  -fx-pref-height: 40px;
+}
+
+.button_menu_navigation:hover {
+  -fx-background-color: #3b6cb6;
+  -fx-text-fill: #adb9eb;
+}
+
+.button_menu_navigation_selected {
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+  -fx-trasition-duration: 0.4s;
+  -fx-cursor: hand;
+  -fx-background-color: #FF8000;
+  -fx-text-fill: #1F3960;
+  -fx-font-size: 18px;
+  -fx-pref-width: 228px;
+  -fx-pref-height: 40px;
+}
+
+.button_menu_navigation_selected:hover {
+  -fx-background-color: #fea64c;
+  -fx-text-fill: #1F3960;
 }

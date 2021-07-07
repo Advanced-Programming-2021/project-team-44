@@ -139,30 +139,15 @@ public class MainMenuProcessor extends Processor { //DONE
 
     @Override
     public String enterMenuErrorChecker(String input) {
-        String response;
+        String response = "";
         input = input.trim();
         switch (input) {
             case "Duel", "duel", "Duel Menu", "duel menu", "Login", "login", "Login Menu", "login menu" -> response = "you can't enter this menu by this command";
-            case "Deck", "deck", "Deck Menu", "deck menu" -> {
-                response = "";
-                enterMenu(Menus.DECK);
-            }
-            case "Scoreboard", "scoreboard", "Scoreboard Menu", "scoreboard menu" -> {
-                response = "";
-                enterMenu(Menus.SCOREBOARD);
-            }
-            case "Profile", "profile", "Profile Menu", "profile menu" -> {
-                response = "";
-                enterMenu(Menus.PROFILE);
-            }
-            case "Shop", "shop", "Shop Menu", "shop menu" -> {
-                response = "";
-                enterMenu(Menus.SHOP);
-            }
-            case "Import/Export", "import/export", "Import/Export Menu", "import/export menu" -> {
-                response = "";
-                enterMenu(Menus.IMPORTEXPORT);
-            }
+            case "Deck", "deck", "Deck Menu", "deck menu" -> enterMenu(Menus.DECK);
+            case "Scoreboard", "scoreboard", "Scoreboard Menu", "scoreboard menu" -> enterMenu(Menus.SCOREBOARD);
+            case "Profile", "profile", "Profile Menu", "profile menu" -> enterMenu(Menus.PROFILE);
+            case "Shop", "shop", "Shop Menu", "shop menu" -> enterMenu(Menus.SHOP);
+            case "Import/Export", "import/export", "Import/Export Menu", "import/export menu" -> enterMenu(Menus.IMPORTEXPORT);
             case "Main", "main", "Main Menu", "main menu" -> response = "you are already in Main Menu!";
             default -> response = "invalid menu name";
         }

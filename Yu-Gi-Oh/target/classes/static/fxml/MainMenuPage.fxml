@@ -3,44 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.MainMenuPage">
     <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <image>
-            <Image url="@../graphics/menus_backgrounds/mainMenuPageBackground.png" />
-        </image>
+        <Image url="@../graphics/menus_backgrounds/mainMenuPageBackground.png" />
     </ImageView>
-    <VBox layoutX="588.0" layoutY="64.0" prefHeight="772.0" prefWidth="425.0">
-      <children>
-         <AnchorPane prefHeight="774.0" prefWidth="425.0">
-            <children>
-               <Button layoutX="29.0" layoutY="20" mnemonicParsing="false" onMouseClicked="#duelHandler" stylesheets="@../graphics/css_styles/button_style.css" text="Duel">
-                  <font>
-                     <Font size="33.0" />
-                  </font></Button>
-                <Button layoutX="29.0" layoutY="150" mnemonicParsing="false" onMouseClicked="#deckHandler" stylesheets="@../graphics/css_styles/button_style.css" text="Deck">
-                  <font>
-                     <Font size="33.0" />
-                  </font></Button>
-                <Button layoutX="29.0" layoutY="280" mnemonicParsing="false" onMouseClicked="#scoreboardHandler" stylesheets="@../graphics/css_styles/button_style.css" text="Scoreboard">
-                  <font>
-                     <Font size="33.0" />
-                  </font></Button>
-                <Button layoutX="29.0" layoutY="410" mnemonicParsing="false" onMouseClicked="#profileHandler" stylesheets="@../graphics/css_styles/button_style.css" text="Profile">
-                  <font>
-                     <Font size="33.0" />
-                  </font></Button>
-                <Button layoutX="29.0" layoutY="540" mnemonicParsing="false" onMouseClicked="#shopHandler" stylesheets="@../graphics/css_styles/button_style.css" text="Shop">
-                  <font>
-                     <Font size="33.0" />
-                  </font></Button>
-                <Button layoutX="29.0" layoutY="670" mnemonicParsing="false" onMouseClicked="#logoutHandler" stylesheets="@../graphics/css_styles/button_style.css" text="Logout">
-                    <font>
-                        <Font size="33.0" />
-                    </font></Button>
-            </children>
-         </AnchorPane>
-      </children></VBox>
-   <CheckBox layoutX="14.0" layoutY="858.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="94.0" text="Mute" />
+    <Button layoutX="650.0" layoutY="840.0" prefWidth="300" prefHeight="40" mnemonicParsing="false" onMouseClicked="#logoutHandler" styleClass="button_back_button" stylesheets="@../graphics/css_styles/button_style.css" text="Logout" />
+    <HBox fx:id="menuNavigationHBox" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+        <Button fx:id="mainMenuButton" text="Main Menu" />
+        <Button fx:id="duelMenuButton" text="Duel Menu" />
+        <Button fx:id="deckMenuButton" text="Deck Menu" />
+        <Button fx:id="scoreboardMenuButton" text="ScoreBoard Menu" />
+        <Button fx:id="profileMenuButton" text="Profile Menu" />
+        <Button fx:id="shopMenuButton" text="Shop Menu" />
+        <Button fx:id="importExportMenuButton" text="Import/Export Menu" />
+    </HBox>
 </AnchorPane>

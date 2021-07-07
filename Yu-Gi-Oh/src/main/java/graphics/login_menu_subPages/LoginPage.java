@@ -35,7 +35,7 @@ public class LoginPage extends Application {
 
     public void redirectToLoginMenu() {
         try {
-            (new LoginMenuPage()).start(StartPage.stage);
+            (new LoginMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class LoginPage extends Application {
 
     public void redirectToMainMenu() {
         try {
-            (new MainMenuPage()).start(StartPage.stage);
+            (new MainMenuPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }

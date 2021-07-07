@@ -93,7 +93,7 @@ public class MonsterCard extends Card {
                 response += name.stringName + " card is missing!";
                 return response;
             }
-        response += "All monster cards added successfully!";
+        response += "Monster cards loaded successfully";
         Card.allCards.addAll(monsterCards);
         return response;
     }

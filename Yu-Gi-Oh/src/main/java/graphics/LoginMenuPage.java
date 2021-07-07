@@ -39,7 +39,7 @@ public class LoginMenuPage extends Application {
 
     public void registerHandler(MouseEvent mouseEvent) {
         try {
-            (new RegisterPage()).start(StartPage.stage);
+            (new RegisterPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class LoginMenuPage extends Application {
 
     public void loginHandler(MouseEvent mouseEvent) {
         try {
-            (new LoginPage()).start(StartPage.stage);
+            (new LoginPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class LoginMenuPage extends Application {
 
     public void creditsHandler(MouseEvent mouseEvent) {
         try {
-            (new CreditsPage()).start(StartPage.stage);
+            (new CreditsPage()).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
