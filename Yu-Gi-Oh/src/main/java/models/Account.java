@@ -21,6 +21,7 @@ public class Account {
 
     static {
         accounts = new ArrayList<>();
+        initializeAccounts();
     }
 
     private String username;
@@ -31,6 +32,7 @@ public class Account {
     private Deck activeDeck;
     private ArrayList<Card> spareCards;
     private ArrayList<Deck> decks;
+    private String profilePicturePath = "placeholder";
 
     public Account(String username, String password, String nickname) {
         this.username = username;
@@ -39,8 +41,8 @@ public class Account {
         this.score = 0;
         this.coin = 50000;
         this.activeDeck = null;
-        spareCards = new ArrayList<>();
-        decks = new ArrayList<>();
+        this.spareCards = new ArrayList<>();
+        this.decks = new ArrayList<>();
         accounts.add(this);
     }
 
@@ -101,6 +103,7 @@ public class Account {
         output.setActiveDeck(activeDeck);
         output.setSpareCards(spareCards);
         output.setDecks(decks);
+        output.setProfilePicturePath(accountDeepSerialized.profilePicturePath);
         return output;
     }
 
@@ -147,7 +150,7 @@ public class Account {
             decksDeepSerialized.add(deck.serialize());
         String spareCardsSerialized = (new Gson()).toJson(spareCardsDeepSerialized);
         String decksSerialized = (new Gson()).toJson(decksDeepSerialized);
-        AccountDeepSerialized accountDeepSerialized = new AccountDeepSerialized(this.username, this.password, this.nickname, this.score, this.coin, activeDeckSerialized, spareCardsSerialized, decksSerialized);
+        AccountDeepSerialized accountDeepSerialized = new AccountDeepSerialized(this.username, this.password, this.nickname, this.score, this.coin, activeDeckSerialized, spareCardsSerialized, decksSerialized, this.profilePicturePath);
         return (new Gson()).toJson(accountDeepSerialized);
     }
 
@@ -168,6 +171,14 @@ public class Account {
     }
 
     //Setters
+    public String getProfilePicturePath() {
+        if (this.profilePicturePath == null) this.profilePicturePath = "placeholder";
+        return this.profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
+    }
 
     public String getPassword() {
         return this.password;
@@ -285,8 +296,9 @@ class AccountDeepSerialized {
     protected String activeDeckSerialized;
     protected String spareCardsSerialized;
     protected String decksSerialized;
+    protected String profilePicturePath;
 
-    public AccountDeepSerialized(String username, String password, String nickname, int score, int coin, String activeDeckSerialized, String spareCardsSerialized, String decksSerialized) {
+    public AccountDeepSerialized(String username, String password, String nickname, int score, int coin, String activeDeckSerialized, String spareCardsSerialized, String decksSerialized, String profilePicturePath) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
@@ -295,5 +307,6 @@ class AccountDeepSerialized {
         this.activeDeckSerialized = activeDeckSerialized;
         this.spareCardsSerialized = spareCardsSerialized;
         this.decksSerialized = decksSerialized;
+        this.profilePicturePath = profilePicturePath;
     }
 }

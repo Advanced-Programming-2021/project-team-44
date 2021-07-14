@@ -24,6 +24,7 @@ public class MonsterCard extends Card {
 
     static {
         monsterCards = new ArrayList<>();
+        addMonsterCardFromJSON();
     }
 
     private MonsterCard() {

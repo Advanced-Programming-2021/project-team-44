@@ -9,7 +9,22 @@
 .label_register_menu_title {
     -fx-padding: 5px;
     -fx-text-alignment: center;
-    -fx-background-color: red;
+    -fx-background-color: #FF8000;
     -fx-background-radius: 10px;
     -fx-text-fill: white;
+}
+
+.label_profile_menu_attributes {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+}
+
+.label_profile_menu_show {
+    -fx-padding: 5px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-color: #FF8000;
+    -fx-background-radius: 20px;
+    -fx-text-fill: white;
+    -fx-pref-width: 128px;
 }

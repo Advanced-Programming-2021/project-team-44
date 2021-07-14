@@ -11,14 +11,13 @@ import models.utils.Utils;
 import java.util.*;
 
 public class Player {
-    private static ArrayList<String> binaryCombinationsArray = new ArrayList<>();
+    private static final ArrayList<String> binaryCombinationsArray = new ArrayList<>();
     private Account account;
     private Board board;
     private int score;
     private int roundsWon;
     private int maxLp;
     private int lp;
-    private Deck deck;
     private ArrayList<Card> mainDeckCards;
     private HashMap<Integer, MonsterCard> monsterZone;
     private HashMap<Integer, MagicCard> magicZone;
@@ -29,17 +28,18 @@ public class Player {
 
     public Player(Account account) {
         this.account = account;
-        this.board = new Board(this);
         this.isCheatActivated = false;
         newRoundInitialize();
     }
 
     private static void generateAllBinaryStrings(int n, int[] array, int i) {
         if (i == n) binaryCombinationSaver(n, array);
-        array[i] = 0;
-        generateAllBinaryStrings(n, array, i + 1);
-        array[i] = 1;
-        generateAllBinaryStrings(n, array, i + 1);
+        else {
+            array[i] = 0;
+            generateAllBinaryStrings(n, array, i + 1);
+            array[i] = 1;
+            generateAllBinaryStrings(n, array, i + 1);
+        }
     }
 
     private static void binaryCombinationSaver(int n, int[] array) {
@@ -50,9 +50,11 @@ public class Player {
     }
 
     public void newRoundInitialize() {
+        this.board = new Board(this);
+
         this.lp = 8000;
-        this.deck = (Deck) Utils.deepClone(this.account.getActiveDeck());
-        this.mainDeckCards = this.deck.getMainDeckCards();
+        Deck deck = (Deck) Utils.deepClone(this.account.getActiveDeck());
+        this.mainDeckCards = deck.getMainDeckCards();
         Collections.shuffle(this.mainDeckCards);
 
         this.monsterZone = new HashMap<>();

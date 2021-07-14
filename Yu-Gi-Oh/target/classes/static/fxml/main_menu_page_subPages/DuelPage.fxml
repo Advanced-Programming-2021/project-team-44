@@ -1,24 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="graphics.main_menu_subPages.DuelPage"
             prefHeight="900.0" prefWidth="1600.0">
 
-    <HBox fx:id="menuNavigationHBox" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
-        <Button fx:id="mainMenuButton" text="Main Menu" />
-        <Button fx:id="duelMenuButton" text="Duel Menu" />
-        <Button fx:id="deckMenuButton" text="Deck Menu" />
-        <Button fx:id="scoreboardMenuButton" text="ScoreBoard Menu" />
-        <Button fx:id="profileMenuButton" text="Profile Menu" />
-        <Button fx:id="shopMenuButton" text="Shop Menu" />
-        <Button fx:id="importExportMenuButton" text="Import/Export Menu" />
+    <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../../graphics/menus_backgrounds/mainMenuPageBackground.png"/>
+    </ImageView>
+
+    <VBox alignment="CENTER" prefHeight="900.0" prefWidth="652.0" spacing="50.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#duelHandler"
+                prefHeight="40" prefWidth="360" styleClass="button_login_menu_page"
+                stylesheets="@../../graphics/css_styles/button_style.css" text="Duel" textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Button>
+        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#duelWithAIHandler" prefHeight="40"
+                prefWidth="360" styleClass="button_login_menu_page"
+                stylesheets="@../../graphics/css_styles/button_style.css" text="Duel with AI" textAlignment="CENTER">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Button>
+    </VBox>
+
+    <HBox fx:id="menuNavigationHBox" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
+          AnchorPane.topAnchor="0.0">
+        <Button fx:id="mainMenuButton" text="Main Menu"/>
+        <Button fx:id="duelMenuButton" text="Duel Menu"/>
+        <Button fx:id="deckMenuButton" text="Deck Menu"/>
+        <Button fx:id="scoreboardMenuButton" text="ScoreBoard Menu"/>
+        <Button fx:id="profileMenuButton" text="Profile Menu"/>
+        <Button fx:id="shopMenuButton" text="Shop Menu"/>
+        <Button fx:id="importExportMenuButton" text="Import/Export Menu"/>
     </HBox>
 
 </AnchorPane>

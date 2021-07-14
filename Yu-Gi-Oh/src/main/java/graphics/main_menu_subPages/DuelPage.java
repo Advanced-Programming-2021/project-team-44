@@ -1,11 +1,11 @@
 package graphics.main_menu_subPages;
 
-import graphics.MainMenuPage;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.Objects;
 
-public class DuelPage extends Application {
+public class DuelPage extends Application implements MainMenuNavigation {
     private static Stage stage;
     private static Pane pane;
     public HBox menuNavigationHBox;
@@ -42,79 +42,38 @@ public class DuelPage extends Application {
 
         mainMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         mainMenuButton.getStyleClass().add("button_menu_navigation");
-        mainMenuButton.setOnMouseClicked(mouseEvent -> redirectToMainMenu());
+        mainMenuButton.setOnMouseClicked(mouseEvent -> redirectToMainMenu(stage));
 
         duelMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         duelMenuButton.getStyleClass().add("button_menu_navigation_selected");
 
         deckMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         deckMenuButton.getStyleClass().add("button_menu_navigation");
-        deckMenuButton.setOnMouseClicked(mouseEvent -> redirectToDeckMenu());
+        deckMenuButton.setOnMouseClicked(mouseEvent -> redirectToDeckMenu(stage));
 
         scoreboardMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         scoreboardMenuButton.getStyleClass().add("button_menu_navigation");
-        scoreboardMenuButton.setOnMouseClicked(mouseEvent -> redirectToScoreboardMenu());
+        scoreboardMenuButton.setOnMouseClicked(mouseEvent -> redirectToScoreboardMenu(stage));
 
         profileMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         profileMenuButton.getStyleClass().add("button_menu_navigation");
-        profileMenuButton.setOnMouseClicked(mouseEvent -> redirectToProfilePage());
+        profileMenuButton.setOnMouseClicked(mouseEvent -> redirectToProfileMenu(stage));
 
         shopMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         shopMenuButton.getStyleClass().add("button_menu_navigation");
-        shopMenuButton.setOnMouseClicked(mouseEvent -> redirectToShopMenu());
+        shopMenuButton.setOnMouseClicked(mouseEvent -> redirectToShopMenu(stage));
 
         importExportMenuButton.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/button_style.css")).toExternalForm());
         importExportMenuButton.getStyleClass().add("button_menu_navigation");
-        importExportMenuButton.setOnMouseClicked(mouseEvent -> redirectToImportExportMenu());
+        importExportMenuButton.setOnMouseClicked(mouseEvent -> redirectToImportExportMenu(stage));
 
     }
 
-    public void redirectToProfilePage() {
-        try {
-            (new ProfileMenuPage()).start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void duelHandler(MouseEvent mouseEvent) {
+
     }
 
-    public void redirectToDeckMenu() {
-        try {
-            (new DeckMenuPage()).start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    public void duelWithAIHandler(MouseEvent mouseEvent) {
 
-    public void redirectToScoreboardMenu() {
-        try {
-            (new ScoreboardMenuPage()).start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
-
-    public void redirectToMainMenu() {
-        try {
-            (new MainMenuPage()).start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void redirectToShopMenu() {
-        try {
-            (new ShopMenuPage()).start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void redirectToImportExportMenu() {
-        try {
-            (new ImportExportMenuPage()).start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

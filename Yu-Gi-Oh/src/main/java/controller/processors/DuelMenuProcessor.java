@@ -45,6 +45,8 @@ abstract public class DuelMenuProcessor extends Processor {
         Player dummy = player1;
         player1 = player2;
         player2 = dummy;
+        player1.newRoundInitialize();
+        player2.newRoundInitialize();
 
         phase = Phases.DRAW;
         whoseTurn = 1;
