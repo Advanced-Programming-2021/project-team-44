@@ -1,5 +1,6 @@
 package graphics.main_menu_subPages;
 
+import controller.Core;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,7 @@ public class ScoreboardMenuPage extends Application implements MainMenuNavigatio
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         ScoreboardMenuPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/main_menu_page_subPages/ScoreboardMenuPage.fxml"));
         pane = FXMLLoader.load(pageUrl);

@@ -22,6 +22,7 @@ public class StartPage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         StartPage.stage = stage;
         {
             Image icon = new Image((Objects.requireNonNull(getClass().getResource("/static/graphics/icon/game_icon.png"))).toExternalForm());
@@ -36,9 +37,6 @@ public class StartPage extends Application {
         }
         stage.setScene(scene);
         stage.show();
-        Core.run();
-        Core.musicPlayer.start();
-        Core.dataSaver.start();
     }
 
     @FXML

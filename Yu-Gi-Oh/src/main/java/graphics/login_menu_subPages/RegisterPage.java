@@ -1,5 +1,6 @@
 package graphics.login_menu_subPages;
 
+import controller.Core;
 import controller.processors.LoginMenuProcessor;
 import graphics.GraphicalUserInterface;
 import graphics.LoginMenuPage;
@@ -23,6 +24,7 @@ public class RegisterPage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         RegisterPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/login_menu_page_subPages/RegisterPage.fxml"));
         Parent pane = FXMLLoader.load(pageUrl);

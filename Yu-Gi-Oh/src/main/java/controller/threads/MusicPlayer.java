@@ -6,6 +6,12 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 
 public class MusicPlayer extends Thread {
+    public MusicPlayer() {
+        super();
+        this.setDaemon(true);
+        start();
+    }
+
     private Clip clip;
     private boolean isStopped;
 

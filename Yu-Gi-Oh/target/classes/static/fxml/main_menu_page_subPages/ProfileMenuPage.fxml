@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.Cursor?>
-<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.main_menu_subPages.ProfileMenuPage" fx:id="anchorPane">
+<?import javafx.scene.text.*?>
 
-    <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Image url="@../../graphics/menus_backgrounds/mainMenuPageBackground.png"/>
+<AnchorPane fx:id="anchorPane" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.main_menu_subPages.ProfileMenuPage">
+
+    <ImageView pickOnBounds="true" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../../graphics/menus_backgrounds/mainMenuPageBackground.png" />
     </ImageView>
-
-    <VBox alignment="TOP_CENTER" prefHeight="900.0" prefWidth="652.0" spacing="50.0" AnchorPane.bottomAnchor="0.0"
-          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
-        <AnchorPane prefHeight="20"/>
+   
+    <VBox alignment="TOP_CENTER" prefHeight="900.0" prefWidth="652.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+        <AnchorPane prefHeight="20" />
         <VBox alignment="TOP_CENTER" spacing="5">
-            <ImageView fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true"
-                       fx:id="profilePictureImage"/>
-            <Label text="Change Profile Picture" textFill="gold" onMouseClicked="#changeProfilePictureHandler">
+            <ImageView fx:id="profilePictureImage" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" />
+            <Label onMouseClicked="#changeProfilePictureHandler" text="Change Profile Picture" textFill="gold">
                 <font>
                     <Font size="14.0" />
                 </font>
                 <cursor>
-                    <Cursor fx:constant="HAND"/>
+                    <Cursor fx:constant="HAND" />
                 </cursor>
             </Label>
         </VBox>
@@ -37,9 +33,9 @@
                     <Font size="18.0" />
                 </font>
             </Label>
-            <Label fx:id="nicknameLabel" stylesheets="@../../graphics/css_styles/label_style.css" styleClass="label_profile_menu_attributes">
+            <Label fx:id="nicknameLabel" styleClass="label_profile_menu_attributes" stylesheets="@../../graphics/css_styles/label_style.css">
                 <font>
-                    <Font size="20.0"/>
+                    <Font size="20.0" />
                 </font>
             </Label>
         </HBox>
@@ -50,9 +46,9 @@
                     <Font size="18.0" />
                 </font>
             </Label>
-            <Label fx:id="usernameLabel" stylesheets="@../../graphics/css_styles/label_style.css" styleClass="label_profile_menu_attributes">
+            <Label fx:id="usernameLabel" styleClass="label_profile_menu_attributes" stylesheets="@../../graphics/css_styles/label_style.css">
                 <font>
-                    <Font size="20.0"/>
+                    <Font size="20.0" />
                 </font>
             </Label>
         </HBox>
@@ -63,9 +59,9 @@
                     <Font size="18.0" />
                 </font>
             </Label>
-            <Label fx:id="scoreLabel" stylesheets="@../../graphics/css_styles/label_style.css" styleClass="label_profile_menu_attributes">
+            <Label fx:id="scoreLabel" styleClass="label_profile_menu_attributes" stylesheets="@../../graphics/css_styles/label_style.css">
                 <font>
-                    <Font size="20.0"/>
+                    <Font size="20.0" />
                 </font>
             </Label>
         </HBox>
@@ -76,23 +72,22 @@
                     <Font size="18.0" />
                 </font>
             </Label>
-            <Label fx:id="coinLabel" stylesheets="@../../graphics/css_styles/label_style.css" styleClass="label_profile_menu_attributes">
+            <Label fx:id="coinLabel" styleClass="label_profile_menu_attributes" stylesheets="@../../graphics/css_styles/label_style.css">
                 <font>
-                    <Font size="20.0"/>
+                    <Font size="20.0" />
                 </font>
             </Label>
         </HBox>
     </VBox>
 
-    <HBox fx:id="menuNavigationHBox" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0"
-          AnchorPane.topAnchor="0.0">
-        <Button fx:id="mainMenuButton" text="Main Menu"/>
-        <Button fx:id="duelMenuButton" text="Duel Menu"/>
-        <Button fx:id="deckMenuButton" text="Deck Menu"/>
-        <Button fx:id="scoreboardMenuButton" text="ScoreBoard Menu"/>
-        <Button fx:id="profileMenuButton" text="Profile Menu"/>
-        <Button fx:id="shopMenuButton" text="Shop Menu"/>
-        <Button fx:id="importExportMenuButton" text="Import/Export Menu"/>
+    <HBox fx:id="menuNavigationHBox" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+        <Button fx:id="mainMenuButton" text="Main Menu" />
+        <Button fx:id="duelMenuButton" text="Duel Menu" />
+        <Button fx:id="deckMenuButton" text="Deck Menu" />
+        <Button fx:id="scoreboardMenuButton" text="ScoreBoard Menu" />
+        <Button fx:id="profileMenuButton" text="Profile Menu" />
+        <Button fx:id="shopMenuButton" text="Shop Menu" />
+        <Button fx:id="importExportMenuButton" text="Import/Export Menu" />
     </HBox>
 
 </AnchorPane>

@@ -6,6 +6,8 @@ import models.Menus;
 import models.utils.comparators.AccountSortByNickname;
 import models.utils.comparators.AccountSortByScore;
 
+import java.util.Collections;
+
 public class ScoreboardMenuProcessor extends Processor { //DONE
     private static ScoreboardMenuProcessor instance;
 

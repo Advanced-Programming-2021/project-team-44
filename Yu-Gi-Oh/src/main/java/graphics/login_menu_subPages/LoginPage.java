@@ -24,6 +24,7 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         LoginPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/login_menu_page_subPages/LoginPage.fxml"));
         Parent pane = FXMLLoader.load(pageUrl);

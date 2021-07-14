@@ -1,5 +1,6 @@
 package graphics;
 
+import controller.Core;
 import controller.processors.LoginMenuProcessor;
 import graphics.login_menu_subPages.CreditsPage;
 import graphics.login_menu_subPages.LoginPage;
@@ -18,10 +19,10 @@ import java.util.Objects;
 public class LoginMenuPage extends Application {
     private static Stage stage;
     private static Pane pane;
-    public Button registerButton;
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         LoginMenuPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/LoginMenuPage.fxml"));
         pane = FXMLLoader.load(pageUrl);
@@ -30,7 +31,7 @@ public class LoginMenuPage extends Application {
         stage.show();
     }
 
-    public void registerHandler(MouseEvent mouseEvent) {
+    public void registerHandler() {
         try {
             (new RegisterPage()).start(stage);
         } catch (Exception e) {
@@ -38,7 +39,7 @@ public class LoginMenuPage extends Application {
         }
     }
 
-    public void loginHandler(MouseEvent mouseEvent) {
+    public void loginHandler() {
         try {
             (new LoginPage()).start(stage);
         } catch (Exception e) {
@@ -46,11 +47,11 @@ public class LoginMenuPage extends Application {
         }
     }
 
-    public void exitHandler(MouseEvent mouseEvent) {
+    public void exitHandler() {
         LoginMenuProcessor.getInstance().exitMenu();
     }
 
-    public void creditsHandler(MouseEvent mouseEvent) {
+    public void creditsHandler() {
         try {
             (new CreditsPage()).start(stage);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package graphics.main_menu_subPages;
 
+import controller.Core;
 import graphics.main_menu_subPages.importexport_menu_subPages.ExportPage;
 import graphics.main_menu_subPages.importexport_menu_subPages.ImportPage;
 import javafx.application.Application;
@@ -29,6 +30,7 @@ public class ImportExportMenuPage extends Application implements MainMenuNavigat
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         ImportExportMenuPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/main_menu_page_subPages/ImportExportMenuPage.fxml"));
         pane = FXMLLoader.load(pageUrl);

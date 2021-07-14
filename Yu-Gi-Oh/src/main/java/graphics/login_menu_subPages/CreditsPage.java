@@ -2,14 +2,12 @@ package graphics.login_menu_subPages;
 
 import controller.Core;
 import graphics.LoginMenuPage;
-import graphics.StartPage;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -26,6 +24,7 @@ public class CreditsPage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         CreditsPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/login_menu_page_subPages/CreditsPage.fxml"));
         Parent pane = FXMLLoader.load(pageUrl);

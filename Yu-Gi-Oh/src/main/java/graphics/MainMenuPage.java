@@ -1,14 +1,13 @@
 package graphics;
 
+import controller.Core;
 import controller.processors.Processor;
 import graphics.main_menu_subPages.*;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -31,6 +30,7 @@ public class MainMenuPage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         MainMenuPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/MainMenuPage.fxml"));
         pane = FXMLLoader.load(pageUrl);

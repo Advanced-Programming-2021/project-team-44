@@ -16,9 +16,14 @@ public class Core {
 
     static {
         currentMenu = Menus.LOGIN;
-        version = "1.0.0";
+        version = "2.0.0";
         musicPlayer = new MusicPlayer();
         dataSaver = new DataSaver();
+        Core.run();
+    }
+
+    public static void trigger() {
+        //Does literally nothing
     }
 
     public static void run() {

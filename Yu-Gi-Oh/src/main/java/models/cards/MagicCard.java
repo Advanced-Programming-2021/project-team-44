@@ -17,7 +17,6 @@ public class MagicCard extends Card {
 
     static {
         magicCards = new ArrayList<>();
-        addMagicCardFromJSON();
     }
 
     protected MagicType type;

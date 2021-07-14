@@ -1,5 +1,6 @@
 package graphics.main_menu_subPages;
 
+import controller.Core;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,7 @@ public class DuelPage extends Application implements MainMenuNavigation {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Core.trigger();
         DuelPage.stage = stage;
         URL pageUrl = Objects.requireNonNull(getClass().getResource("/static/fxml/main_menu_page_subPages/DuelPage.fxml"));
         pane = FXMLLoader.load(pageUrl);

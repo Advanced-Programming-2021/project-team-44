@@ -17,11 +17,10 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Account {
-    public static ArrayList<Account> accounts;
+    public static final ArrayList<Account> accounts;
 
     static {
         accounts = new ArrayList<>();
-        initializeAccounts();
     }
 
     private String username;
@@ -32,7 +31,16 @@ public class Account {
     private Deck activeDeck;
     private ArrayList<Card> spareCards;
     private ArrayList<Deck> decks;
-    private String profilePicturePath = "placeholder";
+    private String profilePicture;
+
+    public Account() {
+        this.username = null;
+        this.password = null;
+        this.nickname = null;
+        this.activeDeck = null;
+        this.spareCards = new ArrayList<>();
+        this.decks = new ArrayList<>();
+    }
 
     public Account(String username, String password, String nickname) {
         this.username = username;
@@ -46,37 +54,44 @@ public class Account {
         accounts.add(this);
     }
 
-    public static String initializeAccounts() {
-        File accountsDirectory = new File("src/main/resources/static/accounts");
-        File[] accountsFiles = accountsDirectory.listFiles();
-        if (accountsFiles == null)
-            return "Accounts JSON files missing!";
-        for (File file : accountsFiles) {
-            String accountJson;
-            try {
-                accountJson = Files.readString(Paths.get(file.getPath()));
-            } catch (IOException e) {
-                return "JSON files can't be accessed!";
+    public static synchronized String initializeAccounts() {
+        if (accounts.size() == 0) {
+            synchronized (accounts) {
+                File accountsDirectory = new File("src/main/resources/static/accounts");
+                File[] accountsFiles = accountsDirectory.listFiles();
+                if (accountsFiles == null)
+                    return "Accounts JSON files missing!";
+                for (File file : accountsFiles) {
+                    String accountJson;
+                    try {
+                        accountJson = Files.readString(Paths.get(file.getPath()));
+                    } catch (IOException e) {
+                        return "JSON files can't be accessed!";
+                    }
+                    accounts.add(Account.deserialize(accountJson));
+                }
+                return "Accounts loaded successfully";
             }
-            accounts.add(Account.deserialize(accountJson));
         }
-        return "Accounts loaded successfully";
+        return "";
     }
 
     public static String saveAccounts() {
-        for (Account account : accounts) {
-            String accountFilePath = "src/main/resources/static/accounts/" + account.getUsername() + ".json";
-            File accountFile = new File(accountFilePath);
-            try {
-                FileWriter writer = new FileWriter(accountFile.getPath());
-                String jsonData = account.serialize();
-                writer.write(jsonData);
-                writer.close();
-            } catch (IOException e) {
-                return "Can't parse accounts JSON files";
+        synchronized (accounts) {
+            for (Account account : accounts) {
+                String accountFilePath = "src/main/resources/static/accounts/" + account.getUsername() + ".json";
+                File accountFile = new File(accountFilePath);
+                try {
+                    FileWriter writer = new FileWriter(accountFile.getPath(), false);
+                    String jsonData = account.serialize();
+                    writer.write(jsonData);
+                    writer.close();
+                } catch (IOException e) {
+                    return "Can't parse accounts JSON files";
+                }
             }
+            return "Accounts data saved successfully";
         }
-        return "Accounts data saved successfully";
     }
 
     public static Account deserialize(String accountSerialized) {
@@ -97,13 +112,16 @@ public class Account {
         }
         for (String deckSerialized : decksDeepSerialized)
             decks.add(Deck.deserialize(deckSerialized));
-        Account output = new Account(accountDeepSerialized.username, accountDeepSerialized.password, accountDeepSerialized.nickname);
+        Account output = new Account();
+        output.setUsername(accountDeepSerialized.username);
+        output.setPassword(accountDeepSerialized.password);
+        output.setNickname(accountDeepSerialized.nickname);
         output.setScore(accountDeepSerialized.score);
         output.setCoin(accountDeepSerialized.coin);
         output.setActiveDeck(activeDeck);
         output.setSpareCards(spareCards);
         output.setDecks(decks);
-        output.setProfilePicturePath(accountDeepSerialized.profilePicturePath);
+        output.setProfilePicture(accountDeepSerialized.profilePicture);
         return output;
     }
 
@@ -150,7 +168,7 @@ public class Account {
             decksDeepSerialized.add(deck.serialize());
         String spareCardsSerialized = (new Gson()).toJson(spareCardsDeepSerialized);
         String decksSerialized = (new Gson()).toJson(decksDeepSerialized);
-        AccountDeepSerialized accountDeepSerialized = new AccountDeepSerialized(this.username, this.password, this.nickname, this.score, this.coin, activeDeckSerialized, spareCardsSerialized, decksSerialized, this.profilePicturePath);
+        AccountDeepSerialized accountDeepSerialized = new AccountDeepSerialized(this.username, this.password, this.nickname, this.score, this.coin, activeDeckSerialized, spareCardsSerialized, decksSerialized, this.profilePicture);
         return (new Gson()).toJson(accountDeepSerialized);
     }
 
@@ -171,13 +189,13 @@ public class Account {
     }
 
     //Setters
-    public String getProfilePicturePath() {
-        if (this.profilePicturePath == null) this.profilePicturePath = "placeholder";
-        return this.profilePicturePath;
+    public String getProfilePicture() {
+        if (this.profilePicture == null) this.profilePicture = "placeholder.png";
+        return this.profilePicture;
     }
 
-    public void setProfilePicturePath(String profilePicturePath) {
-        this.profilePicturePath = profilePicturePath;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getPassword() {
@@ -296,9 +314,9 @@ class AccountDeepSerialized {
     protected String activeDeckSerialized;
     protected String spareCardsSerialized;
     protected String decksSerialized;
-    protected String profilePicturePath;
+    protected String profilePicture;
 
-    public AccountDeepSerialized(String username, String password, String nickname, int score, int coin, String activeDeckSerialized, String spareCardsSerialized, String decksSerialized, String profilePicturePath) {
+    public AccountDeepSerialized(String username, String password, String nickname, int score, int coin, String activeDeckSerialized, String spareCardsSerialized, String decksSerialized, String profilePicture) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
@@ -307,6 +325,6 @@ class AccountDeepSerialized {
         this.activeDeckSerialized = activeDeckSerialized;
         this.spareCardsSerialized = spareCardsSerialized;
         this.decksSerialized = decksSerialized;
-        this.profilePicturePath = profilePicturePath;
+        this.profilePicture = profilePicture;
     }
 }
