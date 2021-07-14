@@ -5,6 +5,8 @@ import models.Menus;
 import models.cards.Card;
 import models.utils.comparators.CardSortByName;
 
+import java.util.Objects;
+
 public class ShopMenuProcessor extends Processor { //DONE
     private static ShopMenuProcessor instance;
 
@@ -20,33 +22,18 @@ public class ShopMenuProcessor extends Processor { //DONE
     }
 
     //Error Checker
-    public String showCardErrorChecker(String arguments) {
-        String response;
-        if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
+    public String buyCardErrorChecker(String cardName) {
+        if (Card.getCardByName(cardName) == null) return  "there is no card with this name";
+        else if (Objects.requireNonNull(Card.getCardByName(cardName)).getPrice() > loggedInUser.getCoin()) return  "not enough money";
         else {
-            response = showCard(arguments);
+            buyCard(cardName);
+            return "card bought successfully";
         }
-        return response;
-    }
-
-    public String buyCardErrorChecker(String arguments) {
-        String response;
-        if (Card.getCardByName(arguments) == null) response = "there is no card with this name";
-        else if (Card.getCardByName(arguments).getPrice() > loggedInUser.getCoin()) response = "not enough money";
-        else {
-            buyCard(arguments);
-            response = "card bought successfully";
-        }
-        return response;
     }
 
     //Command Performer
-    public String showCard(String cardName) {
-        return Card.getCardByName(cardName).getStringForShow();
-    }
-
     public void buyCard(String cardName) {
-        loggedInUser.decreaseCoin(Card.getCardByName(cardName).getPrice());
+        loggedInUser.decreaseCoin(Objects.requireNonNull(Card.getCardByName(cardName)).getPrice());
         loggedInUser.addCard(Card.getCardByName(cardName));
     }
 
@@ -59,16 +46,9 @@ public class ShopMenuProcessor extends Processor { //DONE
         return response.toString();
     }
 
-    public String increaseMoneyByCheat(String arguments) {
-        //Cheat Enhanced
-        int amount;
-        try {
-            amount = Integer.parseInt(arguments);
-        } catch (Exception e) {
-            return "invalid value";
-        }
-        loggedInUser.increaseCoin(amount);
-        return amount + " coins was successfully added to your account, of course by cheats! shame on cheater!";
+    public String forceBuyCard(String cardName) {
+        loggedInUser.addCard(Card.getCardByName(cardName));
+        return "card bought successfully, of course by cheats!\nshame on cheater!";
     }
 
     @Override

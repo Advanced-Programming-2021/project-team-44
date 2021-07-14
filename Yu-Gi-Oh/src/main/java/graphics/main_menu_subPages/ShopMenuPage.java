@@ -1,14 +1,23 @@
 package graphics.main_menu_subPages;
 
 import controller.Core;
+import controller.processors.Processor;
+import controller.processors.ShopMenuProcessor;
+import graphics.GraphicalUserInterface;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import models.Account;
+import models.cards.Card;
 
 import java.net.URL;
 import java.util.Objects;
@@ -24,6 +33,10 @@ public class ShopMenuPage extends Application implements MainMenuNavigation {
     public Button profileMenuButton;
     public Button shopMenuButton;
     public Button importExportMenuButton;
+    public ChoiceBox<String> cardsChoiceBox;
+    public ImageView cardImage;
+    public Button butButton;
+    public Button forceBuyButton;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -68,5 +81,28 @@ public class ShopMenuPage extends Application implements MainMenuNavigation {
         importExportMenuButton.getStyleClass().add("button_menu_navigation");
         importExportMenuButton.setOnMouseClicked(mouseEvent -> redirectToImportExportMenu(stage));
 
+        //Fields
+        if (Processor.loggedInUser == null) Processor.loggedInUser = Account.getAccountByUsername("matadysa");
+        Image defaultImage = new Image(Objects.requireNonNull(getClass().getResource("/static/graphics/cards/back/cardsBack.png")).toExternalForm());
+        cardImage.setImage(defaultImage);
+        for (Card card : Card.allCards)
+            cardsChoiceBox.getItems().add(card.getName());
+        cardsChoiceBox.setOnAction((event) -> {
+            String selectedItem = cardsChoiceBox.getSelectionModel().getSelectedItem();
+            //Action
+            Image image = new Image(Objects.requireNonNull(getClass().getResource("/static/graphics/cards/all/" + selectedItem + ".jpg")).toExternalForm());
+            cardImage.setImage(image);
+        });
+
+    }
+
+    public void buyHandler() {
+        String response = ShopMenuProcessor.getInstance().buyCardErrorChecker(cardsChoiceBox.getSelectionModel().getSelectedItem());
+        GraphicalUserInterface.returnGraphicalResponse(response);
+    }
+
+    public void forceBuyHandler() {
+        String response = ShopMenuProcessor.getInstance().forceBuyCard(cardsChoiceBox.getSelectionModel().getSelectedItem());
+        GraphicalUserInterface.returnGraphicalResponse(response);
     }
 }
