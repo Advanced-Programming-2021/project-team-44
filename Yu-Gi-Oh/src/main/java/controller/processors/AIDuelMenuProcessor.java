@@ -18,46 +18,22 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
     }
 
     @Override
-    public void gameInitialization(Account player1, Account player2, int rounds) {
-        remainingRounds = rounds;
-        allRounds = remainingRounds;
-        if (player1 == null) {
-            this.player1 = new Player(Account.getAccountByNickname("AI"));
-            this.player2 = new Player(player2);
-            whichPlayerIsAI = 1;
-        }
-        else {
-            this.player1 = new Player(player1);
-            this.player2 = new Player(Account.getAccountByNickname("AI"));
-            whichPlayerIsAI = 2;
-        }
-        newRoundInitializer();
-        execute();
-    }//done
+    public void gameInitialization(Account player1, Account player2, int rounds) { remainingRounds = rounds;allRounds = remainingRounds;if (player1 == null) { this.player1 = new Player(Account.getAccountByNickname("AI"));this.player2 = new Player(player2);whichPlayerIsAI = 1; } else { this.player1 = new Player(player1);this.player2 = new Player(Account.getAccountByNickname("AI"));whichPlayerIsAI = 2; }newRoundInitializer();execute(); }//done
 
     @Override
-    public void execute() {
-        executeRound();
-        endGame();
-        Core.currentMenu = Menus.MAIN;
-    }
+    public void execute() { executeRound();endGame();Core.currentMenu = Menus.MAIN; }
 
     @Override
     public void executeRound() {
         executeTurn();
         if (hasAnyoneSurrendered) return;
         if (ifRoundHasEnded()) {
-            if (remainingRounds > 0
-                    && !(allRounds == 3
-                    && (player1.getRoundsWon() == 2
-                    || player2.getRoundsWon() == 2))) {
+            if (remainingRounds > 0 && !(allRounds == 3 && (player1.getRoundsWon() == 2 || player2.getRoundsWon() == 2))) {
                 newRoundInitializer();
-                //TODO check for card swap between decks
                 executeRound();
             } else return;
         }
-        executeRound();
-    }
+        executeRound(); }
 
     @Override
     public void executeTurn() {
