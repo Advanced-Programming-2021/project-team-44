@@ -48,7 +48,7 @@ class PlayerTest {
         Assertions.assertNull(player.getCardFromMonsterZone(1));
         Assertions.assertNull(player.getCardFromMagicZone(1));
         Assertions.assertNull(player.getCardFromFieldZone());
-        Assertions.assertNull(player.getCardFromHandZone(2));
+        Assertions.assertNotNull(player.getCardFromHandZone(2));
         Assertions.assertFalse(player.ifCardsMatchTheLevelOfTheRitualMonster(MonsterCard.getMonsterCardByName("Axe Raider")));
         player.setCardInHandZone(Card.getCardByName("Battle OX"), 1);
         player.setCardInHandZone(Card.getCardByName("Battle OX"), 2);

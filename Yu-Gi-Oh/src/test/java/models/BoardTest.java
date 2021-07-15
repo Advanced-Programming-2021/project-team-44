@@ -42,16 +42,16 @@ class BoardTest {
         Assertions.assertEquals(board.getFieldZoneState(), "1");
 
         Assertions.assertEquals(board.getStringAsOpponent(), "achbar:8000\n" +
-                "\n" +
-                "8\n" +
+                "\tc\tc\tc\tc\tc\tc\n" +
+                "2\n" +
                 "\tE\tE\tF\tE\tE\t\t\n" +
                 "\tE\tE\tE\tE\tE\t\t\n" +
                 "0\t\t\t\t\t\tE\n");
         Assertions.assertEquals(board.getStringAsSelf(), "E\t\t\t\t\t\t0\n" +
                 "\tE\tE\tE\tE\tE\t\t\n" +
                 "\tE\tE\tF\tE\tE\t\t\n" +
-                "\t\t\t\t\t\t8\n" +
-                "\n" +
+                "\t\t\t\t\t\t2\n" +
+                "c\tc\tc\tc\tc\tc\t\n" +
                 "achbar:8000");
     }
 }
