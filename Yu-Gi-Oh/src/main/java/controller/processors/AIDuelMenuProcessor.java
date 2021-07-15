@@ -26,7 +26,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
             this.player2 = new Player(player2);
             whichPlayerIsAI = 1;
         }
-        if (player2 == null) {
+        else {
             this.player1 = new Player(player1);
             this.player2 = new Player(Account.getAccountByNickname("AI"));
             whichPlayerIsAI = 2;
@@ -147,6 +147,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
                 }
             }
         }
+        if(command.toString().equals("")) return "next phase\n";
         return command.toString();
     } //done
 
@@ -178,7 +179,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
                 }
             }
         }
-
+        if(command.toString().equals("")) return "next phase\n";
         return command.toString();
     } //done
 

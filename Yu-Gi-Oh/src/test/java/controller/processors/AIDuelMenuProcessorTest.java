@@ -3,6 +3,7 @@ package controller.processors;
 import controller.Core;
 import models.Account;
 import models.Phases;
+import models.Player;
 import models.cards.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,19 +84,16 @@ class AIDuelMenuProcessorTest {
 
     @Test
     void AITest(){
-        Core.Initializer();
-        Account account1 = Account.getAccountByUsername("matinKing");
-        MainMenuProcessor mainMenuProcessor = new MainMenuProcessor();
-        AIDuelMenuProcessor aiDuelMenuProcessor = new AIDuelMenuProcessor();
-        Processor.loggedInUser = account1;
-        aiDuelMenuProcessor.getAI();
-        aiDuelMenuProcessor.getHuman();
-        aiDuelMenuProcessor.AIHandZoneSortedByAttackPoint();
+        //Core.Initializer();
+        //Account account1 = Account.getAccountByUsername("matinKing");
+       // MainMenuProcessor mainMenuProcessor = new MainMenuProcessor();
+        //AIDuelMenuProcessor aiDuelMenuProcessor = new AIDuelMenuProcessor();
+        //Processor.loggedInUser = account1;
+        //aiDuelMenuProcessor.gameInitialization(null,account1, 1);
+        //aiDuelMenuProcessor.getAI();
+        //aiDuelMenuProcessor.getHuman();
+        //aiDuelMenuProcessor.AIHandZoneSortedByAttackPoint();
         //aiDuelMenuProcessor.AIGetCommand(Phases.DRAW);
         //aiDuelMenuProcessor.AIGetCommand(Phases.MAIN1);
-        //aiDuelMenuProcessor.AIGetCommand(Phases.MAIN2);
-        //aiDuelMenuProcessor.AIGetCommand(Phases.STANDBY);
-        //aiDuelMenuProcessor.AIGetCommand(Phases.BATTLE);
-        //aiDuelMenuProcessor.AIGetCommand(Phases.END);
     }
 }
