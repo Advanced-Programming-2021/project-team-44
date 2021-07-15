@@ -1,40 +1,31 @@
 package models.cards;
 
+import controller.Core;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Objects;
 
 class CardTest {
 
     @Test
-    void getStringForShow() {
-    }
+    public void cardTest(){
+        Core.cardInitializer();
 
-    @Test
-    void getHashMap() {
-    }
+        Assertions.assertNull(Card.getTypeOfCardByName("no card"));
+        Assertions.assertEquals(Card.getTypeOfCardByName("Battle OX"), "monster");
+        Assertions.assertEquals(Card.getTypeOfCardByName("Black Pendant"), "magic");
 
-    @Test
-    void getCardByName() {
-    }
+        Assertions.assertEquals(Card.cardNameFilter("Axe Raider"), "Axe Raider");
 
-    @Test
-    void getTypeOfCardByName() {
-    }
+        Card.descriptionFilter("des");
 
-    @Test
-    void getName() {
-    }
+        Card.getCardByName("Axe Raider").setName("Axe Raider");
+        Card.getCardByName("Axe Raider").setDescription("An axe-wielding monster of tremendous strength and agility.");
+        Assertions.assertEquals(Card.getCardByName("Axe Raider").getDescription(), "An axe-wielding monster of tremendous strength and agility.");
+        Assertions.assertEquals(Card.getCardByName("Axe Raider").getPrice(), 3100);
 
-    @Test
-    void getDescription() {
-    }
+        Card.getCardByName("an");
 
-    @Test
-    void getPrice() {
-    }
-
-    @Test
-    void getStringForAllCardsShow() {
     }
 }

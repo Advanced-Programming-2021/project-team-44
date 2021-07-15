@@ -19,6 +19,7 @@ class MainMenuTest {
         Assertions.assertEquals(mainMenu.commandHandler("duel --new --second-player p2n --rounds 1")[1], "--second-player p2n --rounds 1");
         Assertions.assertEquals(mainMenu.commandHandler("duel --new --ai --rounds 3")[0], "5");
         Assertions.assertEquals(mainMenu.commandHandler("duel --new --ai --rounds 3")[1], "--rounds 3");
+        Assertions.assertEquals(mainMenu.commandHandler("help")[0], "99");
 
     }
 }

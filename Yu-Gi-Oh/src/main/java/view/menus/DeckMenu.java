@@ -42,6 +42,7 @@ public class DeckMenu extends Menu { //DONE
                 case "deck show" -> output[0] = "10";
                 case "card show" -> output[0] = "11";
                 case "help" -> output[0] = "99";
+
             }
             output[1] = matcher.group(2);
             if (output[1] == null) output[1] = "";

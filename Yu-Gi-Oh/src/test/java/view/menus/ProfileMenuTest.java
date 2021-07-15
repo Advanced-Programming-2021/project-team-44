@@ -19,6 +19,7 @@ class ProfileMenuTest {
         Assertions.assertEquals(profileMenu.commandHandler("profile change --password --current cpw --new pw")[0], "4");
         Assertions.assertEquals(profileMenu.commandHandler("profile change --password --current cpw --new pw")[1], "--current cpw --new pw");
         Assertions.assertEquals(profileMenu.commandHandler("show profile")[0], "5");
+        Assertions.assertEquals(profileMenu.commandHandler("help")[0], "99");
 
     }
 }

@@ -45,6 +45,8 @@ abstract public class DuelMenuProcessor extends Processor {
         Player dummy = player1;
         player1 = player2;
         player2 = dummy;
+        player1.newRoundInitialize();
+        player2.newRoundInitialize();
 
         phase = Phases.DRAW;
         whoseTurn = 1;
@@ -677,7 +679,6 @@ abstract public class DuelMenuProcessor extends Processor {
             for (Integer index : tributes)
                 sum += getActingPlayer().getCardFromMonsterZone(index).getLevel();
             if (sum == toBeRitualSummonedCard.getLevel()) break;
-            else System.out.println("selected monsters levels don't match with ritual monster");
         }
         String input = tmpScanner.nextLine();
         while (!(input.equals("attacking") || input.equals("defensive"))) {

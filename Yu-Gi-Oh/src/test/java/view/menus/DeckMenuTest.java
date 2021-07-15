@@ -30,7 +30,7 @@ class DeckMenuTest {
         Assertions.assertEquals(deckMenu.commandHandler("deck show --deck-name dn --side")[1], "--deck-name dn --side");
         Assertions.assertEquals(deckMenu.commandHandler("card show cn")[0], "11");
         Assertions.assertEquals(deckMenu.commandHandler("card show cn")[1], "cn");
-
+        Assertions.assertEquals(deckMenu.commandHandler("help")[0], "99");
 
     }
 }

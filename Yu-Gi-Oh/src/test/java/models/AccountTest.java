@@ -114,6 +114,7 @@ class AccountTest {
     void getUsernameTest(){
         Account test1 = new Account("matinKing3","12345","matadysa3");
         Assertions.assertEquals(test1.getUsername(), "matinKing3");
+        Account.saveAccounts();
     }
 
     @Test
@@ -137,7 +138,7 @@ class AccountTest {
     @Test
     void getCoinTest(){
         Account test1 = new Account("karai", "karai2465", "karai1");
-        Assertions.assertEquals(test1.getCoin(), 0);
+        Assertions.assertEquals(test1.getCoin(), 50000);
     }
 
     @Test
@@ -167,7 +168,7 @@ class AccountTest {
     @Test
     void showSpareCardsTest(){
         Account test1 = new Account("karaii", "karai2465", "karai13");
-        Core.Initializer();
+        Core.cardInitializer();
         test1.addCard(MonsterCard.getMonsterCardByName("Axe Raider"));
         Assertions.assertNotNull(test1.getCardByName("Axe Raider"));
         Assertions.assertEquals(test1.showSpareCards(), "Axe Raider:An axe-wielding monster of tremendous strength and agility.");
@@ -207,6 +208,27 @@ class AccountTest {
     }
 
     @Test
+    void setters(){
+        Core.cardInitializer();
+        Account test1 = new Account("karai", "karai2465", "karai1");
+        ArrayList<Deck> decks = new ArrayList<Deck>();
+        decks.add(new Deck("deck1"));
+        decks.add(new Deck("deck2"));
+        test1.setDecks(decks);
+        Assertions.assertEquals(decks.get(0), test1.getDeckByName("deck1"));
+        test1.setScore(500);
+        Assertions.assertEquals(500, test1.getScore());
+        test1.setCoin(100);
+        Assertions.assertEquals(100, test1.getCoin());
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.getCardByName("Axe Raider"));
+        cards.add(Card.getCardByName("Battle OX"));
+        test1.setSpareCards(cards);
+        test1.setUsername("an");
+        Assertions.assertEquals(test1.getUsername(), "an");
+    }
+
+    @Test
     void increaseScoreTest(){
         Account test1 = new Account("karai", "karai2465", "karai1");
         test1.increaseScore(2000);
@@ -217,7 +239,7 @@ class AccountTest {
     void increaseCoinTest(){
         Account test1 = new Account("karai", "karai2465", "karai1");
         test1.increaseCoin(205);
-        Assertions.assertEquals(test1.getCoin(), 205);
+        Assertions.assertEquals(test1.getCoin(), 50205);
     }
 
     @Test
@@ -225,7 +247,7 @@ class AccountTest {
         Account test1 = new Account("karai", "karai2465", "karai1");
         test1.increaseCoin(1000);
         test1.decreaseCoin(200);
-        Assertions.assertEquals(test1.getCoin(), 800);
+        Assertions.assertEquals(test1.getCoin(), 50800);
     }
 
     @Test
@@ -249,13 +271,23 @@ class AccountTest {
     @Test
     void addOrRemoveCardTest(){
         Account test1 = new Account("karaii", "karai2465", "karai13");
-        Core.Initializer();
+        Core.cardInitializer();
         test1.addCard(MonsterCard.getMonsterCardByName("Axe Raider"));
         Card card = MonsterCard.getMonsterCardByName("Axe Raider");
         Assertions.assertEquals(test1.getCardByName("Axe Raider"), card);
         Assertions.assertNull(test1.getCardByName("Baby dragon"));
         test1.removeCard(MonsterCard.getMonsterCardByName("Axe Raider"));
         Assertions.assertNull(test1.getCardByName("Axe Raider"));
+    }
+
+    @Test
+    void AccountDeepSerializedTest(){
+        new AccountDeepSerialized("karai", "1234", "karaiKing", 0, 50000, "", "", "");
+    }
+
+    @Test
+    void someOtherTest(){
+
     }
 
 

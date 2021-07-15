@@ -40,13 +40,21 @@ public class Core {
 
     public static void Initializer() {
         //TODO INITIALIZER
-        System.out.println(MonsterCard.addMonsterCardFromJSON());
-        System.out.println(MagicCard.addMagicCardFromJSON());
-        System.out.println(Account.initializeAccounts());
+        cardInitializer();
+        //accountInitializer();
     }
 
     public static void destruct() {
         System.out.println(Account.saveAccounts());
         System.exit(0);
+    }
+
+    public static void cardInitializer(){
+        System.out.println(MonsterCard.addMonsterCardFromJSON());
+        System.out.println(MagicCard.addMagicCardFromJSON());
+    }
+
+    public static void accountInitializer(){
+        System.out.println(Account.initializeAccounts());
     }
 }

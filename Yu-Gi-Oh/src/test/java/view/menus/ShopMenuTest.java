@@ -19,5 +19,7 @@ class ShopMenuTest {
         Assertions.assertEquals(shopMenu.commandHandler("shop show --all")[0], "4");
         Assertions.assertEquals(shopMenu.commandHandler("card show cn")[0], "5");
         Assertions.assertEquals(shopMenu.commandHandler("card show cn")[1], "cn");
+        Assertions.assertEquals(shopMenu.commandHandler("increase --money 2000")[0], "6");
+        Assertions.assertEquals(shopMenu.commandHandler("help")[0], "99");
     }
 }

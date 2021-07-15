@@ -15,6 +15,7 @@ class ScoreboardMenuTest {
         Assertions.assertEquals(scoreboardMenu.commandHandler("menu exit")[0], "1");
         Assertions.assertEquals(scoreboardMenu.commandHandler("menu show-current")[0], "2");
         Assertions.assertEquals(scoreboardMenu.commandHandler("scoreboard show")[0], "3");
+        Assertions.assertEquals(scoreboardMenu.commandHandler("help")[0], "99");
 
     }
 }

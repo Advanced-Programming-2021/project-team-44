@@ -9,14 +9,13 @@ import models.utils.Utils;
 import java.util.*;
 
 public class Player {
-    private static ArrayList<String> binaryCombinationsArray = new ArrayList<>();
+    final private static ArrayList<String> binaryCombinationsArray = new ArrayList<>();
     private Account account;
     private Board board;
     private int score;
     private int roundsWon;
     private int maxLp;
     private int lp;
-    private Deck deck;
     private ArrayList<Card> mainDeckCards;
     private HashMap<Integer, MonsterCard> monsterZone;
     private HashMap<Integer, MagicCard> magicZone;
@@ -27,17 +26,19 @@ public class Player {
 
     public Player(Account account) {
         this.account = account;
-        this.board = new Board(this);
         this.isCheatActivated = false;
         newRoundInitialize();
+
     }
 
     private static void generateAllBinaryStrings(int n, int[] array, int i) {
         if (i == n) binaryCombinationSaver(n, array);
-        array[i] = 0;
-        generateAllBinaryStrings(n, array, i + 1);
-        array[i] = 1;
-        generateAllBinaryStrings(n, array, i + 1);
+        else {
+            array[i] = 0;
+            generateAllBinaryStrings(n, array, i + 1);
+            array[i] = 1;
+            generateAllBinaryStrings(n, array, i + 1);
+        }
     }
 
     private static void binaryCombinationSaver(int n, int[] array) {
@@ -48,9 +49,10 @@ public class Player {
     }
 
     public void newRoundInitialize() {
+
         this.lp = 8000;
-        this.deck = (Deck) Utils.deepClone(this.account.getActiveDeck());
-        this.mainDeckCards = this.deck.getMainDeckCards();
+        Deck deck = (Deck) Utils.deepClone(this.account.getActiveDeck());
+        this.mainDeckCards = deck.getMainDeckCards();
         Collections.shuffle(this.mainDeckCards);
 
         this.monsterZone = new HashMap<>();
@@ -77,6 +79,7 @@ public class Player {
 
         this.fieldZone = null;
         this.graveyardZone = new ArrayList<>();
+        this.board = new Board(this);
     }
 
     public String getCommand() {
@@ -347,7 +350,7 @@ public class Player {
         int count = 0;
         for (int i = 1; i <= handZone.size(); i++) {
             if (handZone.get(i) != null)
-                if (!MonsterCard.getMonsterCardByName(handZone.get(i).getName()).equals(null))
+                if (MonsterCard.monsterCards.contains(handZone.get(i)))
                     count++;
         }
         return count;
@@ -375,7 +378,7 @@ public class Player {
             for (int i = 0; i < binary.length(); i++) {
                 int ifCounts = Integer.parseInt(String.valueOf(binary.charAt(i)));
                 if (monsterZone.get(i) != null) {
-                    sum += monsterZone.get(i).getLevel() * ifCounts;
+                    sum += monsterZone.get(i).getLevel();
                 }
             }
             if (sum == ritualCard.getLevel()) return true;

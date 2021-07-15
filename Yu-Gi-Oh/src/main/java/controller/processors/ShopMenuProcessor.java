@@ -101,7 +101,6 @@ public class ShopMenuProcessor extends Processor { //DONE
                 help
                 """;
     }
-
     @Override
     protected void enterMenu(Menus menu) {
     }

@@ -12,12 +12,13 @@ class LoginMenuTest {
         LoginMenu loginMenu = new LoginMenu();
         Assertions.assertEquals(loginMenu.commandHandler("menu exittt")[0], "-1");
         Assertions.assertEquals(loginMenu.commandHandler("menu enter")[0], "0");
-        Assertions.assertEquals(loginMenu.commandHandler("menu exit")[0], "1");
+        Assertions.assertEquals(loginMenu.commandHandler("exit")[0], "1");
         Assertions.assertEquals(loginMenu.commandHandler("menu show-current")[0], "2");
         Assertions.assertEquals(loginMenu.commandHandler("user create --username un --nickname nn --password pw")[0], "3");
         Assertions.assertEquals(loginMenu.commandHandler("user create --username un --nickname nn --password pw")[1], "--username un --nickname nn --password pw");
         Assertions.assertEquals(loginMenu.commandHandler("user login --username un --nickname nn --password pw")[0], "4");
         Assertions.assertEquals(loginMenu.commandHandler("user login --username un --nickname nn --password pw")[1], "--username un --nickname nn --password pw");
+        Assertions.assertEquals(loginMenu.commandHandler("help")[0], "99");
 
     }
 }

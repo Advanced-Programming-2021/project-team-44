@@ -14,7 +14,7 @@ class DeckTest {
 
     @Test
     void addOrRemoveCardToMainDeckTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck1 = new Deck("My first");
         deck1.addCardToMainDeck(Card.getCardByName("Axe Raider"));
         deck1.addCardToMainDeck(Card.getCardByName("Baby dragon"));
@@ -27,7 +27,7 @@ class DeckTest {
 
     @Test
     void addOrRemoveCardToSideDeckTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck1 = new Deck("My first");
         deck1.addCardToSideDeck(Card.getCardByName("Axe Raider"));
         Assertions.assertEquals(deck1.sideDeckCounter(), 1);
@@ -45,7 +45,7 @@ class DeckTest {
 
     @Test
     void isMainDeckFullTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("Main deck");
         Assertions.assertFalse(deck.isMainDeckFull());
         for (int i = 0; i < 60; i++) {
@@ -57,7 +57,7 @@ class DeckTest {
 
     @Test
     void isSideDeckFullTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("Side deck");
         Assertions.assertFalse(deck.isSideDeckFull());
         for (int i = 0; i < 15; i++) {
@@ -68,7 +68,7 @@ class DeckTest {
 
     @Test
     void isCardExistedInSideDeckTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("DECK");
         deck.addCardToSideDeck(Card.getCardByName("Axe Raider"));
         Assertions.assertTrue(deck.isCardExistedInSideDeck("Axe Raider"));
@@ -79,7 +79,7 @@ class DeckTest {
 
     @Test
     void isCardExistedInMainDeckTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("DECK");
         deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
         Assertions.assertTrue(deck.isCardExistedInMainDeck("Axe Raider"));
@@ -90,7 +90,7 @@ class DeckTest {
 
     @Test
     void isDeckValidTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("validInvalidDeck");
         Assertions.assertFalse(deck.isDeckValid());
         for (int i = 0; i < 50; i++) {
@@ -105,7 +105,7 @@ class DeckTest {
 
     @Test
     void getMainDeckCardsTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("abas bo azar");
         ArrayList<Card> cards = new ArrayList<>();
         Assertions.assertEquals(deck.getMainDeckCards(), cards);
@@ -118,7 +118,7 @@ class DeckTest {
 
     @Test
     void getSideDeckCardsTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("abas bo azar");
         ArrayList<Card> cards = new ArrayList<>();
         Assertions.assertEquals(deck.getSideDeckCards(), cards);
@@ -131,7 +131,7 @@ class DeckTest {
 
     @Test
     void showDeckTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("taj");
         deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
         deck.addCardToMainDeck(Card.getCardByName("Advanced Ritual Art"));
@@ -157,7 +157,7 @@ class DeckTest {
 
     @Test
     void getStringForShowAllDecksTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("crown");
         deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
         deck.addCardToMainDeck(Card.getCardByName("Battle OX"));
@@ -168,7 +168,7 @@ class DeckTest {
 
     @Test
     void ifMaxOfCardIsReachedTest() {
-        Core.Initializer();
+        Core.cardInitializer();
         Deck deck = new Deck("first deck");
         deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
         deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
@@ -180,5 +180,27 @@ class DeckTest {
 
     @Test
     void cloneTest(){
+        Core.cardInitializer();
+        Deck deck = new Deck("achbar");
+        deck.addCardToMainDeck(Card.getCardByName("Axe Raider"));
+        deck.addCardToSideDeck(Card.getCardByName("Monster Reborn"));
+        deck.clone();
+    }
+
+    @Test
+    void settersTest(){
+        Deck deck = new Deck("mah");
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.add(Card.getCardByName("Battle OX"));
+        cards.add(Card.getCardByName("Monster Reborn"));
+        deck.setMainDeckCards(cards);
+        Assertions.assertEquals(cards, deck.getMainDeckCards());
+        deck.setSideDeckCards(cards);
+        Assertions.assertEquals(cards, deck.getSideDeckCards());
+    }
+
+    @Test
+    void DeckDeepSerializedTest(){
+        new DeckDeepSerialized("khorshid", "poshtesh", "be mas");
     }
 }

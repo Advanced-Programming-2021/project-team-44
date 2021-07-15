@@ -18,6 +18,7 @@ class ImportExportMenuTest {
         Assertions.assertEquals(importExportMenu.commandHandler("import card cn")[1], "cn");
         Assertions.assertEquals(importExportMenu.commandHandler("export card cn")[0], "4");
         Assertions.assertEquals(importExportMenu.commandHandler("export card cn")[1], "cn");
+        Assertions.assertEquals(importExportMenu.commandHandler("help")[0], "99");
 
     }
 }
