@@ -32,6 +32,15 @@ public class Account {
     private ArrayList<Card> spareCards;
     private ArrayList<Deck> decks;
 
+    public Account() {
+        this.username = null;
+        this.password = null;
+        this.nickname = null;
+        this.activeDeck = null;
+        this.spareCards = new ArrayList<>();
+        this.decks = new ArrayList<>();
+    }
+
     public Account(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
@@ -102,7 +111,10 @@ public class Account {
         }
         for (String deckSerialized : decksDeepSerialized)
             decks.add(Deck.deserialize(deckSerialized));
-        Account output = new Account(accountDeepSerialized.username, accountDeepSerialized.password, accountDeepSerialized.nickname);
+        Account output = new Account();
+        output.setUsername(accountDeepSerialized.username);
+        output.setPassword(accountDeepSerialized.password);
+        output.setNickname(accountDeepSerialized.nickname);
         output.setScore(accountDeepSerialized.score);
         output.setCoin(accountDeepSerialized.coin);
         output.setActiveDeck(activeDeck);
