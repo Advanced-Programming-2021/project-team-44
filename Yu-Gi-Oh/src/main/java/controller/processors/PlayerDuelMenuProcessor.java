@@ -48,6 +48,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
 
     @Override
     public void executeTurn() {
+        System.out.print(showBoard());
         String command = getActingPlayer().getCommand();
         String[] dividedCommand = commandHandler(command);
         String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);

@@ -87,7 +87,7 @@ public class Player {
         System.out.print(consoleMessage);
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine().trim();
-        scanner.close();
+        //scanner.close();
         return command;
     }
 
