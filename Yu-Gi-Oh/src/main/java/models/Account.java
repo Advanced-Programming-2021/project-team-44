@@ -3,6 +3,8 @@ package models;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.cards.Card;
+import models.cards.MagicCard;
+import models.cards.MonsterCard;
 import models.utils.comparators.CardSortByName;
 
 import java.io.File;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Account {
-    public static ArrayList<Account> accounts;
+    public static final ArrayList<Account> accounts;
 
     static {
         accounts = new ArrayList<>();
@@ -42,37 +44,44 @@ public class Account {
         accounts.add(this);
     }
 
-    public static String initializeAccounts() {
-        File accountsDirectory = new File("src/main/resources/static/accounts");
-        File[] accountsFiles = accountsDirectory.listFiles();
-        if (accountsFiles == null)
-            return "Accounts JSON files missing!";
-        for (File file : accountsFiles) {
-            String accountJson;
-            try {
-                accountJson = Files.readString(Paths.get(file.getPath()));
-            } catch (IOException e) {
-                return "JSON files can't be accessed!";
+    public static synchronized String initializeAccounts() {
+        if (accounts.size() == 0) {
+            synchronized (accounts) {
+                File accountsDirectory = new File("src/main/resources/static/accounts");
+                File[] accountsFiles = accountsDirectory.listFiles();
+                if (accountsFiles == null)
+                    return "Accounts JSON files missing!";
+                for (File file : accountsFiles) {
+                    String accountJson;
+                    try {
+                        accountJson = Files.readString(Paths.get(file.getPath()));
+                    } catch (IOException e) {
+                        return "JSON files can't be accessed!";
+                    }
+                    accounts.add(Account.deserialize(accountJson));
+                }
+                return "Accounts loaded successfully";
             }
-            accounts.add(Account.deserialize(accountJson));
         }
-        return "Accounts loaded successfully";
+        return "";
     }
 
     public static String saveAccounts() {
-        for (Account account : accounts) {
-            String accountFilePath = "src/main/resources/static/accounts/" + account.getUsername() + ".json";
-            File accountFile = new File(accountFilePath);
-            try {
-                FileWriter writer = new FileWriter(accountFile.getPath());
-                String jsonData = account.serialize();
-                writer.write(jsonData);
-                writer.close();
-            } catch (IOException e) {
-                return "Can't parse accounts JSON files";
+        synchronized (accounts) {
+            for (Account account : accounts) {
+                String accountFilePath = "src/main/resources/static/accounts/" + account.getUsername() + ".json";
+                File accountFile = new File(accountFilePath);
+                try {
+                    FileWriter writer = new FileWriter(accountFile.getPath(), false);
+                    String jsonData = account.serialize();
+                    writer.write(jsonData);
+                    writer.close();
+                } catch (IOException e) {
+                    return "Can't parse accounts JSON files";
+                }
             }
+            return "Accounts data saved successfully";
         }
-        return "Accounts data saved successfully";
     }
 
     public static Account deserialize(String accountSerialized) {
@@ -84,8 +93,13 @@ public class Account {
         ArrayList<String> decksDeepSerialized = (new Gson()).fromJson(accountDeepSerialized.decksSerialized, collectionType);
         ArrayList<Card> spareCards = new ArrayList<>();
         ArrayList<Deck> decks = new ArrayList<>();
-        for (String cardSerialized : spareCardsDeepSerialized)
-            spareCards.add((new Gson()).fromJson(cardSerialized, Card.class));
+        for (String cardSerialized : spareCardsDeepSerialized) {
+            try {
+                spareCards.add((new Gson()).fromJson(cardSerialized, MonsterCard.class));
+            } catch (Exception e) {
+                spareCards.add((new Gson()).fromJson(cardSerialized, MagicCard.class));
+            }
+        }
         for (String deckSerialized : decksDeepSerialized)
             decks.add(Deck.deserialize(deckSerialized));
         Account output = new Account(accountDeepSerialized.username, accountDeepSerialized.password, accountDeepSerialized.nickname);

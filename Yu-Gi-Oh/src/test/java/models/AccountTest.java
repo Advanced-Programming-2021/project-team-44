@@ -7,7 +7,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class AccountTest {
 
@@ -88,6 +95,7 @@ class AccountTest {
     //Getters
     @Test
     void getAccountByUsernameTest(){
+        Account.accounts.clear();
         Account test1 = new Account("matinKing","12345","matadysa");
         Assertions.assertEquals(test1,Account.getAccountByUsername("matinKing"));
 
@@ -286,8 +294,14 @@ class AccountTest {
     }
 
     @Test
-    void someOtherTest(){
-
+    void deserializeTest(){
+        File file = new File("src/main/resources/static/accounts/AI.json");
+        String accountJSON = null;
+        try {
+            accountJSON = Files.readString(Paths.get(file.getPath()));
+        } catch (IOException ignored) {}
+        Account account = Account.deserialize(accountJSON);
+        Assertions.assertEquals(account.getUsername(), "AI");
     }
 
 
