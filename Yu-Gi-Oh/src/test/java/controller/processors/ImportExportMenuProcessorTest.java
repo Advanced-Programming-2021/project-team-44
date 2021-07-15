@@ -3,12 +3,18 @@ package controller.processors;
 import controller.Core;
 import models.Account;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import view.menus.Menus;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ImportExportMenuProcessorTest {
+
+    @BeforeEach
+    void accountsClear(){
+        Account.accounts.clear();
+    }
 
     @Test
     void commandDistributor() {

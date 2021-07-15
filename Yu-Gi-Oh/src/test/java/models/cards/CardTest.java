@@ -1,12 +1,19 @@
 package models.cards;
 
 import controller.Core;
+import models.Account;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
 class CardTest {
+
+    @BeforeEach
+    void accountsClear(){
+        Account.accounts.clear();
+    }
 
     @Test
     public void cardTest(){

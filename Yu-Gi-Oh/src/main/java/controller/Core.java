@@ -56,5 +56,6 @@ public class Core {
 
     public static void accountInitializer(){
         System.out.println(Account.initializeAccounts());
+        System.out.println(Account.accounts.size());
     }
 }

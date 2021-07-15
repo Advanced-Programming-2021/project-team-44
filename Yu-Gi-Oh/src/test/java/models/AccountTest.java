@@ -5,6 +5,7 @@ import models.cards.Card;
 import models.cards.MonsterCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -18,6 +19,10 @@ import java.util.Scanner;
 
 class AccountTest {
 
+    @BeforeEach
+    void accountsClear(){
+        Account.accounts.clear();
+    }
     //Utils
     @Test
     void isUsernameValidTest() {
