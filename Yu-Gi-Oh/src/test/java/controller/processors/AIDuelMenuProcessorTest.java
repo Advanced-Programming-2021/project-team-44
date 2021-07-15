@@ -2,6 +2,7 @@ package controller.processors;
 
 import controller.Core;
 import models.Account;
+import models.Phases;
 import models.cards.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class AIDuelMenuProcessorTest {
         playerDuelMenuProcessor.getLoser();
         playerDuelMenuProcessor.selectedCard = playerDuelMenuProcessor.getActingPlayer().getCardFromHandZone(1);
         playerDuelMenuProcessor.flipSummonErrorChecker();
-        playerDuelMenuProcessor.summon();
+        playerDuelMenuProcessor.set();
         playerDuelMenuProcessor.selectedCard = playerDuelMenuProcessor.getActingPlayer().getCardFromMonsterZone(1);
         playerDuelMenuProcessor.showSelectedCardErrorChecker();
         playerDuelMenuProcessor.directAttack();
@@ -44,6 +45,57 @@ class AIDuelMenuProcessorTest {
         playerDuelMenuProcessor.setPosition("OO");
         playerDuelMenuProcessor.changePhase();
         playerDuelMenuProcessor.changeTurn();
+        playerDuelMenuProcessor.selectedCard = playerDuelMenuProcessor.getActingPlayer().getCardFromHandZone(1);
+        playerDuelMenuProcessor.summon();
+        playerDuelMenuProcessor.selectedCard = playerDuelMenuProcessor.getActingPlayer().getCardFromMonsterZone(1);
+        playerDuelMenuProcessor.attack(1);
+        playerDuelMenuProcessor.process(0,"");
+        playerDuelMenuProcessor.process(1,"");
+        playerDuelMenuProcessor.process(2,"");
+        playerDuelMenuProcessor.process(3,"");
+        playerDuelMenuProcessor.process(4,"");
+        playerDuelMenuProcessor.process(5,"");
+        playerDuelMenuProcessor.process(6,"");
+        playerDuelMenuProcessor.process(7,"");
+        playerDuelMenuProcessor.process(8,"");
+        playerDuelMenuProcessor.process(9,"");
+        playerDuelMenuProcessor.process(10,"");
+        playerDuelMenuProcessor.process(11,"");
+        playerDuelMenuProcessor.process(12,"");
+        playerDuelMenuProcessor.process(13,"");
+        playerDuelMenuProcessor.process(15,"");
+        playerDuelMenuProcessor.process(17,"");
+        playerDuelMenuProcessor.process(18,"");
+        playerDuelMenuProcessor.process(19,"");
+        playerDuelMenuProcessor.process(20,"");
+        playerDuelMenuProcessor.process(30, "");
+        playerDuelMenuProcessor.process(31,"");
+        playerDuelMenuProcessor.process(99,"");
+        playerDuelMenuProcessor.help();
+        playerDuelMenuProcessor.increaseLp(0);
+        playerDuelMenuProcessor.changePhase();
+        playerDuelMenuProcessor.changePhase();
+        playerDuelMenuProcessor.changePhase();
+        playerDuelMenuProcessor.changePhase();
+
         playerDuelMenuProcessor.surrender();
+    }
+
+    @Test
+    void AITest(){
+        Core.Initializer();
+        Account account1 = Account.getAccountByUsername("matinKing");
+        MainMenuProcessor mainMenuProcessor = new MainMenuProcessor();
+        AIDuelMenuProcessor aiDuelMenuProcessor = new AIDuelMenuProcessor();
+        Processor.loggedInUser = account1;
+        aiDuelMenuProcessor.getAI();
+        aiDuelMenuProcessor.getHuman();
+        aiDuelMenuProcessor.AIHandZoneSortedByAttackPoint();
+        //aiDuelMenuProcessor.AIGetCommand(Phases.DRAW);
+        //aiDuelMenuProcessor.AIGetCommand(Phases.MAIN1);
+        //aiDuelMenuProcessor.AIGetCommand(Phases.MAIN2);
+        //aiDuelMenuProcessor.AIGetCommand(Phases.STANDBY);
+        //aiDuelMenuProcessor.AIGetCommand(Phases.BATTLE);
+        //aiDuelMenuProcessor.AIGetCommand(Phases.END);
     }
 }
