@@ -76,6 +76,7 @@ public class Player {
         this.handZone.put(4, null);
         this.handZone.put(5, null);
         this.handZone.put(6, null);
+        setHandCards();
 
         this.fieldZone = null;
         this.graveyardZone = new ArrayList<>();

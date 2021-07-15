@@ -195,7 +195,7 @@ abstract public class DuelMenuProcessor extends Processor {
         if (type == SelectType.HAND && ofOpponent) return "invalid command";
         if (type == SelectType.MONSTER || type == SelectType.SPELL || type == SelectType.HAND) {
             try {
-                selectedPosition = Integer.parseInt(selectedPositionString);
+                selectedPosition = Integer.parseInt(selectedPositionString.trim());
             } catch (Exception e) {
                 return "invalid command";
             }
@@ -482,8 +482,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 else tmpCard = getActingPlayer().getCardFromFieldZone();
             }
             case "hand" -> {
-                if (ofOpponent) tmpCard = getOtherPlayer().getCardFromHandZone(position);
-                else tmpCard = getActingPlayer().getCardFromHandZone(position);
+                tmpCard = getActingPlayer().getCardFromHandZone(position);
             }
         }
         if (tmpCard == null) response = "no card found in the given position";
