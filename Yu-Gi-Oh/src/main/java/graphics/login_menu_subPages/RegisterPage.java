@@ -43,6 +43,6 @@ public class RegisterPage extends Application {
 
     public void registerSubmitHandler() {
         String response = LoginMenuProcessor.getInstance().createUserErrorChecker(usernameField.getText(), nicknameField.getText(), passwordField.getText());
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, stage);
     }
 }

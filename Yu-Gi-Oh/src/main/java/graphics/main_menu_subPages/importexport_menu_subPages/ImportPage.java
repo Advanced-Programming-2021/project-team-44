@@ -39,6 +39,6 @@ public class ImportPage extends Application {
 
     public void importHandler(MouseEvent mouseEvent) {
         String response = ImportExportMenuProcessor.getInstance().importCardErrorChecker(pathField.getText());
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, stage);
     }
 }

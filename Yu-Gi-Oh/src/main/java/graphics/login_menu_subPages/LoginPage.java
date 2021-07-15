@@ -51,7 +51,7 @@ public class LoginPage extends Application {
 
     public void loginSubmitHandler() {
         String response = LoginMenuProcessor.getInstance().loginUserErrorChecker(usernameField.getText(), passwordField.getText());
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, stage);
         if (Core.currentMenu == Menus.MAIN) redirectToMainMenu();
     }
 }

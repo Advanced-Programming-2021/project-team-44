@@ -2,6 +2,7 @@ package controller.processors;
 
 import controller.Core;
 import graphics.GraphicalUserInterface;
+import graphics.StartPage;
 import models.Account;
 import models.Menus;
 import models.cards.MonsterCard;
@@ -75,7 +76,7 @@ public class AIDuelMenuProcessor extends DuelMenuProcessor {
         else command = getActingPlayer().getCommand();
         String[] dividedCommand = commandHandler(command);
         String response = process(Integer.parseInt(dividedCommand[0]), dividedCommand[1]);
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, StartPage.stage);
     }
 
     @Override

@@ -98,11 +98,11 @@ public class ShopMenuPage extends Application implements MainMenuNavigation {
 
     public void buyHandler() {
         String response = ShopMenuProcessor.getInstance().buyCardErrorChecker(cardsChoiceBox.getSelectionModel().getSelectedItem());
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, stage);
     }
 
     public void forceBuyHandler() {
         String response = ShopMenuProcessor.getInstance().forceBuyCard(cardsChoiceBox.getSelectionModel().getSelectedItem());
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, stage);
     }
 }

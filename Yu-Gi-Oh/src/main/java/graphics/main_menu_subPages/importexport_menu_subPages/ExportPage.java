@@ -41,6 +41,6 @@ public class ExportPage extends Application {
     public void exportHandler(MouseEvent mouseEvent) {
         if (pathField.getText() == null) pathField.setText("");
         String response = ImportExportMenuProcessor.getInstance().exportCardErrorChecker(cardNameField.getText(), pathField.getText());
-        GraphicalUserInterface.returnGraphicalResponse(response);
+        GraphicalUserInterface.returnGraphicalResponse(response, stage);
     }
 }

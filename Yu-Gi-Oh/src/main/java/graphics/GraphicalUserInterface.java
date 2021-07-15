@@ -10,13 +10,8 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class GraphicalUserInterface {
-    private static final Stage stage;
 
-    static {
-        stage = StartPage.stage;
-    }
-
-    public static void returnGraphicalResponse(String response) {
+    public static void returnGraphicalResponse(String response, Stage stage) {
         Popup popup = new Popup();
 
         AnchorPane anchorPane = new AnchorPane();
