@@ -118,7 +118,6 @@ public class ScoreboardMenuPage extends Application implements MainMenuNavigatio
         scoreLabel.getStylesheets().add(Objects.requireNonNull(this.getClass().getResource("/static/graphics/css_styles/label_style.css")).toExternalForm());
         scoreLabel.getStyleClass().add("label_scoreboard_item");
 
-
         return hBox;
     }
 }
