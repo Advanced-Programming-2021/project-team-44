@@ -6,7 +6,7 @@ import models.Menus;
 import models.utils.comparators.AccountSortByNickname;
 import models.utils.comparators.AccountSortByScore;
 
-import java.util.Collections;
+import java.util.HashMap;
 
 public class ScoreboardMenuProcessor extends Processor { //DONE
     private static ScoreboardMenuProcessor instance;
@@ -23,24 +23,18 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    public String showScoreboard() {
-        StringBuilder response = new StringBuilder();
+    public HashMap<Integer, Account> showScoreboard() {
+        HashMap<Integer, Account> output = new HashMap<>();
         Account.accounts.sort(new AccountSortByNickname());
         Account.accounts.sort(new AccountSortByScore());
         int rank = 1;
         for (int i = 0; i < Account.accounts.size(); i++) {
-            if (i == 0)
-                response.append(rank).append("- ").append(Account.accounts.get(i).getStringForScoreboard()).append("\n");
-            else {
-                if (i == Account.accounts.size() - 1)
-                    response.append(rank).append("- ").append(Account.accounts.get(i).getStringForScoreboard());
-                else {
-                    if (Account.accounts.get(i - 1).getScore() > Account.accounts.get(i).getScore()) rank++;
-                    response.append(rank).append("- ").append(Account.accounts.get(i).getStringForScoreboard()).append("\n");
-                }
-            }
+            if (i != 0)
+                if (Account.accounts.get(i - 1).getScore() > Account.accounts.get(i).getScore())
+                    rank++;
+            output.put(rank, Account.accounts.get(i));
         }
-        return response.toString();
+        return output;
     }
 
     @Override
