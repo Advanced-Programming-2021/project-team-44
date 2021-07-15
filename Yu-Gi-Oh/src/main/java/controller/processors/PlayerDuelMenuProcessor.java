@@ -86,7 +86,7 @@ public class PlayerDuelMenuProcessor extends DuelMenuProcessor {
                 + loser.getScore());
     } //done
 
-    private void coinPayer(Player winner, Player loser) {
+    public void coinPayer(Player winner, Player loser) {
         if (allRounds == 1) {
             winner.getAccount().increaseScore(1000);
 
