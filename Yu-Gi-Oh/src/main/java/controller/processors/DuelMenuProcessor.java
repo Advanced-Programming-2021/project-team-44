@@ -81,7 +81,6 @@ abstract public class DuelMenuProcessor extends Processor {
                 "menu enter|" +
                 "menu exit|" +
                 "menu show-current|" +
-                "card show|" +
                 //Cheats
                 "use cheat|" +
                 "increase --LP|" +
@@ -102,6 +101,7 @@ abstract public class DuelMenuProcessor extends Processor {
                 "show graveyard --opponent|" + "show graveyard -o|" +
                 "show graveyard|" +
                 "card show --selected|" + "card show -s|" +
+                "card show|" +
                 "surrender" +
                 ")\\b(?:\\s+(.*))?$");
         Matcher matcher = pattern.matcher(input);
