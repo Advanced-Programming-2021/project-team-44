@@ -8,9 +8,6 @@ class CoreTest {
 
     @Test
     void run() {
-    }
-
-    @Test
-    void menuDistributor() {
+        Core core = new Core();
     }
 }
