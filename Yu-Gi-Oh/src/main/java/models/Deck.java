@@ -29,10 +29,20 @@ public class Deck {
         ArrayList<String> sideDeckCardsSerialized = (new Gson()).fromJson(deck.sideDeckCardsSerialized, collectionType);
         ArrayList<Card> mainDeckCards = new ArrayList<>();
         ArrayList<Card> sideDeckCards = new ArrayList<>();
-        for (String cardSerialized : mainDeckCardsSerialized)
-            mainDeckCards.add((new Gson()).fromJson(cardSerialized, Card.class));
-        for (String cardSerialized : sideDeckCardsSerialized)
-            sideDeckCards.add((new Gson()).fromJson(cardSerialized, Card.class));
+        for (String cardSerialized : mainDeckCardsSerialized) {
+            try {
+                mainDeckCards.add((new Gson()).fromJson(cardSerialized, MonsterCard.class));
+            } catch (Exception e) {
+                mainDeckCards.add((new Gson()).fromJson(cardSerialized, MagicCard.class));
+            }
+        }
+        for (String cardSerialized : sideDeckCardsSerialized) {
+            try {
+                sideDeckCards.add((new Gson()).fromJson(cardSerialized, MonsterCard.class));
+            } catch (Exception e) {
+                sideDeckCards.add((new Gson()).fromJson(cardSerialized, MagicCard.class));
+            }
+        }
         Deck output = new Deck(deck.name);
         output.setMainDeckCards(mainDeckCards);
         output.setSideDeckCards(sideDeckCards);
