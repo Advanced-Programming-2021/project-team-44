@@ -44,6 +44,14 @@
                     <Font size="20.0"/>
                 </font>
             </Label>
+            <Label onMouseClicked="#changeNicknameHandler" text="Change" textFill="gold">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Label>
         </HBox>
         <HBox alignment="BASELINE_LEFT" spacing="10">
             <AnchorPane prefWidth="190"/>
@@ -58,6 +66,29 @@
                 <font>
                     <Font size="20.0"/>
                 </font>
+            </Label>
+        </HBox>
+        <HBox alignment="BASELINE_LEFT" spacing="10">
+            <AnchorPane prefWidth="190"/>
+            <Label styleClass="label_profile_menu_show" stylesheets="@../../graphics/css_styles/label_style.css"
+                   text="Password">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+            </Label>
+            <Label fx:id="passwordLabel" styleClass="label_profile_menu_attributes"
+                   stylesheets="@../../graphics/css_styles/label_style.css">
+                <font>
+                    <Font size="20.0"/>
+                </font>
+            </Label>
+            <Label onMouseClicked="#changePasswordHandler" text="Change" textFill="gold">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
             </Label>
         </HBox>
         <HBox alignment="BASELINE_LEFT" spacing="10">
