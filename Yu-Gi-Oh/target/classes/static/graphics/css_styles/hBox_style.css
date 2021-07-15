@@ -1,0 +1,10 @@
+.hBox_scoreboard_item {
+    -fx-background-color: orange;
+    -fx-padding: 5px;
+    -fx-pref-height: 50px;
+    -fx-pref-width: 500px;
+}
+
+.hBox_scoreboard_item:hover {
+    -fx-background-color: #fec04c;
+}

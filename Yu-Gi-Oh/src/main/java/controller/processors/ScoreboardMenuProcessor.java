@@ -7,6 +7,7 @@ import models.utils.comparators.AccountSortByNickname;
 import models.utils.comparators.AccountSortByScore;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ScoreboardMenuProcessor extends Processor { //DONE
     private static ScoreboardMenuProcessor instance;
@@ -23,8 +24,8 @@ public class ScoreboardMenuProcessor extends Processor { //DONE
     }
 
     //Command Performer
-    public HashMap<Integer, Account> showScoreboard() {
-        HashMap<Integer, Account> output = new HashMap<>();
+    public LinkedHashMap<Integer, Account> showScoreboard() {
+        LinkedHashMap<Integer, Account> output = new LinkedHashMap<>();
         Account.accounts.sort(new AccountSortByNickname());
         Account.accounts.sort(new AccountSortByScore());
         int rank = 1;

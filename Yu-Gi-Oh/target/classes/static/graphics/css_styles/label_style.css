@@ -28,3 +28,10 @@
     -fx-text-fill: white;
     -fx-pref-width: 128px;
 }
+
+.label_scoreboard_item {
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-text-fill: #3b6cb6;
+    -fx-font-size: 20px;
+}
