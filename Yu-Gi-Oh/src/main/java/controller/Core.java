@@ -41,7 +41,7 @@ public class Core {
     public static void Initializer() {
         //TODO INITIALIZER
         cardInitializer();
-        //accountInitializer();
+        accountInitializer();
     }
 
     public static void destruct() {

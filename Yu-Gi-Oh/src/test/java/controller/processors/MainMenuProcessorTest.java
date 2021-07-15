@@ -15,8 +15,8 @@ class MainMenuProcessorTest {
     void commandDistributor() {
         Core.cardInitializer();
         MainMenuProcessor mainMenuProcessor = new MainMenuProcessor();
-        Account account = new Account("matinKing","12345","matadysa");
-        Account account2 = new Account("matinKing2","12345","matadysa2");
+        Account account = new Account("matinKing3","12345","matadysa3");
+        Account account2 = new Account("matinKing4","12345","matadysa4");
         Processor.loggedInUser = account;
 
         String responseFor0 = "you can't enter this menu by this command";
@@ -43,19 +43,19 @@ class MainMenuProcessorTest {
         Assertions.assertEquals(mainMenuProcessor.process(4,"-r 2 -s akbar --ali"), responseFor4);
         responseFor4 = "there is no player with this username";
         Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s akbar"), responseFor4);
-        responseFor4 = "matinKing has no active deck";
-        Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s matinKing2"), responseFor4);
+        responseFor4 = "matinKing3 has no active deck";
+        Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s matinKing4"), responseFor4);
         account.setActiveDeck(new Deck("deck"));
-        responseFor4 = "matinKing2 has no active deck";
-        Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s matinKing2"), responseFor4);
+        responseFor4 = "matinKing4 has no active deck";
+        Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s matinKing4"), responseFor4);
         account2.setActiveDeck(new Deck("deck2"));
-        responseFor4 = "matinKing deck is invalid";
-        Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s matinKing2"), responseFor4);
+        responseFor4 = "matinKing3 deck is invalid";
+        Assertions.assertEquals(mainMenuProcessor.process(4,"-r 1 -s matinKing4"), responseFor4);
 
         String responseFor5 = "invalid command";
         Assertions.assertEquals(mainMenuProcessor.process(5,""), responseFor5);
         Assertions.assertEquals(mainMenuProcessor.process(5,"-r 3 --ali"), responseFor5);
-        responseFor5 = "matinKing deck is invalid";
+        responseFor5 = "matinKing3 deck is invalid";
         Assertions.assertEquals(mainMenuProcessor.process(5,"-r 3"), responseFor5);
 
         String responseFor99 =

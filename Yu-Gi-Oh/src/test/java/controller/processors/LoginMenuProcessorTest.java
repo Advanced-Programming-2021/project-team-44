@@ -53,9 +53,9 @@ class LoginMenuProcessorTest {
         Assertions.assertEquals(loginMenuProcessor.process(3, "-u abas --password 246810 wqe -n karim"), responseFor3);
         responseFor3 = "user with username matinKing already exists";
         Assertions.assertEquals(loginMenuProcessor.process(3, "-u matinKing --password 246810 -n karim"), responseFor3);
-        responseFor3 = "user with username matinKing2 already exists";
+        responseFor3 = "user with nickname matadysa already exists";
         Assertions.assertEquals(loginMenuProcessor.process(3, "-u matinKing2 --password 246810 -n matadysa"), responseFor3);
-        responseFor3 = "user with username matinKing2 already exists";
+        responseFor3 = "user created successfully!";
         Assertions.assertEquals(loginMenuProcessor.process(3, "-u matinKing2 --password 246810 -n matadysa2"), responseFor3);
         Assertions.assertNotNull(Account.getAccountByUsername("matinKing2"));
         Assertions.assertNotNull(Account.getAccountByNickname("matadysa2"));
