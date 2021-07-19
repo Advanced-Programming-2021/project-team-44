@@ -874,15 +874,31 @@ abstract public class DuelMenuProcessor extends Processor {
                         """);
                 Pattern pattern = Pattern.compile("^(self|opponent)\\s+(.+?)$");
                 String input = tmpScanner.nextLine();
-                while (!pattern.matcher(input).find()) {
-                    System.out.println("invalid input. ");
+                if (!pattern.matcher(input).find()) {
+                    return "invalid input";
+                }
+                else if (pattern.matcher(input).group(1).equals("self")){
+                    if(!getActingPlayer().getGraveyardZone().contains(MonsterCard.getMonsterCardByName(pattern.matcher(input).group(1)))) return "invalid input";
+                    specialSummon(MonsterCard.getMonsterCardByName(pattern.matcher(input).group(1)));
+                }
+                else {
+                    if(!getOtherPlayer().getGraveyardZone().contains(MonsterCard.getMonsterCardByName(pattern.matcher(input).group(1)))) return "invalid input";
+                    specialSummon(MonsterCard.getMonsterCardByName(pattern.matcher(input).group(1)));
                 }
             }
             case "Terraforming" -> {
             }
             case "Pot of Greed" -> {
+                getActingPlayer().getHandZone().put(getActingPlayer().getFirstFreePositionInHandZone(), getActingPlayer().getMainDeck().get(0));
+                getActingPlayer().getMainDeck().remove(0);
+
+                getActingPlayer().getHandZone().put(getActingPlayer().getFirstFreePositionInHandZone(), getActingPlayer().getMainDeck().get(0));
+                getActingPlayer().getMainDeck().remove(0);
+                return "";
             }
             case "Raigeki" -> {
+                getOtherPlayer().destroyAllMonstersInMonsterZone();
+                return "";
             }
             case "Change of Heart" -> {
             }
@@ -891,6 +907,9 @@ abstract public class DuelMenuProcessor extends Processor {
             case "Swords of Revealing Light" -> {
             }
             case "Dark Hole" -> {
+                getActingPlayer().destroyAllMonstersInMonsterZone();
+                getOtherPlayer().destroyAllMonstersInMonsterZone();
+                return "";
             }
             case "Supply Squad" -> {
             }
@@ -901,6 +920,17 @@ abstract public class DuelMenuProcessor extends Processor {
             case "Twin Twisters" -> {
             }
             case "Mystical space typhoon" -> {
+                System.out.println("""
+                        Choose a magic from your opponent's board to destroy it.
+                        Input format:
+                        <card index>
+                        """);
+                int input = Integer.parseInt(tmpScanner.nextLine());
+                if(getOtherPlayer().getCardFromMagicZone(input) != null) {
+                    getOtherPlayer().destroyMagic(input);
+                    return "";
+                }
+                return "invalid input";
             }
             case "Ring of defense" -> {
             }
@@ -941,6 +971,19 @@ abstract public class DuelMenuProcessor extends Processor {
             case "Magic Jammer" -> {
             }
             case "Call of The Haunted" -> {
+                System.out.println("""
+                        Choose a monster from your graveyard to revive and special summon.
+                        Input format:
+                        <card name>
+                        """);
+                Pattern pattern = Pattern.compile("^(.+?)$");
+                String input = tmpScanner.nextLine();
+                if (!pattern.matcher(input).find()) {
+                    return "invalid input";
+                }
+                if(!getActingPlayer().getGraveyardZone().contains(MonsterCard.getMonsterCardByName(pattern.matcher(input).group(1)))) return "invalid input";
+                specialSummon(MonsterCard.getMonsterCardByName(pattern.matcher(input).group(1)));
+
             }
             case "Vanity's Emptiness" -> {
             }

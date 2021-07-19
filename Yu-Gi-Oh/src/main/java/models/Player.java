@@ -401,4 +401,19 @@ public class Player {
     public ArrayList<Card> getGraveyardZone() {
         return graveyardZone;
     }
+
+    public void destroyAllMonstersInMonsterZone(){
+        destroyMonster(1);
+        destroyMonster(2);
+        destroyMonster(3);
+        destroyMonster(4);
+        destroyMonster(5);
+    }
+
+    public ArrayList<Card> getMainDeck(){
+        return this.mainDeckCards;
+    }
+    public HashMap<Integer, Card> getHandZone(){
+        return this.handZone;
+    }
 }
